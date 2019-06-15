@@ -1,10 +1,15 @@
 import { Constants } from '../../const/index.js';
 import * as coordinateHelpers from '../../helpers/coordinates.js';
+import { Player } from './model/player.js';
 
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'SpaceScene' });
+	}
+
+	init(data) {
+		this.playerOne = new Player();
 	}
 
 	preload() {
@@ -13,6 +18,8 @@ export class SpaceScene extends Phaser.Scene {
 
 		const track = Constants.getSprite(Constants.keys.sprites.gameTrack);
 		this.load.image(Constants.keys.sprites.gameTrack, track.location);
+
+		this.cursors = this.input.keyboard.createCursorKeys();
 	}
 
 	create() {
