@@ -29,4 +29,11 @@ export const SPRITES = {
 			frameHeight: 544,
 		},
 	},
+	redBullet: {
+		location: `${spriteDir}/redBullet.png`,
+		config: {
+			frameWidth: 12,
+			frameHeight: 30,
+		}
+	}
 };

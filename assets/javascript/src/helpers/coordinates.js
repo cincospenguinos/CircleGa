@@ -21,6 +21,7 @@ export const toPolar = (coordinates) => {
 
 	// debugger;
 
+	// TODO: we may need to set the radius dynamically
 	return {
 		radius,
 		theta: Math.atan2(coordinates.y, coordinates.x),
