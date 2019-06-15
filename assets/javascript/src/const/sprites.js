@@ -34,13 +34,20 @@ export const SPRITES = {
 		config: {
 			frameWidth: 12,
 			frameHeight: 30,
-		}
+		},
 	},
 	blueBullet: {
 		location: `${spriteDir}/blueBullet.png`,
 		config: {
 			frameWidth: 12,
 			frameHeight: 30,
+		},
+
+	},
+	background: {
+		location: `${spriteDir}/background.png`,
+		config: {
+			frameWidth: 1080,
+			frameHeight: 920,
 		}
-	}
 };
