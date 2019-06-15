@@ -22,6 +22,11 @@ const topOfRing = {
 	y: (DIMENSIONS.screen.height - SPRITES.gameTrack.config.frameHeight) / 2,
 };
 
+const centerOfScreen = {
+	x: DIMENSIONS.screen.width / 2,
+	y: DIMENSIONS.screen.height / 2,
+}
+
 export const Constants = {
 	sprites: {
 		...SPRITES,
@@ -30,5 +35,8 @@ export const Constants = {
 	keys: KEYS,
 	getSprite,
 	dimensions: DIMENSIONS,
-	topOfRing,
+	coordinates: {
+		topOfRing,
+		centerOfScreen,
+	}
 };

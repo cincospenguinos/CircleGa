@@ -16,8 +16,9 @@ export class SpaceScene extends Phaser.Scene {
 
 	create() {
 		const sprites = Constants.keys.sprites;
-		const topOfRing = Constants.topOfRing;
-		this.add.image(Constants.dimensions.screen.width / 2, Constants.dimensions.screen.height / 2, sprites.gameTrack);
+		const topOfRing = Constants.coordinates.topOfRing;
+		const center = Constants.coordinates.centerOfScreen;
+		this.add.image(center.x, center.y, sprites.gameTrack);
 		this.add.sprite(topOfRing.x, topOfRing.y, sprites.playerOne);
 	}
 
