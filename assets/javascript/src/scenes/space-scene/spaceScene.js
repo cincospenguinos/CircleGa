@@ -23,7 +23,14 @@ export class SpaceScene extends Phaser.Scene {
 		const track = Constants.getSprite(Constants.keys.sprites.gameTrack);
 		this.load.image(Constants.keys.sprites.gameTrack, track.location);
 
-		this.cursors = this.input.keyboard.createCursorKeys();
+		const cursors = this.input.keyboard.createCursorKeys();
+
+		this.keys = {
+			p1Right: cursors.right,
+			p1Left: cursors.left,
+			p2Right: this.input.keyboard.addKey('D'),
+			p2Left: this.input.keyboard.addKey('A'),
+		};
 	}
 
 	create() {
@@ -39,15 +46,23 @@ export class SpaceScene extends Phaser.Scene {
 
 		const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
 		const playerTwoImg = this.add.sprite(playerTwoPos.x, playerTwoPos.y, sprites.playerTwo);
+		this.playerTwo.setImg(playerTwoImg);
 	}
 
 	update() {
-		if (this.cursors.left.isDown) {
+		if (this.keys.p1Right.isDown) {
 			this.playerOne.accelerate(1);
-		} else if (this.cursors.right.isDown) {
+		} else if (this.keys.p1Left.isDown) {
 			this.playerOne.accelerate(-1);
 		}
 
+		if (this.keys.p2Right.isDown) {
+			this.playerTwo.accelerate(1);
+		} else if (this.keys.p2Left.isDown) {
+			this.playerTwo.accelerate(-1);
+		}
+
 		this.playerOne.update();
+		this.playerTwo.update();
 	}
 }

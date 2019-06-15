@@ -7,7 +7,7 @@ Game jam with Stefano.
 - [x] Setup dev environment
 - [x] Get player on screen
 - [x] Player moves on screen
-- [ ] 2nd Player on screen
+- [x] 2nd Player on screen
 - [ ] Players may collide
 - [ ] Enemy on screen
 - [ ] Shots can be fired
