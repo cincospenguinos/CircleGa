@@ -18,8 +18,8 @@ export const SPRITES = {
 	enemyOne: {
 		location: `${spriteDir}/Enemy1.png`,
 		config: {
-			frameWidth: 32,
-			frameHeight: 32,
+			frameWidth: 46,
+			frameHeight: 42,
 		},
 	},
 	gameTrack: {
