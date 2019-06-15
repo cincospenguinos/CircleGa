@@ -28,14 +28,18 @@ export class SpaceScene extends Phaser.Scene {
 		const p1Bullet = Constants.getSprite(Constants.keys.sprites.redBullet);
 		this.load.spritesheet(Constants.keys.sprites.redBullet, p1Bullet.location, p1Bullet.config);
 
+		const p2Bullet = Constants.getSprite(Constants.keys.sprites.blueBullet);
+		this.load.spritesheet(Constants.keys.sprites.blueBullet, p2Bullet.location, p2Bullet.config);
+
 		const cursors = this.input.keyboard.createCursorKeys();
 
 		this.keys = {
 			p1Right: cursors.right,
 			p1Left: cursors.left,
-			p1Fire: this.input.keyboard.addKey('SPACE'),
+			p1Fire: cursors.up,
 			p2Right: this.input.keyboard.addKey('D'),
 			p2Left: this.input.keyboard.addKey('A'),
+			p2Fire: this.input.keyboard.addKey('W'),
 		};
 	}
 
@@ -63,13 +67,7 @@ export class SpaceScene extends Phaser.Scene {
 		}
 
 		if (this.keys.p1Fire.isDown) {
-			const playerOne = Constants.keys.sprites.playerOne;
-
-			if (this.bullets.bulletCountFor(playerOne) < 2 && this.playerOne.canFire()) {
-				const bullet = this.playerOne.fireBullet();
-				const sprite = this.add.sprite(bullet.x, bullet.y, Constants.keys.sprites.redBullet);
-				this.bullets.addBullet(sprite, playerOne);
-			}
+			this._fireBullet(this.playerOne, Constants.keys.sprites.playerOne, Constants.keys.sprites.redBullet);
 		}
 
 		if (this.keys.p2Right.isDown) {
@@ -78,8 +76,20 @@ export class SpaceScene extends Phaser.Scene {
 			this.playerTwo.accelerate(-1);
 		}
 
+		if (this.keys.p2Fire.isDown) {
+			this._fireBullet(this.playerTwo, Constants.keys.sprites.playerTwo, Constants.keys.sprites.blueBullet);
+		}
+
 		this.playerOne.update();
 		this.playerTwo.update();
 		this.bullets.update();
+	}
+
+	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
+		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
+			const bullet = player.fireBullet();
+			const sprite = this.add.sprite(bullet.x, bullet.y, bulletSpriteKey);
+			this.bullets.addBullet(sprite, playerSpriteKey);
+		}
 	}
 }
