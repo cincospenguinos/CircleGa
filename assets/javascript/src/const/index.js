@@ -1,5 +1,6 @@
 import { SPRITES } from './sprites.js';
 import { DIMENSIONS } from './gameConfig.js';
+import { COORDINATES } from './coordinates.js';
 
 const extractKeys = (obj) => {
 	const keys = {};
@@ -17,16 +18,6 @@ const getSprite = (spriteKey) => {
 	return SPRITES[spriteKey];
 };
 
-const topOfRing = { 
-	x: DIMENSIONS.screen.width / 2,
-	y: (DIMENSIONS.screen.height - SPRITES.gameTrack.config.frameHeight) / 2,
-};
-
-const centerOfScreen = {
-	x: DIMENSIONS.screen.width / 2,
-	y: DIMENSIONS.screen.height / 2,
-}
-
 export const Constants = {
 	sprites: {
 		...SPRITES,
@@ -36,7 +27,6 @@ export const Constants = {
 	getSprite,
 	dimensions: DIMENSIONS,
 	coordinates: {
-		topOfRing,
-		centerOfScreen,
+		...COORDINATES,
 	}
 };
