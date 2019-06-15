@@ -63,11 +63,12 @@ export class SpaceScene extends Phaser.Scene {
 		}
 
 		if (this.keys.p1Fire.isDown) {
-			const bullet = this.playerOne.fireBullet();
+			const playerOne = Constants.keys.sprites.playerOne;
 
-			if (bullet) {
+			if (this.bullets.bulletCountFor(playerOne) < 2 && this.playerOne.canFire()) {
+				const bullet = this.playerOne.fireBullet();
 				const sprite = this.add.sprite(bullet.x, bullet.y, Constants.keys.sprites.redBullet);
-				this.bullets.addBullet(sprite);
+				this.bullets.addBullet(sprite, playerOne);
 			}
 		}
 

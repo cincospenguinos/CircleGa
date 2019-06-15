@@ -4,7 +4,7 @@ import * as coordinateHelpers from '../../../helpers/coordinates.js';
 
 export class Player extends Entity {
 	static MAX_VELOCITY = Math.PI / 64;
-	static MAX_COOLDOWN = 120;
+	static MAX_COOLDOWN = 60;
 
 	constructor(opts) {
 		super(opts);
@@ -36,13 +36,13 @@ export class Player extends Entity {
 	}
 
 	fireBullet() {
-		if (this.cooldown <= 0) {
-			this.cooldown = Player.MAX_COOLDOWN;
-			const polar = coordinateHelpers.toPolar(this.getPosition());
-			polar.radius = polar.radius * 9 / 10
-			return coordinateHelpers.toGame(polar);
-		}
+		this.cooldown = Player.MAX_COOLDOWN;
+		const polar = coordinateHelpers.toPolar(this.getPosition());
+		polar.radius = polar.radius * 9 / 10
+		return coordinateHelpers.toGame(polar);
+	}
 
-		return null;
+	canFire() {
+		return this.cooldown <= 0;
 	}
 }
