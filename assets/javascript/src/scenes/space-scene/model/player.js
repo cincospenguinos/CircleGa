@@ -4,7 +4,7 @@ import * as coordinateHelpers from '../../../helpers/coordinates.js';
 
 export class Player extends Entity {
 	static MAX_VELOCITY = Math.PI / 64;
-	static MAX_COOLDOWN = 60;
+	static MAX_COOLDOWN = 15;
 
 	constructor(opts) {
 		super(opts);

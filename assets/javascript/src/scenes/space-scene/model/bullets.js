@@ -7,7 +7,7 @@ export class Bullet extends Entity {
 	constructor(img, opts = {}) {
 		super(opts);
 
-		this.origin = origin;
+		this.firingOrigin = opts.firingOrigin;
 		this.xVel = opts.xVel;
 		this.yVel = opts.yVel;
 
@@ -28,7 +28,7 @@ export class Bullet extends Entity {
 }
 
 export class Bullets {
-	static BULLET_VEL = 20;
+	static BULLET_VEL = 15;
 
 	constructor() {
 		this.nextKey = 1;
@@ -36,9 +36,9 @@ export class Bullets {
 		this.originCounts = {};
 	}
 
-	addBullet(bulletImg, origin) {
-		const bullet = this._createBullet(bulletImg);
-		this.originCounts[origin] ? this.originCounts[origin]++ : this.originCounts[origin] = 1;
+	addBullet(bulletImg, firingOrigin) {
+		const bullet = this._createBullet(bulletImg, firingOrigin);
+		this.originCounts[firingOrigin] ? this.originCounts[firingOrigin]++ : this.originCounts[firingOrigin] = 1;
 	}
 
 	bulletCountFor(key) {
@@ -55,12 +55,16 @@ export class Bullets {
 			}
 		});
 
-		toRemove.forEach((b) => this.originCounts[b.origin]--);
 		this.bullets = this.bullets.filter((b) => !toRemove.includes(b));
-		console.log(this.bullets);
+
+		toRemove.forEach((b) => {
+			this.originCounts[b.firingOrigin] -= 1;
+			b.img.destroy();
+		});
+
 	}
 
-	_createBullet(bulletImg, origin) {
+	_createBullet(bulletImg, firingOrigin) {
 		const angle = Phaser.Math.Angle.Between(bulletImg.x, bulletImg.y,
 			COORDINATES.centerOfScreen.x, COORDINATES.centerOfScreen.y) + Math.PI / 2;
 		bulletImg.rotation = angle;
@@ -71,7 +75,7 @@ export class Bullets {
 		const bullet = new Bullet(bulletImg, {
 			xVel,
 			yVel,
-			origin,
+			firingOrigin,
 		});
 
 		this.bullets.push(bullet);
