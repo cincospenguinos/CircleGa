@@ -21,7 +21,7 @@ export const toPolar = (coordinates) => {
 
 	return {
 		radius,
-		theta: Math.atan(coordinates.y / coordinates.x),
+		theta: Math.atan(coordinates.y / coordinates.x) /* % (Math.PI / 2) */,
 		type: 'polar',
 	}
 }

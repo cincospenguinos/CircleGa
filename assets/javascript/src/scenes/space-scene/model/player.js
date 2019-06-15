@@ -1,15 +1,19 @@
 import { Entity } from './entity.js';
+import * as coordinateHelpers from '../../../helpers/coordinates.js';
 
 export class Player extends Entity {
 	constructor(opts) {
 		super(opts);
+		this.velocity = 0;
 	}
 
 	setVelocity(angularVel) {
-		console.log(`setVelocity ${angularVel}`)
+		this.velocity = angularVel || 0;
 	}
 
 	update() {
-		console.log('update!');
+		const polar = coordinateHelpers.toPolar(this.getPosition());
+		polar.theta += this.velocity;
+		this.setPosition(polar);
 	}
 }

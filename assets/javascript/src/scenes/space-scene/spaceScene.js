@@ -28,13 +28,19 @@ export class SpaceScene extends Phaser.Scene {
 		const center = Constants.coordinates.centerOfScreen;
 
 		const spritePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(topOfRing));
-		console.log(spritePos);
 
 		this.add.image(center.x, center.y, sprites.gameTrack);
-		this.add.sprite(spritePos.x, spritePos.y, sprites.playerOne);
+		const playerImg = this.add.sprite(spritePos.x, spritePos.y, sprites.playerOne);
+		this.playerOne.setImg(playerImg);
 	}
 
 	update() {
+		if (this.cursors.left.isDown) {
+			this.playerOne.setVelocity(-Math.PI / 64);
+		} else if (this.cursors.right.isDown) {
+			this.playerOne.setVelocity(Math.PI / 64);
+		}
 
+		this.playerOne.update();
 	}
 }
