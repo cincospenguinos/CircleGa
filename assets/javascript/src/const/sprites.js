@@ -4,15 +4,15 @@ export const SPRITES = {
 	playerOne: {
 		location: `${spriteDir}/Player1.png`,
 		config: {
-			frameWidth: 50,
-			frameHeight: 43,
+			frameWidth: 57,
+			frameHeight: 53,
 		},
 	},
 	playerTwo: {
 		location: `${spriteDir}/Player2.png`,
 		config: {
-			frameWidth: 50,
-			frameHeight: 43,
+			frameWidth: 57,
+			frameHeight: 53,
 		},
 	},
 	enemyOne: {
