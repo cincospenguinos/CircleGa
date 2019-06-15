@@ -16,6 +16,7 @@ Game jam with Stefano.
 
 ## Ideas and future plans
 
+- [x] Setup a fancy background
 - [ ] Create menu screen
 - [ ] Limit shots fired
 - [ ] Allow players to connect and move together

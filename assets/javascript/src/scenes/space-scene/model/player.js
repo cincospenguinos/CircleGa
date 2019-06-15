@@ -8,16 +8,28 @@ export class Player extends Entity {
 
 	constructor(opts) {
 		super(opts);
+		this.direction = 0;
 		this.velocity = 0;
-		this.cooldown = 0;
+		this.fireCooldown = 0;
+		this.moveCooldown = 0;
 	}
 
 	accelerate(direction) {
-		this.velocity += direction * Math.PI / 1024;
+		this.setDirection(direction);
+		this.velocity += this.direction * Math.PI / 1024;
 
 		if (Math.abs(this.velocity) > Player.MAX_VELOCITY) {
 			this.velocity = (this.velocity < 0 ? -1 : 1) * Player.MAX_VELOCITY;
 		}
+	}
+
+	setDirection(direction) {
+		this.direction = direction;
+	}
+
+	collidedWithPlayer() {
+		this.velocity = -this.velocity;
+		this.moveCooldown = 20;
 	}
 
 	update() {
@@ -32,7 +44,8 @@ export class Player extends Entity {
 			COORDINATES.centerOfScreen.x, COORDINATES.centerOfScreen.y)) + Math.PI / 2;
 
 		// update the cooldown
-		this.cooldown--;
+		this.fireCooldown--;
+		this.moveCooldown--;
 	}
 
 	fireBullet() {
@@ -43,6 +56,10 @@ export class Player extends Entity {
 	}
 
 	canFire() {
-		return this.cooldown <= 0;
+		return this.fireCooldown <= 0;
+	}
+
+	canMove() {
+		return this.moveCooldown <= 0;
 	}
 }

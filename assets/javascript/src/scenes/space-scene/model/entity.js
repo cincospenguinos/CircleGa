@@ -31,4 +31,15 @@ export class Entity {
 	setImg(img) {
 		this.img = img;
 	}
+
+	static handleCollision(e1, e2, onCollision) {
+		const e1P1 = { x: e1.img.x - e1.img.width / 2, y: e1.img.y - e1.img.height / 2 };
+		const e1P2 = { x: e1.img.x + e1.img.width / 2, y: e1.img.y + e1.img.height / 2 };
+		const e2P1 = { x: e2.img.x - e2.img.width / 2, y: e2.img.y - e2.img.height / 2 };
+		const e2P2 = { x: e2.img.x + e2.img.width / 2, y: e2.img.y + e2.img.height / 2 };
+
+		if (e1P1.x < e2P2.x && e1P2.x > e2P1.x && e1P1.y < e2P2.y && e1P2.y > e2P1.y) {
+			onCollision(e1, e2);
+		}
+	}
 }

@@ -1,5 +1,6 @@
 import { Constants } from '../../const/index.js';
 import * as coordinateHelpers from '../../helpers/coordinates.js';
+import { Entity } from './model/entity.js'
 import { Player } from './model/player.js';
 import { Bullets } from './model/bullets.js';
 
@@ -83,6 +84,11 @@ export class SpaceScene extends Phaser.Scene {
 		if (this.keys.p2Fire.isDown) {
 			this._fireBullet(this.playerTwo, Constants.keys.sprites.playerTwo, Constants.keys.sprites.blueBullet);
 		}
+
+		Entity.handleCollision(this.playerOne, this.playerTwo, () => {
+			this.playerOne.collidedWithPlayer();
+			this.playerTwo.collidedWithPlayer();
+		});
 
 		this.playerOne.update();
 		this.playerTwo.update();
