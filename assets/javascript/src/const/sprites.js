@@ -25,8 +25,8 @@ export const SPRITES = {
 	gameTrack: {
 		location: `${spriteDir}/GameTrack.png`,
 		config: {
-			frameWidth: 434,
-			frameHeight: 434,
+			frameWidth: 544,
+			frameHeight: 544,
 		},
 	},
 };
