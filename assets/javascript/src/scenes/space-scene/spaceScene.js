@@ -1,3 +1,5 @@
+import * as CONST from '../../const/index.js';
+
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'SpaceScene' });
@@ -6,7 +8,7 @@ export class SpaceScene extends Phaser.Scene {
 	preload() {}
 
 	create() {
-		console.log('Hello, world!');
+		console.log(CONST.default);
 	}
 
 	update() {}
