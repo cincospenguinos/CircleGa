@@ -36,9 +36,9 @@ export class SpaceScene extends Phaser.Scene {
 
 	update() {
 		if (this.cursors.left.isDown) {
-			this.playerOne.setVelocity(Math.PI / 64);
+			this.playerOne.accelerate(1);
 		} else if (this.cursors.right.isDown) {
-			this.playerOne.setVelocity(-Math.PI / 64);
+			this.playerOne.accelerate(-1);
 		}
 
 		this.playerOne.update();
