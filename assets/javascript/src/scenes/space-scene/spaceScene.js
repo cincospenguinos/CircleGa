@@ -16,6 +16,9 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	preload() {
+		const background = Constants.getSprite(Constants.keys.sprites.background);
+		this.load.image(Constants.keys.sprites.background, background.location);
+
 		const player = Constants.getSprite(Constants.keys.sprites.playerOne);
 		this.load.spritesheet(Constants.keys.sprites.playerOne, player.location, player.config);
 
@@ -50,6 +53,7 @@ export class SpaceScene extends Phaser.Scene {
 
 		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(topOfRing));
 
+		this.add.image(center.x, center.y, sprites.background);
 		this.add.image(center.x, center.y, sprites.gameTrack);
 		const playerImg = this.add.sprite(playerOnePos.x, playerOnePos.y, sprites.playerOne);
 		this.playerOne.setImg(playerImg);

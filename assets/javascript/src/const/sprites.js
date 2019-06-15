@@ -49,5 +49,6 @@ export const SPRITES = {
 		config: {
 			frameWidth: 1080,
 			frameHeight: 920,
-		}
+		},
+	}
 };
