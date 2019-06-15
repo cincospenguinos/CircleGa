@@ -2,8 +2,8 @@ import { SpaceScene } from './scenes/space-scene/spaceScene.js';
 
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1080,
+    height: 920,
     parent: 'game',
     scene: [ SpaceScene ],
     physics: {
