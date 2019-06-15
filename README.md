@@ -5,7 +5,7 @@ Game jam with Stefano.
 ## TODO
 
 - [x] Setup dev environment
-- [ ] Get player on screen
+- [x] Get player on screen
 - [ ] Player moves on screen
 - [ ] 2nd Player on screen
 - [ ] Enemy on screen

@@ -12,7 +12,15 @@ const KEYS = {
 	sprites: extractKeys(SPRITES),
 };
 
-export default {
-	sprites: SPRITES,
+const getSprite = (spriteKey) => {
+	return SPRITES[spriteKey];
+}
+
+export const Constants = {
+	sprites: {
+		...SPRITES,
+		getSprite,
+	},
 	keys: KEYS,
+	getSprite,
 };

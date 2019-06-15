@@ -3,6 +3,10 @@ const spriteDir = 'assets/sprites';
 export const SPRITES = {
 	playerOne: {
 		location: `${spriteDir}/Player1.png`,
+		config: {
+			frameWidth: 48,
+			frameHeight: 41,
+		},
 	},
 	playerTwo: {
 		location: `${spriteDir}/Player2.png`,
