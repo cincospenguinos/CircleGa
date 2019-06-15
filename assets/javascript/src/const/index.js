@@ -1,4 +1,5 @@
 import { SPRITES } from './sprites.js';
+import { DIMENSIONS } from './gameConfig.js';
 
 const extractKeys = (obj) => {
 	const keys = {};
@@ -23,4 +24,5 @@ export const Constants = {
 	},
 	keys: KEYS,
 	getSprite,
+	dimensions: DIMENSIONS,
 };
