@@ -1,24 +1,18 @@
+import { SpaceScene } from './scenes/space-scene/spaceScene.js';
+
 const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
+    parent: 'game',
+    scene: [ SpaceScene ],
+    physics: {
+    	default: 'arcade',
+    	arcade: {
+    		gravity: {},
+    		debug: true,
+    	},
+    },
 };
 
 const game = new Phaser.Game(config);
-
-function preload() {
-
-}
-
-function create() {
-
-}
-
-function update () {
-	
-}
