@@ -8,6 +8,7 @@ Game jam with Stefano.
 - [x] Get player on screen
 - [x] Player moves on screen
 - [ ] 2nd Player on screen
+- [ ] Players may collide
 - [ ] Enemy on screen
 - [ ] Shots can be fired
 - [ ] Shots hit enemy and player
@@ -15,6 +16,7 @@ Game jam with Stefano.
 
 ## Ideas and future plans
 
+- [ ] Create menu screen
 - [ ] Limit shots fired
 - [ ] Allow players to connect and move together
 - [ ] Add multiple levels

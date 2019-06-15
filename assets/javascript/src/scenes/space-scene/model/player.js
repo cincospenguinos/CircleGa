@@ -1,4 +1,5 @@
 import { Entity } from './entity.js';
+import { COORDINATES } from '../../../const/coordinates.js';
 import * as coordinateHelpers from '../../../helpers/coordinates.js';
 
 export class Player extends Entity {
@@ -21,5 +22,9 @@ export class Player extends Entity {
 		const polar = coordinateHelpers.toPolar(this.getPosition());
 		polar.theta += this.velocity;
 		this.setPosition(polar);
+
+		// Set where the sprite is facing
+		const position = this.getPosition();
+		this.img.rotation = (Phaser.Math.Angle.Between(position.x, position.y, COORDINATES.centerOfScreen.x, COORDINATES.centerOfScreen.y)) + Math.PI / 2;
 	}
 }

@@ -10,11 +10,15 @@ export class SpaceScene extends Phaser.Scene {
 
 	init(data) {
 		this.playerOne = new Player();
+		this.playerTwo = new Player();
 	}
 
 	preload() {
 		const player = Constants.getSprite(Constants.keys.sprites.playerOne);
 		this.load.spritesheet(Constants.keys.sprites.playerOne, player.location, player.config);
+
+		const playerTwo = Constants.getSprite(Constants.keys.sprites.playerTwo);
+		this.load.spritesheet(Constants.keys.sprites.playerTwo, playerTwo.location, playerTwo.config);
 
 		const track = Constants.getSprite(Constants.keys.sprites.gameTrack);
 		this.load.image(Constants.keys.sprites.gameTrack, track.location);
@@ -27,11 +31,14 @@ export class SpaceScene extends Phaser.Scene {
 		const topOfRing = Constants.coordinates.topOfRing;
 		const center = Constants.coordinates.centerOfScreen;
 
-		const spritePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(topOfRing));
+		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(topOfRing));
 
 		this.add.image(center.x, center.y, sprites.gameTrack);
-		const playerImg = this.add.sprite(spritePos.x, spritePos.y, sprites.playerOne);
+		const playerImg = this.add.sprite(playerOnePos.x, playerOnePos.y, sprites.playerOne);
 		this.playerOne.setImg(playerImg);
+
+		const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
+		const playerTwoImg = this.add.sprite(playerTwoPos.x, playerTwoPos.y, sprites.playerTwo);
 	}
 
 	update() {

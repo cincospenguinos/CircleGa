@@ -5,7 +5,7 @@
  */
 import { COORDINATES } from '../const/coordinates.js';
 
-const radius = COORDINATES.centerOfScreen.y - COORDINATES.topOfRing.y;
+export const radius = COORDINATES.centerOfScreen.y - COORDINATES.topOfRing.y;
 
 export const toPolar = (coordinates) => {
 	if (coordinates.type === 'polar') {
