@@ -15,7 +15,12 @@ const KEYS = {
 
 const getSprite = (spriteKey) => {
 	return SPRITES[spriteKey];
-}
+};
+
+const topOfRing = { 
+	x: DIMENSIONS.screen.width / 2,
+	y: (DIMENSIONS.screen.height - SPRITES.gameTrack.config.frameHeight) / 2,
+};
 
 export const Constants = {
 	sprites: {
@@ -25,4 +30,5 @@ export const Constants = {
 	keys: KEYS,
 	getSprite,
 	dimensions: DIMENSIONS,
+	topOfRing,
 };

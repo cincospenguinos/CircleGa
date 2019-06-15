@@ -12,16 +12,16 @@ export class SpaceScene extends Phaser.Scene {
 
 		const track = Constants.getSprite(Constants.keys.sprites.gameTrack);
 		this.load.image(Constants.keys.sprites.gameTrack, track.location);
-		// console.log(Constants);
 	}
 
 	create() {
 		const sprites = Constants.keys.sprites;
-		this.add.sprite(200, 200, sprites.playerOne);
-		this.add.image(540, 460, sprites.gameTrack);
+		const topOfRing = Constants.topOfRing;
+		this.add.image(Constants.dimensions.screen.width / 2, Constants.dimensions.screen.height / 2, sprites.gameTrack);
+		this.add.sprite(topOfRing.x, topOfRing.y, sprites.playerOne);
 	}
 
 	update() {
-		
+
 	}
 }
