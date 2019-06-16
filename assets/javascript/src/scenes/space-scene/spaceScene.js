@@ -56,11 +56,11 @@ export class SpaceScene extends Phaser.Scene {
 
 		this.add.image(center.x, center.y, sprites.background);
 		this.add.image(center.x, center.y, sprites.gameTrack);
-		const playerImg = this.add.sprite(playerOnePos.x, playerOnePos.y, sprites.playerOne);
+		const playerImg = this.physics.add.sprite(playerOnePos.x, playerOnePos.y, sprites.playerOne);
 		this.playerOne.setImg(playerImg);
 
 		const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
-		const playerTwoImg = this.add.sprite(playerTwoPos.x, playerTwoPos.y, sprites.playerTwo);
+		const playerTwoImg = this.physics.add.sprite(playerTwoPos.x, playerTwoPos.y, sprites.playerTwo);
 		this.playerTwo.setImg(playerTwoImg);
 	}
 
@@ -98,7 +98,7 @@ export class SpaceScene extends Phaser.Scene {
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
 		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
 			const bullet = player.fireBullet();
-			const sprite = this.add.sprite(bullet.x, bullet.y, bulletSpriteKey);
+			const sprite = this.physics.add.sprite(bullet.x, bullet.y, bulletSpriteKey);
 			this.bullets.addBullet(sprite, playerSpriteKey);
 		}
 	}

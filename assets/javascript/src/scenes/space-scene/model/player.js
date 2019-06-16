@@ -28,7 +28,7 @@ export class Player extends Entity {
 	}
 
 	collidedWithPlayer() {
-		this.velocity = -this.velocity;
+		this.velocity = -this.velocity * 3 / 4;
 		this.moveCooldown = 20;
 	}
 

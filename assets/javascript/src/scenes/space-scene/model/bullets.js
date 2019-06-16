@@ -72,6 +72,8 @@ export class Bullets {
 		const xVel = Bullets.BULLET_VEL * Math.cos(angle - Math.PI / 2);
 		const yVel = Bullets.BULLET_VEL * Math.sin(angle - Math.PI / 2);
 
+		// bulletImg.setOffset(2 * Math.cos(angle - Math.PI / 2), 2 * Math.sin(angle - Math.PI / 2));
+
 		const bullet = new Bullet(bulletImg, {
 			xVel,
 			yVel,
