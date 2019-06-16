@@ -18,6 +18,8 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [ ] Create menu screen
 - [ ] Allow players to connect and move together
 - [ ] Add multiple levels
+- [ ] Change the text of the menu screen
+	* Perhaps a reference to something enlightenment era or to that effect
 
 ## Story
 
