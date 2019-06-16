@@ -1,6 +1,7 @@
 import { SPRITES } from './sprites.js';
 import { DIMENSIONS } from './gameConfig.js';
 import { COORDINATES } from './coordinates.js';
+import { ENEMY_TYPES } from './enemies.js';
 
 const extractKeys = (obj) => {
 	const keys = {};
@@ -12,6 +13,7 @@ const extractKeys = (obj) => {
 
 const KEYS = {
 	sprites: extractKeys(SPRITES),
+	enemies: extractKeys(ENEMY_TYPES),
 };
 
 const getSprite = (spriteKey) => {

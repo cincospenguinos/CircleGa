@@ -3,7 +3,7 @@ import * as coordinateHelpers from '../../helpers/coordinates.js';
 import { Entity } from './model/entity.js'
 import { Player } from './model/player.js';
 import { Bullets } from './model/bullets.js';
-
+import { Enemies } from './model/enemies.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -14,6 +14,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.playerOne = new Player();
 		this.playerTwo = new Player();
 		this.bullets = new Bullets();
+		this.enemies = new Enemies();
 	}
 
 	preload() {
@@ -34,6 +35,9 @@ export class SpaceScene extends Phaser.Scene {
 
 		const p2Bullet = Constants.getSprite(Constants.keys.sprites.blueBullet);
 		this.load.spritesheet(Constants.keys.sprites.blueBullet, p2Bullet.location, p2Bullet.config);
+
+		const enemyOne = Constants.getSprite(Constants.keys.sprites.enemyOne);
+		this.load.spritesheet(Constants.keys.sprites.enemyOne, enemyOne.location, enemyOne.config);
 
 		const cursors = this.input.keyboard.createCursorKeys();
 
@@ -62,14 +66,19 @@ export class SpaceScene extends Phaser.Scene {
 		const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
 		const playerTwoImg = this.physics.add.sprite(playerTwoPos.x, playerTwoPos.y, sprites.playerTwo);
 		this.playerTwo.setImg(playerTwoImg);
+
+		const enemy = this.physics.add.sprite(center.x, center.y, sprites.enemyOne);
+		this.enemies.addEnemy(enemy, Constants.keys.enemies.domeHead);
 	}
 
 	update() {
 		this._handleInput();
 
 		Entity.handleCollision(this.playerOne, this.playerTwo, () => {
-			this.playerOne.collidedWithPlayer();
-			this.playerTwo.collidedWithPlayer();
+			if (this.playerOne.canMove() && this.playerTwo.canMove()) {
+				this.playerOne.collidedWithPlayer();
+				this.playerTwo.collidedWithPlayer();
+			}
 		});
 
 		this.bullets.all().forEach((b) => {
@@ -89,6 +98,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.playerOne.update();
 		this.playerTwo.update();
 		this.bullets.update();
+		this.enemies.update();
 	}
 
 	_handleInput() {
