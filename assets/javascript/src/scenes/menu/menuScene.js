@@ -2,7 +2,7 @@ import { Constants } from '../../const/index.js';
 
 export class MenuScene extends Phaser.Scene {
 	constructor() {
-		super({ key: 'MenuScene' });
+		super({ key: Constants.scenes.menuScene });
 	}
 
 	init() {
@@ -49,7 +49,7 @@ export class MenuScene extends Phaser.Scene {
 	}
 
 	makeSelection() {
-		console.log('Selection made');
+		this.scene.start(Constants.scenes.spaceScene, {});
 	}
 
 	drawSelection() {

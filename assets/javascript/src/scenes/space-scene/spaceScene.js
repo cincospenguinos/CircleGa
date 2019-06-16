@@ -7,7 +7,7 @@ import { Enemies } from './model/enemies.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
-		super({ key: 'SpaceScene' });
+		super({ key: Constants.scenes.spaceScene });
 	}
 
 	init(data) {
