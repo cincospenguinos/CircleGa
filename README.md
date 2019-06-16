@@ -1,6 +1,6 @@
 # CircleGa
 
-Game jam with Stefano.
+An homage to Galaga. Most of this was built over a 10-12 hour period. We will be adding to it though if it's fun.
 
 ## TODO
 
@@ -8,17 +8,16 @@ Game jam with Stefano.
 - [x] Get player on screen
 - [x] Player moves on screen
 - [x] 2nd Player on screen
-- [ ] Players may collide
-- [ ] Enemy on screen
-- [ ] Shots can be fired
-- [ ] Shots hit enemy and player
-- [ ] Enemy moves on screen
+- [x] Players may collide
+- [x] Enemy on screen
+- [x] Shots can be fired
+- [x] Shots hit enemy and player
+- [x] Enemy moves on screen
+- [x] Setup a fancy background
+- [x] Limit shots fired
+- [ ] Create menu screen
 
 ## Ideas and future plans
 
-- [x] Setup a fancy background
-- [ ] Create menu screen
-- [ ] Limit shots fired
 - [ ] Allow players to connect and move together
 - [ ] Add multiple levels
-- [ ] Multiple difficulty across levels

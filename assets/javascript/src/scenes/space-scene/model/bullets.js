@@ -28,7 +28,7 @@ export class Bullet extends Entity {
 }
 
 export class Bullets {
-	static BULLET_VEL = 15;
+	static BULLET_VEL = 10;
 
 	constructor() {
 		this.nextKey = 1;
@@ -36,8 +36,8 @@ export class Bullets {
 		this.originCounts = {};
 	}
 
-	addBullet(bulletImg, firingOrigin) {
-		const bullet = this._createBullet(bulletImg, firingOrigin);
+	addBullet(bulletImg, firingOrigin, target = undefined) {
+		const bullet = this._createBullet(bulletImg, firingOrigin, target);
 		this.originCounts[firingOrigin] ? this.originCounts[firingOrigin]++ : this.originCounts[firingOrigin] = 1;
 	}
 
@@ -67,15 +67,12 @@ export class Bullets {
 		return this.bullets;
 	}
 
-	_createBullet(bulletImg, firingOrigin) {
-		const angle = Phaser.Math.Angle.Between(bulletImg.x, bulletImg.y,
-			COORDINATES.centerOfScreen.x, COORDINATES.centerOfScreen.y) + Math.PI / 2;
+	_createBullet(bulletImg, firingOrigin, target = COORDINATES.centerOfScreen) {
+		const angle = Phaser.Math.Angle.Between(bulletImg.x, bulletImg.y, target.x, target.y) + Math.PI / 2;
 		bulletImg.rotation = angle;
 
 		const xVel = Bullets.BULLET_VEL * Math.cos(angle - Math.PI / 2);
 		const yVel = Bullets.BULLET_VEL * Math.sin(angle - Math.PI / 2);
-
-		// bulletImg.setOffset(2 * Math.cos(angle - Math.PI / 2), 2 * Math.sin(angle - Math.PI / 2));
 
 		const bullet = new Bullet(bulletImg, {
 			xVel,

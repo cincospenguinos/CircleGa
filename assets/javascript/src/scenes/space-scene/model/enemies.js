@@ -27,6 +27,8 @@ class Enemy extends Entity {
 			}
 
 			entity.setPosition(position);
+
+			entity.currentCooldown--;
 		}
 	};
 
@@ -39,6 +41,9 @@ class Enemy extends Entity {
 		this.currentSwitch = 0;
 		this.directions = opts.directions;
 		this.currentDirection = 0;
+		this.currentCooldown = 0;
+		this.bulletCooldown = opts.bulletCooldown;
+
 		this.setImg(img);
 	}
 
@@ -53,6 +58,14 @@ class Enemy extends Entity {
 
 	changeDirections() {
 		this.currentDirection = (this.currentDirection + 1) % this.directions.length;
+	}
+
+	canFire() {
+		return this.currentCooldown <= 0;
+	}
+
+	fireBullet() {
+		this.currentCooldown = this.bulletCooldown;
 	}
 }
 
@@ -87,6 +100,16 @@ export class Enemies {
 		toRemove.forEach((e) => {
 			e.img.destroy();
 		});
+
+		const bullets = [];
+		this.enemies.forEach((e) => {
+			if (e.canFire()) {
+				bullets.push(e.getPosition());
+				e.fireBullet();
+			}
+		});
+
+		return bullets;
 	}
 
 	all() {

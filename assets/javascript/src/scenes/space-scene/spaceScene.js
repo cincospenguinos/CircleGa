@@ -36,6 +36,9 @@ export class SpaceScene extends Phaser.Scene {
 		const p2Bullet = Constants.getSprite(Constants.keys.sprites.blueBullet);
 		this.load.spritesheet(Constants.keys.sprites.blueBullet, p2Bullet.location, p2Bullet.config);
 
+		const enemyBullet = Constants.getSprite(Constants.keys.sprites.enemyBullet);
+		this.load.spritesheet(Constants.keys.sprites.enemyBullet, enemyBullet.location, enemyBullet.config);
+
 		const enemyOne = Constants.getSprite(Constants.keys.sprites.enemyOne);
 		this.load.spritesheet(Constants.keys.sprites.enemyOne, enemyOne.location, enemyOne.config);
 
@@ -85,11 +88,11 @@ export class SpaceScene extends Phaser.Scene {
 		// Enemy collisions
 		this.enemies.all().forEach((e) => {
 			Entity.handleCollision(this.playerOne, e, () => {
-				console.log('Enemy hit player 1');
+				console.log('Enemy crashed into player 1');
 			});
 
 			Entity.handleCollision(this.playerTwo, e, () => {
-				console.log('Enemy hit player 2');
+				console.log('Enemy crashed into player 2');
 			});
 		});
 
@@ -119,7 +122,14 @@ export class SpaceScene extends Phaser.Scene {
 		this.playerOne.update();
 		this.playerTwo.update();
 		this.bullets.update();
-		this.enemies.update();
+
+		const enemyBullets = this.enemies.update();
+		if (enemyBullets.length) {
+			enemyBullets.forEach((bullet) => {
+				const sprite = this.physics.add.sprite(bullet.x, bullet.y, Constants.keys.sprites.enemyBullet);
+				this.bullets.addBullet(sprite, Constants.keys.sprites.enemyOne, Math.random() < 0.5 ? this.playerOne.getPosition() : this.playerTwo.getPosition());
+			});
+		}
 	}
 
 	_handleInput() {

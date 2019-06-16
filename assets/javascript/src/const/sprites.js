@@ -44,6 +44,13 @@ export const SPRITES = {
 		},
 
 	},
+	enemyBullet: {
+		location: `${spriteDir}/enemyBullet.png`,
+		config: {
+			frameWidth: 12,
+			frameHeight: 12,
+		}
+	},
 	background: {
 		location: `${spriteDir}/background.png`,
 		config: {
