@@ -61,7 +61,10 @@ export class Bullets {
 			this.originCounts[b.firingOrigin] -= 1;
 			b.img.destroy();
 		});
+	}
 
+	all() {
+		return this.bullets;
 	}
 
 	_createBullet(bulletImg, firingOrigin) {

@@ -65,6 +65,33 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	update() {
+		this._handleInput();
+
+		Entity.handleCollision(this.playerOne, this.playerTwo, () => {
+			this.playerOne.collidedWithPlayer();
+			this.playerTwo.collidedWithPlayer();
+		});
+
+		this.bullets.all().forEach((b) => {
+			Entity.handleCollision(this.playerOne, b, () => {
+				if (b.firingOrigin !== Constants.keys.sprites.playerOne) {
+					console.log('Player one is hit!');
+				}
+			});
+
+			Entity.handleCollision(this.playerTwo, b, () => {
+				if (b.firingOrigin !== Constants.keys.sprites.playerTwo) {
+					console.log('Player two is hit!');
+				}
+			});
+		});
+
+		this.playerOne.update();
+		this.playerTwo.update();
+		this.bullets.update();
+	}
+
+	_handleInput() {
 		if (this.keys.p1Right.isDown) {
 			this.playerOne.accelerate(1);
 		} else if (this.keys.p1Left.isDown) {
@@ -84,15 +111,6 @@ export class SpaceScene extends Phaser.Scene {
 		if (this.keys.p2Fire.isDown) {
 			this._fireBullet(this.playerTwo, Constants.keys.sprites.playerTwo, Constants.keys.sprites.blueBullet);
 		}
-
-		Entity.handleCollision(this.playerOne, this.playerTwo, () => {
-			this.playerOne.collidedWithPlayer();
-			this.playerTwo.collidedWithPlayer();
-		});
-
-		this.playerOne.update();
-		this.playerTwo.update();
-		this.bullets.update();
 	}
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
