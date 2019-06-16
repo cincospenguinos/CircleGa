@@ -57,5 +57,12 @@ export const SPRITES = {
 			frameWidth: 1080,
 			frameHeight: 920,
 		},
-	}
+	},
+	mainMenu: {
+		location: `${spriteDir}/MainMenu.png`,
+		config: {
+			frameWidth: 1080,
+			frameHeight: 920,
+		}
+	},
 };
