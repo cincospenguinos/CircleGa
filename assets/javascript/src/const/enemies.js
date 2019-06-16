@@ -4,6 +4,8 @@ export const ENEMY_TYPES = {
 		switchTime: 40,
 		directions: [
 			['right', 'up', 'right', 'down'],
+			['left', 'up', 'right', 'up'],
+			['up', 'up', 'right', 'up'],
 		]
 	},
 };

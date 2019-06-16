@@ -88,4 +88,8 @@ export class Enemies {
 			e.img.destroy();
 		});
 	}
+
+	all() {
+		return this.enemies;
+	}
 }

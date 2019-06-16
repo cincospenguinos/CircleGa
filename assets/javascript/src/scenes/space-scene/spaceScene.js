@@ -74,6 +74,7 @@ export class SpaceScene extends Phaser.Scene {
 	update() {
 		this._handleInput();
 
+		// player collision management
 		Entity.handleCollision(this.playerOne, this.playerTwo, () => {
 			if (this.playerOne.canMove() && this.playerTwo.canMove()) {
 				this.playerOne.collidedWithPlayer();
@@ -81,6 +82,18 @@ export class SpaceScene extends Phaser.Scene {
 			}
 		});
 
+		// Enemy collisions
+		this.enemies.all().forEach((e) => {
+			Entity.handleCollision(this.playerOne, e, () => {
+				console.log('Enemy hit player 1');
+			});
+
+			Entity.handleCollision(this.playerTwo, e, () => {
+				console.log('Enemy hit player 2');
+			});
+		});
+
+		// Bullet collisions
 		this.bullets.all().forEach((b) => {
 			Entity.handleCollision(this.playerOne, b, () => {
 				if (b.firingOrigin !== Constants.keys.sprites.playerOne) {
@@ -92,6 +105,14 @@ export class SpaceScene extends Phaser.Scene {
 				if (b.firingOrigin !== Constants.keys.sprites.playerTwo) {
 					console.log('Player two is hit!');
 				}
+			});
+
+			this.enemies.all().forEach((e) => {
+				Entity.handleCollision(e, b, () => {
+					if (b.firingOrigin !== Constants.keys.sprites.enemyOne) {
+						console.log('Enemy is hit!');
+					}
+				});
 			});
 		});
 
