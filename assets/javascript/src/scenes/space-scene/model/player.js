@@ -49,7 +49,7 @@ export class Player extends Entity {
 	}
 
 	fireBullet() {
-		this.cooldown = Player.MAX_COOLDOWN;
+		this.fireCooldown = Player.MAX_COOLDOWN;
 		const polar = coordinateHelpers.toPolar(this.getPosition());
 		polar.radius = polar.radius * 9 / 10
 		return coordinateHelpers.toGame(polar);
