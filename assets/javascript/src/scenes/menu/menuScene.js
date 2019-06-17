@@ -18,8 +18,10 @@ export class MenuScene extends Phaser.Scene {
 	}
 
 	preload() {
-		const menu = Constants.getSprite(Constants.keys.sprites.mainMenu);
-		this.load.image(Constants.keys.sprites.mainMenu, menu.location);
+		const menuSprite = Constants.getSprite(Constants.keys.sprites.mainMenu);
+		this.load.image(Constants.keys.sprites.mainMenu, menuSprite.location);
+
+		this.load.audio(Constants.keys.sounds.mainMenu, Constants.sounds.mainMenu.location);
 
 		this.keys = this.input.keyboard.addKeys({
 			up: 'up',
@@ -32,8 +34,10 @@ export class MenuScene extends Phaser.Scene {
 		const center = Constants.coordinates.centerOfScreen;
 		this.add.image(center.x, center.y, Constants.keys.sprites.mainMenu);
 
+		this.backgroundMusic = this.sound.add(Constants.keys.sounds.mainMenu, Constants.sounds.mainMenu.config);
+		this.backgroundMusic.play();
+
 		this.graphics = this.add.graphics();
-		
 	}
 
 	update() {
@@ -49,6 +53,7 @@ export class MenuScene extends Phaser.Scene {
 	}
 
 	makeSelection() {
+		this.backgroundMusic.stop();
 		this.scene.start(Constants.scenes.spaceScene, {});
 	}
 

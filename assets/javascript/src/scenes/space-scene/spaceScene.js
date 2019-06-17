@@ -21,8 +21,8 @@ export class SpaceScene extends Phaser.Scene {
 		const background = Constants.getSprite(Constants.keys.sprites.background);
 		this.load.image(Constants.keys.sprites.background, background.location);
 
-		const player = Constants.getSprite(Constants.keys.sprites.playerOne);
-		this.load.spritesheet(Constants.keys.sprites.playerOne, player.location, player.config);
+		const playerOne = Constants.sprites.playerOne;
+		this.load.spritesheet(Constants.keys.sprites.playerOne, playerOne.location, playerOne.config);
 
 		const playerTwo = Constants.getSprite(Constants.keys.sprites.playerTwo);
 		this.load.spritesheet(Constants.keys.sprites.playerTwo, playerTwo.location, playerTwo.config);
