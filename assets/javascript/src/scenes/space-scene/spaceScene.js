@@ -18,7 +18,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	preload() {
-		const background = Constants.getSprite(Constants.keys.sprites.background);
+		const background = Constants.sprites.background;
 		this.load.image(Constants.keys.sprites.background, background.location);
 
 		const playerOne = Constants.sprites.playerOne;

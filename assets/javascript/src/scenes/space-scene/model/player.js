@@ -1,5 +1,5 @@
 import { Entity } from './entity.js';
-import { COORDINATES } from '../../../const/coordinates.js';
+import { Constants } from '../../../const/index.js';
 import * as coordinateHelpers from '../../../helpers/coordinates.js';
 
 export class Player extends Entity {
@@ -40,8 +40,9 @@ export class Player extends Entity {
 
 		// Set where the sprite is facing
 		const position = this.getPosition();
+		const centerOfScreen = Constants.coordinates.centerOfScreen;
 		this.img.rotation = (Phaser.Math.Angle.Between(position.x, position.y, 
-			COORDINATES.centerOfScreen.x, COORDINATES.centerOfScreen.y)) + Math.PI / 2;
+			centerOfScreen.x, centerOfScreen.y)) + Math.PI / 2;
 
 		// update the cooldown
 		this.fireCooldown--;

@@ -1,6 +1,5 @@
 import { Entity } from './entity.js';
-import { ENEMY_TYPES } from '../../../const/enemies.js';
-import { DIMENSIONS } from '../../../const/gameConfig.js';
+import { Constants } from '../../../const/index.js';
 
 class Enemy extends Entity {
 	static UpdateFuncs = {
@@ -53,7 +52,8 @@ class Enemy extends Entity {
 
 	isOutOfBounds() {
 		const position = this.getPosition();
-		return position.x < 0 || position.y < 0 || position.x > DIMENSIONS.screen.width || position.y > DIMENSIONS.screen.height;
+		const screen = Constants.dimensions.screen;
+		return position.x < 0 || position.y < 0 || position.x > screen.width || position.y > screen.height;
 	}
 
 	changeDirections() {
@@ -75,7 +75,7 @@ export class Enemies {
 	}
 
 	addEnemy(enemyImg, type) {
-		const info = ENEMY_TYPES[type];
+		const info = Constants.enemies[type];
 		const dir = Math.floor(Math.random() * Math.floor(info.directions.length));
 		const enemy = new Enemy(enemyImg, {
 			...info,

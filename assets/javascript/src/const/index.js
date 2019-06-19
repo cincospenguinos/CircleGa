@@ -34,10 +34,9 @@ export const Constants = {
 	keys: KEYS,
 	getSprite,
 	dimensions: DIMENSIONS,
-	coordinates: {
-		...COORDINATES,
-	},
+	coordinates: COORDINATES,
 	briefings: BRIEFINGS,
 	scenes: SCENES,
 	sounds: SOUNDS,
+	enemies: ENEMY_TYPES,
 };

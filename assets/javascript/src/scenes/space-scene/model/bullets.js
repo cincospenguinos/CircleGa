@@ -1,7 +1,6 @@
 import { Entity } from './entity.js';
-import { COORDINATES } from '../../../const/coordinates.js';
+import { Constants } from '../../../const/index.js';
 import * as coordinateHelpers from '../../../helpers/coordinates.js';
-import { DIMENSIONS } from '../../../const/gameConfig.js';
 
 export class Bullet extends Entity {
 	constructor(img, opts = {}) {
@@ -23,7 +22,8 @@ export class Bullet extends Entity {
 
 	isOutOfBounds() {
 		const position = this.getPosition();
-		return position.x < 0 || position.y < 0 || position.x > DIMENSIONS.screen.width || position.y > DIMENSIONS.screen.height;
+		const screen = Constants.dimensions.screen;
+		return position.x < 0 || position.y < 0 || position.x > screen.width || position.y > screen.height;
 	}
 }
 
@@ -67,7 +67,7 @@ export class Bullets {
 		return this.bullets;
 	}
 
-	_createBullet(bulletImg, firingOrigin, target = COORDINATES.centerOfScreen) {
+	_createBullet(bulletImg, firingOrigin, target = Constants.coordinates.centerOfScreen) {
 		const angle = Phaser.Math.Angle.Between(bulletImg.x, bulletImg.y, target.x, target.y) + Math.PI / 2;
 		bulletImg.rotation = angle;
 
