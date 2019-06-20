@@ -15,7 +15,7 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [x] Enemy moves on screen
 - [x] Setup a fancy background
 - [x] Limit shots fired
-- [ ] Create menu screen
+- [x] Create menu screen
 - [ ] Allow players to connect and move together
 - [ ] Add multiple levels
 - [ ] Change the text of the menu screen
@@ -32,3 +32,7 @@ The game opens with a briefing, and then the opening level. Each level consists 
 ### Why this story?
 
 Various pieces of enlightenment philosophy and excerpts of literature about the genocide of the American Indians show up on screen between each of the levels. These excerpts, juxtaposed with the gameplay, intend to make a statement about what sorts of things become our past times, and what ways people benefit from systems that were created through horrific violence. Most of all, this horrific violence isn't even thought of by the people who actually benefit from such a system--hence a menu screen with an odd-looking DOS terminal.
+
+## Notes
+
+* Let's hide [this](https://www.youtube.com/watch?v=ARz6kYS12cg) somewhere. It was part of the inspiration for this game.

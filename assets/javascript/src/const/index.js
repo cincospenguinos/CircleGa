@@ -5,6 +5,7 @@ import { ENEMY_TYPES } from './enemies.js';
 import { BRIEFINGS } from './briefings.js';
 import { SCENES } from './scenes.js';
 import { SOUNDS } from './sounds.js';
+import { TEXT } from './text.js';
 
 const extractKeys = (obj) => {
 	const keys = {};
@@ -20,6 +21,7 @@ const KEYS = {
 	briefings: extractKeys(BRIEFINGS),
 	scenes: extractKeys(SCENES),
 	sounds: extractKeys(SOUNDS),
+	text: extractKeys(TEXT),
 };
 
 const getSprite = (spriteKey) => {
@@ -39,4 +41,5 @@ export const Constants = {
 	scenes: SCENES,
 	sounds: SOUNDS,
 	enemies: ENEMY_TYPES,
+	text: TEXT,
 };
