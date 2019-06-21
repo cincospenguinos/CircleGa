@@ -30,6 +30,7 @@ export class Entity {
 
 	setImg(img) {
 		this.img = img;
+		this.setPosition({ x: img.x, y: img.y });
 	}
 
 	static handleCollision(e1, e2, onCollision) {

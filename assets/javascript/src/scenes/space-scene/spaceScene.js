@@ -2,8 +2,9 @@ import { Constants } from '../../const/index.js';
 import * as coordinateHelpers from '../../helpers/coordinates.js';
 import { Entity } from './model/entity.js'
 import { Player } from './model/player.js';
+import { Enemy } from './model/enemy.js';
 import { Bullets } from './model/bullets.js';
-import { Enemies } from './model/enemies.js';
+import { EntityCollection } from './model/entityCollection.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -14,7 +15,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.playerOne = new Player();
 		this.playerTwo = new Player();
 		this.bullets = new Bullets();
-		this.enemies = new Enemies();
+		this.enemies = new EntityCollection();
 	}
 
 	preload() {
@@ -60,8 +61,12 @@ export class SpaceScene extends Phaser.Scene {
 		const playerTwoImg = this.physics.add.sprite(playerTwoPos.x, playerTwoPos.y, sprites.playerTwo);
 		this.playerTwo.setImg(playerTwoImg);
 
+		this.input.on('pointerdown', (pointer) => {
+			console.log(`[${pointer.x}, ${pointer.y}]`);
+		});
+
 		const enemy = this.physics.add.sprite(centerOfScreen.x, centerOfScreen.y, sprites.enemyOne);
-		this.enemies.addEnemy(enemy, Constants.keys.enemies.domeHead);
+		this.enemies.add(new Enemy(enemy, Constants.enemies.father.opts));
 	}
 
 	update() {
@@ -70,15 +75,8 @@ export class SpaceScene extends Phaser.Scene {
 
 		this.playerOne.update();
 		this.playerTwo.update();
+		this.enemies.update();
 		this.bullets.update();
-
-		const enemyBullets = this.enemies.update();
-		if (enemyBullets.length) {
-			enemyBullets.forEach((bullet) => {
-				const sprite = this.physics.add.sprite(bullet.x, bullet.y, Constants.keys.sprites.enemyBullet);
-				this.bullets.addBullet(sprite, Constants.keys.sprites.enemyOne, Math.random() < 0.5 ? this.playerOne.getPosition() : this.playerTwo.getPosition());
-			});
-		}
 	}
 
 	_handleInput() {

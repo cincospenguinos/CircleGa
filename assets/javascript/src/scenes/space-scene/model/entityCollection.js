@@ -4,6 +4,7 @@
  * Collection of entities. Manages updating all entities, and checks to see if they're still on screen.
  */
 import { Constants } from '../../../const/index.js';
+import { isOutOfBounds } from '../../../helpers/coordinates.js';
 
 export class EntityCollection {
 	constructor() {
@@ -21,7 +22,7 @@ export class EntityCollection {
 	update() {
 		const toRemove = [];
 		this.entities.forEach((e) => {
-			if (e.isOutOfBounds()) {
+			if (isOutOfBounds(e.getPosition())) {
 				toRemove.push(e);
 			} else {
 				e.update();
@@ -31,7 +32,6 @@ export class EntityCollection {
 		this.entities = this.entities.filter((e) => !toRemove.includes(e));
 
 		toRemove.forEach((e) => {
-			this.originCounts[b.firingOrigin] -= 1;
 			e.img.destroy();
 		});
 	}
