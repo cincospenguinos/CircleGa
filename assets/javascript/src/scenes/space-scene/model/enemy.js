@@ -23,9 +23,12 @@ export class Enemy extends Entity {
 		}
 
 		const currentPosition = this.getPosition();
-
 		const newPosition = { x: currentPosition.x + this.xVel, y: currentPosition.y + this.yVel, type: 'game' };
 		this.setPosition(newPosition);
+
+		const nextPosition = this._nextPosition();
+		this.setRotation(Phaser.Math.Angle.Between(currentPosition.x, currentPosition.y, 
+			nextPosition.x, nextPosition.y) + Math.PI / 2);
 	}
 
 	_shouldUpdateVelocity() {
@@ -35,9 +38,9 @@ export class Enemy extends Entity {
 
 	_updateVelocity() {
 		this.currentPositionIndex++;
-		console.log(this.getPosition());
 		const distance = distanceBetween(this.getPosition(), this._nextPosition());
 		const { x, y } = parameterizedDistance(this.getPosition(), this._nextPosition());
+
 		this.xVel = x * this.speed / distance;
 		this.yVel = y * this.speed / distance;
 	}

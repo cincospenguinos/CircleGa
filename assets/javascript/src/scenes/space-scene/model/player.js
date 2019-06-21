@@ -40,9 +40,9 @@ export class Player extends Entity {
 
 		// Set where the sprite is facing
 		const position = this.getPosition();
-		const centerOfScreen = Constants.coordinates.centerOfScreen;
-		this.img.rotation = (Phaser.Math.Angle.Between(position.x, position.y, 
-			centerOfScreen.x, centerOfScreen.y)) + Math.PI / 2;
+		const { centerOfScreen } = Constants.coordinates;
+		this.setRotation(Phaser.Math.Angle.Between(position.x, position.y, 
+			centerOfScreen.x, centerOfScreen.y) + Math.PI / 2);
 
 		// update the cooldown
 		this.fireCooldown--;

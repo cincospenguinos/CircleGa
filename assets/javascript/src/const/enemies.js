@@ -19,7 +19,7 @@ export const ENEMY_TYPES = {
 	father: {
 		opts: {
 			type: 'father',
-			speed: 8,
+			speed: 4,
 			points: toGamePoints([
 				[578, 478],
 				[624, 467],

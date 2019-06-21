@@ -33,6 +33,12 @@ export class Entity {
 		this.setPosition({ x: img.x, y: img.y });
 	}
 
+	setRotation(angle) {
+		if (this.img) {
+			this.img.rotation = angle;
+		}
+	}
+
 	static handleCollision(e1, e2, onCollision) {
 		const e1P1 = { x: e1.img.x - e1.img.width / 2, y: e1.img.y - e1.img.height / 2 };
 		const e1P2 = { x: e1.img.x + e1.img.width / 2, y: e1.img.y + e1.img.height / 2 };
