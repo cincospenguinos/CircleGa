@@ -47,13 +47,12 @@ export class SpaceScene extends Phaser.Scene {
 
 	create() {
 		const sprites = Constants.keys.sprites;
-		const topOfRing = Constants.coordinates.topOfRing;
-		const center = Constants.coordinates.centerOfScreen;
+		const { centerOfScreen, topOfRing } = Constants.coordinates;
 
 		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(topOfRing));
 
-		this.add.image(center.x, center.y, sprites.background);
-		this.add.image(center.x, center.y, sprites.gameTrack);
+		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.background);
+		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.gameTrack);
 		const playerImg = this.physics.add.sprite(playerOnePos.x, playerOnePos.y, sprites.playerOne);
 		this.playerOne.setImg(playerImg);
 
@@ -61,54 +60,13 @@ export class SpaceScene extends Phaser.Scene {
 		const playerTwoImg = this.physics.add.sprite(playerTwoPos.x, playerTwoPos.y, sprites.playerTwo);
 		this.playerTwo.setImg(playerTwoImg);
 
-		const enemy = this.physics.add.sprite(center.x, center.y, sprites.enemyOne);
+		const enemy = this.physics.add.sprite(centerOfScreen.x, centerOfScreen.y, sprites.enemyOne);
 		this.enemies.addEnemy(enemy, Constants.keys.enemies.domeHead);
 	}
 
 	update() {
 		this._handleInput();
-
-		// player collision management
-		Entity.handleCollision(this.playerOne, this.playerTwo, () => {
-			if (this.playerOne.canMove() && this.playerTwo.canMove()) {
-				this.playerOne.collidedWithPlayer();
-				this.playerTwo.collidedWithPlayer();
-			}
-		});
-
-		// Enemy collisions
-		this.enemies.all().forEach((e) => {
-			Entity.handleCollision(this.playerOne, e, () => {
-				console.log('Enemy crashed into player 1');
-			});
-
-			Entity.handleCollision(this.playerTwo, e, () => {
-				console.log('Enemy crashed into player 2');
-			});
-		});
-
-		// Bullet collisions
-		this.bullets.all().forEach((b) => {
-			Entity.handleCollision(this.playerOne, b, () => {
-				if (b.firingOrigin !== Constants.keys.sprites.playerOne) {
-					console.log('Player one is hit!');
-				}
-			});
-
-			Entity.handleCollision(this.playerTwo, b, () => {
-				if (b.firingOrigin !== Constants.keys.sprites.playerTwo) {
-					console.log('Player two is hit!');
-				}
-			});
-
-			this.enemies.all().forEach((e) => {
-				Entity.handleCollision(e, b, () => {
-					if (b.firingOrigin !== Constants.keys.sprites.enemyOne) {
-						console.log('Enemy is hit!');
-					}
-				});
-			});
-		});
+		this._handleCollisions();
 
 		this.playerOne.update();
 		this.playerTwo.update();
@@ -131,7 +89,7 @@ export class SpaceScene extends Phaser.Scene {
 		}
 
 		if (this.keys.p1Fire.isDown) {
-			this._fireBullet(this.playerOne, Constants.keys.sprites.playerOne, Constants.keys.sprites.redBullet);
+			this._fireBullet(this.playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
 		}
 
 		if (this.keys.p2Right.isDown) {
@@ -141,8 +99,52 @@ export class SpaceScene extends Phaser.Scene {
 		}
 
 		if (this.keys.p2Fire.isDown) {
-			this._fireBullet(this.playerTwo, Constants.keys.sprites.playerTwo, Constants.keys.sprites.blueBullet);
+			this._fireBullet(this.playerTwo, Constants.sprites.playerTwo.key, Constants.sprites.blueBullet.key);
 		}
+	}
+
+	_handleCollisions() {
+		// player collision management
+		Entity.handleCollision(this.playerOne, this.playerTwo, () => {
+			if (this.playerOne.canMove() && this.playerTwo.canMove()) {
+				this.playerOne.collidedWithPlayer();
+				this.playerTwo.collidedWithPlayer();
+			}
+		});
+
+		// Enemy collisions
+		this.enemies.all().forEach((e) => {
+			Entity.handleCollision(this.playerOne, e, () => {
+				console.log('Enemy crashed into player 1');
+			});
+
+			Entity.handleCollision(this.playerTwo, e, () => {
+				console.log('Enemy crashed into player 2');
+			});
+		});
+
+		// Bullet collisions
+		this.bullets.all().forEach((b) => {
+			Entity.handleCollision(this.playerOne, b, () => {
+				if (b.firingOrigin !== Constants.sprites.playerOne.key) {
+					console.log('Player one is hit!');
+				}
+			});
+
+			Entity.handleCollision(this.playerTwo, b, () => {
+				if (b.firingOrigin !== Constants.sprites.playerTwo.key) {
+					console.log('Player two is hit!');
+				}
+			});
+
+			this.enemies.all().forEach((e) => {
+				Entity.handleCollision(e, b, () => {
+					if (b.firingOrigin !== Constants.sprites.enemyOne.key) {
+						console.log('Enemy is hit!');
+					}
+				});
+			});
+		});
 	}
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {

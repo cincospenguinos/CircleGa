@@ -16,10 +16,10 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [x] Setup a fancy background
 - [x] Limit shots fired
 - [x] Create menu screen
+- [ ] Single level exists
 - [ ] Allow players to connect and move together
 - [ ] Add multiple levels
 - [ ] Change the text of the menu screen
-	* Perhaps a reference to something enlightenment era or to that effect
 
 ## Story
 
@@ -36,3 +36,5 @@ Various pieces of enlightenment philosophy and excerpts of literature about the 
 ## Notes
 
 * Let's hide [this](https://www.youtube.com/watch?v=ARz6kYS12cg) somewhere. It was part of the inspiration for this game.
+* [Guns](https://opengameart.org/content/4-projectile-launches)
+* [Atmospheric sky sound](https://opengameart.org/content/red-eclipse-sounds)
