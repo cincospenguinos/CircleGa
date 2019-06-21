@@ -18,7 +18,7 @@ export class MenuScene extends Phaser.Scene {
 	}
 
 	preload() {
-		const menuSprite = Constants.getSprite(Constants.keys.sprites.mainMenu);
+		const menuSprite = Constants.sprites.mainMenu;
 		this.load.image(Constants.keys.sprites.mainMenu, menuSprite.location);
 
 		this.load.audio(Constants.keys.sounds.mainMenu, Constants.sounds.mainMenu.location);

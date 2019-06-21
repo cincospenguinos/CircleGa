@@ -15,6 +15,12 @@ const extractKeys = (obj) => {
 	return keys;
 };
 
+const appendKeysTo = (data) => {
+	const keys = Object.keys(data);
+	keys.forEach((k) => data[k].key = k);
+	return data;
+};
+
 const KEYS = {
 	sprites: extractKeys(SPRITES),
 	enemies: extractKeys(ENEMY_TYPES),
@@ -25,14 +31,13 @@ const KEYS = {
 };
 
 export const Constants = {
-	sprites: SPRITES,
-	keys: KEYS,
-	getSprite,
-	dimensions: DIMENSIONS,
-	coordinates: COORDINATES,
 	briefings: BRIEFINGS,
+	coordinates: appendKeysTo(COORDINATES),
+	dimensions: appendKeysTo(DIMENSIONS),
+	enemies: appendKeysTo(ENEMY_TYPES),
+	keys: KEYS,
 	scenes: SCENES,
-	sounds: SOUNDS,
-	enemies: ENEMY_TYPES,
-	text: TEXT,
+	sounds: appendKeysTo(SOUNDS),
+	sprites: appendKeysTo(SPRITES),
+	text: appendKeysTo(TEXT),
 };
