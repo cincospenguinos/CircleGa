@@ -12,7 +12,6 @@ export class Enemy extends Entity {
 		this.positions = opts.points;
 		this.terminalPosition = opts.terminalPosition;
 		this.currentPositionIndex = 0;
-		this.tweenCallback = opts.tweenCallback;
 
 		this.setImg(img);
 		this._updateVelocity();

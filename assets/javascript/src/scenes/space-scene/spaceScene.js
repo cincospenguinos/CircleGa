@@ -66,11 +66,6 @@ export class SpaceScene extends Phaser.Scene {
 		});
 
 		const enemy = this.physics.add.sprite(centerOfScreen.x, centerOfScreen.y, sprites.enemyOne);
-		const tweenCallback = (angle) => {
-			this.tweens.add({
-
-			});
-		};
 		this.enemies.add(new Enemy(enemy, Constants.enemies.father.opts));
 	}
 
