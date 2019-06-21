@@ -5,6 +5,7 @@ import * as coordinateHelpers from '../../../helpers/coordinates.js';
 export class Player extends Entity {
 	static MAX_VELOCITY = Math.PI / 64;
 	static MAX_COOLDOWN = 15;
+	static ACCELERATION = Math.PI / 1024
 
 	constructor(opts) {
 		super(opts);
@@ -16,7 +17,7 @@ export class Player extends Entity {
 
 	accelerate(direction) {
 		this.setDirection(direction);
-		this.velocity += this.direction * Math.PI / 1024;
+		this.velocity += this.direction * Player.ACCELERATION;
 
 		if (Math.abs(this.velocity) > Player.MAX_VELOCITY) {
 			this.velocity = (this.velocity < 0 ? -1 : 1) * Player.MAX_VELOCITY;
@@ -25,12 +26,12 @@ export class Player extends Entity {
 
 	slow() {
 		if (this.velocity > 0) {
-			this.velocity -= Math.PI / 2048;
+			this.velocity -= Player.ACCELERATION;
 		} else if (this.velocity < 0) {
-			this.velocity += Math.PI / 2048;
+			this.velocity += Player.ACCELERATION;
 		}
 
-		if (Math.abs(this.velocity) < Math.PI / 2048) {
+		if (Math.abs(this.velocity) < Player.ACCELERATION) {
 			this.velocity = 0;
 		}
 	}
