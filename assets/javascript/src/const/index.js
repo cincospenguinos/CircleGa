@@ -24,15 +24,8 @@ const KEYS = {
 	text: extractKeys(TEXT),
 };
 
-const getSprite = (spriteKey) => {
-	return SPRITES[spriteKey];
-};
-
 export const Constants = {
-	sprites: {
-		...SPRITES,
-		getSprite,
-	},
+	sprites: SPRITES,
 	keys: KEYS,
 	getSprite,
 	dimensions: DIMENSIONS,
