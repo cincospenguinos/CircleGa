@@ -41,7 +41,7 @@ export const TEXT = {
 	},
 	circlevilleMassacre: {
 		type: 'quote',
-		text: 'In April 1866 the white settlers of Circleville annihilated a band of captive Paiute Indians, including helpless women and children. This incident of the Black Hawk War of 1865-68 was the largest massacre of Indians in Utah's history.',
+		text: "In April 1866 the white settlers of Circleville annihilated a band of captive Paiute Indians, including helpless women and children. This incident of the Black Hawk War of 1865-68 was the largest massacre of Indians in Utah's history.",
 		author: 'Albert Winkler',
 		source: "The Circleville Massacre: A Brutal Incident in Utah's Black Hawk War",
 		url: 'https://scholarsarchive.byu.edu/cgi/viewcontent.cgi?article=2868&context=facpub',

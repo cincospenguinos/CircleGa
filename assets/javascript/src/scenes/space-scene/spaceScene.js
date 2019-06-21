@@ -24,22 +24,22 @@ export class SpaceScene extends Phaser.Scene {
 		const playerOne = Constants.sprites.playerOne;
 		this.load.spritesheet(Constants.keys.sprites.playerOne, playerOne.location, playerOne.config);
 
-		const playerTwo = Constants.getSprite(Constants.keys.sprites.playerTwo);
+		const playerTwo = Constants.sprites.playerTwo;
 		this.load.spritesheet(Constants.keys.sprites.playerTwo, playerTwo.location, playerTwo.config);
 
-		const track = Constants.getSprite(Constants.keys.sprites.gameTrack);
+		const track = Constants.sprites.gameTrack;
 		this.load.image(Constants.keys.sprites.gameTrack, track.location);
 
-		const p1Bullet = Constants.getSprite(Constants.keys.sprites.redBullet);
+		const p1Bullet = Constants.sprites.redBullet;
 		this.load.spritesheet(Constants.keys.sprites.redBullet, p1Bullet.location, p1Bullet.config);
 
-		const p2Bullet = Constants.getSprite(Constants.keys.sprites.blueBullet);
+		const p2Bullet = Constants.sprites.blueBullet;
 		this.load.spritesheet(Constants.keys.sprites.blueBullet, p2Bullet.location, p2Bullet.config);
 
-		const enemyBullet = Constants.getSprite(Constants.keys.sprites.enemyBullet);
+		const enemyBullet = Constants.sprites.enemyBullet;
 		this.load.spritesheet(Constants.keys.sprites.enemyBullet, enemyBullet.location, enemyBullet.config);
 
-		const enemyOne = Constants.getSprite(Constants.keys.sprites.enemyOne);
+		const enemyOne = Constants.sprites.enemyOne;
 		this.load.spritesheet(Constants.keys.sprites.enemyOne, enemyOne.location, enemyOne.config);
 
 		const cursors = this.input.keyboard.createCursorKeys();
