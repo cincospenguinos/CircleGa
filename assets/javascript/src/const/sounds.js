@@ -29,7 +29,7 @@ export const SOUNDS = {
 		location: `${soundsDir}/`,
 		config: {
 			loop: false,
-		}
+		},
 		meta: {
 			author: 'Arthur',
 			license: 'Attribution-ShareAlike 3.0 Unported',
