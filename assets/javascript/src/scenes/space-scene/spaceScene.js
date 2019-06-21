@@ -39,9 +39,11 @@ export class SpaceScene extends Phaser.Scene {
 		this.keys = {
 			p1Right: cursors.right,
 			p1Left: cursors.left,
+			p1Slow: cursors.down,
 			p1Fire: cursors.up,
 			p2Right: this.input.keyboard.addKey('D'),
 			p2Left: this.input.keyboard.addKey('A'),
+			p2Slow: this.input.keyboard.addKey('S'),
 			p2Fire: this.input.keyboard.addKey('W'),
 		};
 	}
@@ -84,6 +86,8 @@ export class SpaceScene extends Phaser.Scene {
 			this.playerOne.accelerate(1);
 		} else if (this.keys.p1Left.isDown) {
 			this.playerOne.accelerate(-1);
+		} else if (this.keys.p1Slow.isDown) {
+			this.playerOne.slow();
 		}
 
 		if (this.keys.p1Fire.isDown) {
@@ -94,6 +98,8 @@ export class SpaceScene extends Phaser.Scene {
 			this.playerTwo.accelerate(1);
 		} else if (this.keys.p2Left.isDown) {
 			this.playerTwo.accelerate(-1);
+		} else if (this.keys.p2Slow.isDown) {
+			this.playerTwo.slow();
 		}
 
 		if (this.keys.p2Fire.isDown) {

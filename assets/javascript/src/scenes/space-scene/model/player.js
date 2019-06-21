@@ -23,6 +23,18 @@ export class Player extends Entity {
 		}
 	}
 
+	slow() {
+		if (this.velocity > 0) {
+			this.velocity -= Math.PI / 2048;
+		} else if (this.velocity < 0) {
+			this.velocity += Math.PI / 2048;
+		}
+
+		if (Math.abs(this.velocity) < Math.PI / 2048) {
+			this.velocity = 0;
+		}
+	}
+
 	setDirection(direction) {
 		this.direction = direction;
 	}
