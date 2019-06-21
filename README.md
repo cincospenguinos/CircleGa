@@ -2,6 +2,13 @@
 
 An homage to Galaga. Most of this was built over a 10-12 hour period. We will be adding to it though if it's fun.
 
+## Starting the project
+
+1. Open up the command prompt
+2. `> cd to\the\directory\the\repo\is\in`
+3. Run `bundle exec jekyll s`
+4. The game is now running on `localhost:4000`
+
 ### TODO
 
 - [x] Setup dev environment
