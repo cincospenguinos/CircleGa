@@ -9,7 +9,7 @@ export class Enemy extends Entity {
 
 		this.type = opts.type;
 		this.speed = opts.speed;
-		this.positions = opts.points;
+		this.positions = opts.positions;
 		this.terminalPosition = opts.terminalPosition;
 		this.currentPositionIndex = 0;
 

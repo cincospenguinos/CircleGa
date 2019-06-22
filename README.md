@@ -23,11 +23,13 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [x] Setup a fancy background
 - [x] Limit shots fired
 - [x] Create menu screen
-- [ ] Enemies move according to paths (a la Galaga)
-- [ ] List of enemies and their paths is set for first level
+- [x] Enemies move according to paths (a la Galaga)
 - [ ] Allow players to connect and move together
+- [ ] List of enemies and their paths is set for first level
 - [ ] Add multiple levels
 - [ ] Change the text of the menu screen
+- [ ] Combination of players spritesheet
+- [ ] On connect--inverted color circle animation
 
 ## Story
 

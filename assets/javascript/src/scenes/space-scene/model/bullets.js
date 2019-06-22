@@ -41,6 +41,15 @@ export class Bullets {
 		this.originCounts[firingOrigin] ? this.originCounts[firingOrigin]++ : this.originCounts[firingOrigin] = 1;
 	}
 
+	remove(bullet) {
+		const index = this.bullets.indexOf(bullet);
+		if (index > -1) {
+			this.originCounts[bullet.firingOrigin] ? this.originCounts[bullet.firingOrigin] -= 1 : this.originCounts[bullet.firingOrigin] = 0;
+			bullet.img.destroy();
+		  this.bullets.splice(index, 1);
+		}
+	}
+
 	bulletCountFor(key) {
 		return this.originCounts[key] || 0;
 	}

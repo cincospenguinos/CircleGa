@@ -16,6 +16,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.playerTwo = new Player();
 		this.bullets = new Bullets();
 		this.enemies = new EntityCollection();
+		this.killCount = 0;
 	}
 
 	preload() {
@@ -66,12 +67,13 @@ export class SpaceScene extends Phaser.Scene {
 		this.input.on('pointerdown', (pointer) => {
 			console.log(`[${pointer.x}, ${pointer.y}]`);
 		});
-
-		const enemy = this.physics.add.sprite(centerOfScreen.x, centerOfScreen.y, sprites.enemyOne);
-		this.enemies.add(new Enemy(enemy, Constants.enemies.father.opts));
 	}
 
 	update() {
+		if (this.enemies.all().length < 1) {
+			this._spawnEnemy();
+		}
+
 		this._handleInput();
 		this._handleCollisions();
 
@@ -119,11 +121,15 @@ export class SpaceScene extends Phaser.Scene {
 		// Enemy collisions
 		this.enemies.all().forEach((e) => {
 			Entity.handleCollision(this.playerOne, e, () => {
-				console.log('Enemy crashed into player 1');
+				this.playerOne.img.destroy();
+				this.enemies.remove(e);
+				console.log(`Killed ${++this.killCount}`);
 			});
 
 			Entity.handleCollision(this.playerTwo, e, () => {
-				console.log('Enemy crashed into player 2');
+				this.playerTwo.img.destroy();
+				this.enemies.remove(e);
+				console.log(`Killed ${++this.killCount}`);
 			});
 		});
 
@@ -131,20 +137,24 @@ export class SpaceScene extends Phaser.Scene {
 		this.bullets.all().forEach((b) => {
 			Entity.handleCollision(this.playerOne, b, () => {
 				if (b.firingOrigin !== Constants.sprites.playerOne.key) {
-					console.log('Player one is hit!');
+					this.bullets.remove(b);
+					this.playerOne.img.destroy();
 				}
 			});
 
 			Entity.handleCollision(this.playerTwo, b, () => {
 				if (b.firingOrigin !== Constants.sprites.playerTwo.key) {
-					console.log('Player two is hit!');
+					this.bullets.remove(b);
+					this.playerTwo.img.destroy();
 				}
 			});
 
 			this.enemies.all().forEach((e) => {
 				Entity.handleCollision(e, b, () => {
 					if (b.firingOrigin !== Constants.sprites.enemyOne.key) {
-						console.log('Enemy is hit!');
+						this.enemies.remove(e);
+						this.bullets.remove(b);
+						console.log(`Killed ${++this.killCount}`);
 					}
 				});
 			});
@@ -157,5 +167,15 @@ export class SpaceScene extends Phaser.Scene {
 			const sprite = this.physics.add.sprite(bullet.x, bullet.y, bulletSpriteKey);
 			this.bullets.addBullet(sprite, playerSpriteKey);
 		}
+	}
+
+	_spawnEnemy() {
+		const allPoints = Constants.enemies.father.positions;
+		const index = Math.floor(Math.random() * Math.floor(allPoints.length));
+		const positions = allPoints[index];
+
+		const { centerOfScreen } = Constants.coordinates;
+		const enemy = this.physics.add.sprite(centerOfScreen.x, centerOfScreen.y, Constants.sprites.enemyOne.key);
+		this.enemies.add(new Enemy(enemy, { positions, ...Constants.enemies.father.opts }));
 	}
 }

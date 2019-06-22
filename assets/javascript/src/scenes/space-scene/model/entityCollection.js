@@ -15,6 +15,14 @@ export class EntityCollection {
 		this.entities.push(entity);
 	}
 
+	remove(entity) {
+		const index = this.entities.indexOf(entity);
+		if (index > -1) {
+			entity.img.destroy();
+		  this.entities.splice(index, 1);
+		}
+	}
+
 	all() {
 		return this.entities;
 	}
