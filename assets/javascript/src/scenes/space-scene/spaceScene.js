@@ -4,7 +4,7 @@ import { Entity } from './model/entity.js'
 import { Player } from './model/player.js';
 import { Enemy } from './model/enemy.js';
 import { Bullets } from './model/bullets.js';
-import { EntityCollection } from './model/entityCollection.js';
+import { EntityCollection } from './services/entityCollection.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -149,12 +149,14 @@ export class SpaceScene extends Phaser.Scene {
 
 		// Bullet collisions
 		this.bullets.all().forEach((b) => {
-			Entity.handleCollision(playerOne, b, () => {
-				if (b.firingOrigin !== Constants.sprites.playerOne.key) {
-					this.bullets.remove(b);
-					this.players.remove(playerOne);
-				}
-			});
+			if (playerOne) {
+				Entity.handleCollision(playerOne, b, () => {
+					if (b.firingOrigin !== Constants.sprites.playerOne.key) {
+						this.bullets.remove(b);
+						this.players.remove(playerOne);
+					}
+				});
+			}
 
 			if (playerTwo) {
 				Entity.handleCollision(playerTwo, b, () => {

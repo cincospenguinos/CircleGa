@@ -1,5 +1,4 @@
 import { Entity } from './entity.js';
-import { EntityCollection } from './entityCollection.js'
 import { Constants } from '../../../const/index.js';
 import { distanceBetween, parameterizedDistance } from '../../../helpers/coordinates.js';
 
