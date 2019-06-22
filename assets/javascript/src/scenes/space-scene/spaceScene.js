@@ -87,19 +87,21 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_handleInput(playerOne, playerTwo) {
-		if (this.keys.p1Right.isDown) {
-			playerOne.accelerate(1);
-		} else if (this.keys.p1Left.isDown) {
-			playerOne.accelerate(-1);
-		} else if (this.keys.p1Slow.isDown) {
-			playerOne.slow();
+		if (playerOne) {
+			if (this.keys.p1Right.isDown) {
+				playerOne.accelerate(1);
+			} else if (this.keys.p1Left.isDown) {
+				playerOne.accelerate(-1);
+			} else if (this.keys.p1Slow.isDown) {
+				playerOne.slow();
+			}
+
+			if (this.keys.p1Fire.isDown) {
+				this._fireBullet(playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
+			}
 		}
 
-		if (this.keys.p1Fire.isDown) {
-			this._fireBullet(playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
-		}
-
-		if (this.playerCount == 2) {
+		if (playerTwo) {
 			if (this.keys.p2Right.isDown) {
 				playerTwo.accelerate(1);
 			} else if (this.keys.p2Left.isDown) {
@@ -115,12 +117,13 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_handleCollisions(playerOne, playerTwo) {
+		if (!(playerOne || playerTwo)) return;
 		// player collision management
-		if (this.playerCount === 2) {
-			Entity.handleCollision(this.playerOne, this.playerTwo, () => {
-				if (this.playerOne.canMove() && this.playerTwo.canMove()) {
-					this.playerOne.collidedWithPlayer();
-					this.playerTwo.collidedWithPlayer();
+		if (playerOne && playerTwo) {
+			Entity.handleCollision(playerOne, playerTwo, () => {
+				if (playerOne.canMove() && playerTwo.canMove()) {
+					playerOne.collidedWithPlayer();
+					playerTwo.collidedWithPlayer();
 				}
 			});
 		}
@@ -128,14 +131,14 @@ export class SpaceScene extends Phaser.Scene {
 		// Enemy collisions
 		this.enemies.all().forEach((e) => {
 			Entity.handleCollision(playerOne, e, () => {
-				playerOne.img.destroy();
+				this.players.remove(playerOne);
 				this.enemies.remove(e);
 				console.log(`Killed ${++this.killCount}`);
 			});
 
-			if (this.playerCount === 2) {
+			if (playerTwo) {
 				Entity.handleCollision(playerTwo, e, () => {
-					playerTwo.img.destroy();
+					this.players.remove(playerTwo);
 					this.enemies.remove(e);
 					console.log(`Killed ${++this.killCount}`);
 				});
@@ -147,15 +150,15 @@ export class SpaceScene extends Phaser.Scene {
 			Entity.handleCollision(playerOne, b, () => {
 				if (b.firingOrigin !== Constants.sprites.playerOne.key) {
 					this.bullets.remove(b);
-					playerOne.img.destroy();
+					this.players.remove(playerOne);
 				}
 			});
 
-			if (this.playerCount === 2) {
+			if (playerTwo) {
 				Entity.handleCollision(playerTwo, b, () => {
 					if (b.firingOrigin !== Constants.sprites.playerTwo.key) {
 						this.bullets.remove(b);
-						playerTwo.img.destroy();
+						this.players.remove(playerTwo);
 					}
 				});
 			}
