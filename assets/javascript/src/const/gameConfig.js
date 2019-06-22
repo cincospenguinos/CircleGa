@@ -4,3 +4,7 @@ export const DIMENSIONS = {
 		height: 920,
 	}
 }
+
+export const CONFIG = {
+	runLevelEditor: true,
+};

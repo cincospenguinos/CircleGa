@@ -1,5 +1,5 @@
 import { SPRITES } from './sprites.js';
-import { DIMENSIONS } from './gameConfig.js';
+import { DIMENSIONS, CONFIG } from './gameConfig.js';
 import { COORDINATES } from './coordinates.js';
 import { ENEMY_TYPES } from './enemies.js';
 import { BRIEFINGS } from './briefings.js';
@@ -32,6 +32,7 @@ const KEYS = {
 
 export const Constants = {
 	briefings: BRIEFINGS,
+	config: CONFIG,
 	coordinates: appendKeysTo(COORDINATES),
 	dimensions: appendKeysTo(DIMENSIONS),
 	enemies: appendKeysTo(ENEMY_TYPES),
