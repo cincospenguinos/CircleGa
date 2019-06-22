@@ -130,11 +130,13 @@ export class SpaceScene extends Phaser.Scene {
 
 		// Enemy collisions
 		this.enemies.all().forEach((e) => {
-			Entity.handleCollision(playerOne, e, () => {
-				this.players.remove(playerOne);
-				this.enemies.remove(e);
-				console.log(`Killed ${++this.killCount}`);
-			});
+			if (playerOne) {
+				Entity.handleCollision(playerOne, e, () => {
+					this.players.remove(playerOne);
+					this.enemies.remove(e);
+					console.log(`Killed ${++this.killCount}`);
+				});
+			}
 
 			if (playerTwo) {
 				Entity.handleCollision(playerTwo, e, () => {
