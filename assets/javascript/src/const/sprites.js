@@ -42,7 +42,6 @@ export const SPRITES = {
 			frameWidth: 12,
 			frameHeight: 30,
 		},
-
 	},
 	enemyBullet: {
 		location: `${spriteDir}/enemyBullet.png`,
@@ -65,4 +64,18 @@ export const SPRITES = {
 			frameHeight: 920,
 		}
 	},
+	playAndPause: {
+		location: `${spriteDir}/playAndPause.png`,
+		config: {
+			frameWidth: 32,
+			frameHeight: 32,
+		},
+	},
+	point: {
+		location: `${spriteDir}/point.png`,
+		config: {
+			frameWidth: 32,
+			frameHeight: 32,
+		}
+	}
 };
