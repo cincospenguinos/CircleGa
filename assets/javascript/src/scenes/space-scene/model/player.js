@@ -7,12 +7,14 @@ export class Player extends Entity {
 	static MAX_COOLDOWN = 15;
 	static ACCELERATION = Math.PI / 1024
 
-	constructor(opts) {
+	constructor(img, opts) {
 		super(opts);
 		this.direction = 0;
 		this.velocity = 0;
 		this.fireCooldown = 0;
 		this.moveCooldown = 0;
+
+		this.setImg(img);
 	}
 
 	accelerate(direction) {

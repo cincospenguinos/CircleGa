@@ -15,6 +15,18 @@ export class EntityCollection {
 		this.entities.push(entity);
 	}
 
+	get(spriteKey) {
+		let toReturn = undefined;
+		this.entities.forEach(e => {
+			if (e.img.texture.key === spriteKey) { 
+				toReturn = e;
+				return;
+			}
+		});
+
+		return toReturn;
+	}
+
 	remove(entity) {
 		const index = this.entities.indexOf(entity);
 		if (index > -1) {

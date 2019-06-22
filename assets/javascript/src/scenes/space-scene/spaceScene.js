@@ -12,8 +12,9 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	init(data) {
-		this.playerOne = new Player();
-		this.playerTwo = new Player();
+		this.playerCount = data.players;
+
+		this.players = new EntityCollection();
 		this.bullets = new Bullets();
 		this.enemies = new EntityCollection();
 		this.killCount = 0;
@@ -52,17 +53,17 @@ export class SpaceScene extends Phaser.Scene {
 	create() {
 		const sprites = Constants.keys.sprites;
 		const { centerOfScreen, topOfRing } = Constants.coordinates;
-
 		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(topOfRing));
 
 		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.background);
 		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.gameTrack);
-		const playerImg = this.physics.add.sprite(playerOnePos.x, playerOnePos.y, sprites.playerOne);
-		this.playerOne.setImg(playerImg);
 
-		const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
-		const playerTwoImg = this.physics.add.sprite(playerTwoPos.x, playerTwoPos.y, sprites.playerTwo);
-		this.playerTwo.setImg(playerTwoImg);
+		this._createPlayer(playerOnePos, sprites.playerOne);
+
+		if (this.playerCount == 2) {
+			const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
+			this._createPlayer(playerTwoPos, sprites.playerTwo);
+		}
 
 		this.input.on('pointerdown', (pointer) => {
 			console.log(`[${pointer.x}, ${pointer.y}]`);
@@ -74,80 +75,90 @@ export class SpaceScene extends Phaser.Scene {
 			this._spawnEnemy();
 		}
 
-		this._handleInput();
-		this._handleCollisions();
+		const playerOne = this.players.get(Constants.sprites.playerOne.key);
+		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
-		this.playerOne.update();
-		this.playerTwo.update();
+		this._handleInput(playerOne, playerTwo);
+		this._handleCollisions(playerOne, playerTwo);
+
+		this.players.update();
 		this.enemies.update();
 		this.bullets.update();
 	}
 
-	_handleInput() {
+	_handleInput(playerOne, playerTwo) {
 		if (this.keys.p1Right.isDown) {
-			this.playerOne.accelerate(1);
+			playerOne.accelerate(1);
 		} else if (this.keys.p1Left.isDown) {
-			this.playerOne.accelerate(-1);
+			playerOne.accelerate(-1);
 		} else if (this.keys.p1Slow.isDown) {
-			this.playerOne.slow();
+			playerOne.slow();
 		}
 
 		if (this.keys.p1Fire.isDown) {
-			this._fireBullet(this.playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
+			this._fireBullet(playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
 		}
 
-		if (this.keys.p2Right.isDown) {
-			this.playerTwo.accelerate(1);
-		} else if (this.keys.p2Left.isDown) {
-			this.playerTwo.accelerate(-1);
-		} else if (this.keys.p2Slow.isDown) {
-			this.playerTwo.slow();
-		}
+		if (this.playerCount == 2) {
+			if (this.keys.p2Right.isDown) {
+				playerTwo.accelerate(1);
+			} else if (this.keys.p2Left.isDown) {
+				playerTwo.accelerate(-1);
+			} else if (this.keys.p2Slow.isDown) {
+				playerTwo.slow();
+			}
 
-		if (this.keys.p2Fire.isDown) {
-			this._fireBullet(this.playerTwo, Constants.sprites.playerTwo.key, Constants.sprites.blueBullet.key);
+			if (this.keys.p2Fire.isDown) {
+				this._fireBullet(playerTwo, Constants.sprites.playerTwo.key, Constants.sprites.blueBullet.key);
+			}
 		}
 	}
 
-	_handleCollisions() {
+	_handleCollisions(playerOne, playerTwo) {
 		// player collision management
-		Entity.handleCollision(this.playerOne, this.playerTwo, () => {
-			if (this.playerOne.canMove() && this.playerTwo.canMove()) {
-				this.playerOne.collidedWithPlayer();
-				this.playerTwo.collidedWithPlayer();
-			}
-		});
+		if (this.playerCount === 2) {
+			Entity.handleCollision(this.playerOne, this.playerTwo, () => {
+				if (this.playerOne.canMove() && this.playerTwo.canMove()) {
+					this.playerOne.collidedWithPlayer();
+					this.playerTwo.collidedWithPlayer();
+				}
+			});
+		}
 
 		// Enemy collisions
 		this.enemies.all().forEach((e) => {
-			Entity.handleCollision(this.playerOne, e, () => {
-				this.playerOne.img.destroy();
+			Entity.handleCollision(playerOne, e, () => {
+				playerOne.img.destroy();
 				this.enemies.remove(e);
 				console.log(`Killed ${++this.killCount}`);
 			});
 
-			Entity.handleCollision(this.playerTwo, e, () => {
-				this.playerTwo.img.destroy();
-				this.enemies.remove(e);
-				console.log(`Killed ${++this.killCount}`);
-			});
+			if (this.playerCount === 2) {
+				Entity.handleCollision(playerTwo, e, () => {
+					playerTwo.img.destroy();
+					this.enemies.remove(e);
+					console.log(`Killed ${++this.killCount}`);
+				});
+			}
 		});
 
 		// Bullet collisions
 		this.bullets.all().forEach((b) => {
-			Entity.handleCollision(this.playerOne, b, () => {
+			Entity.handleCollision(playerOne, b, () => {
 				if (b.firingOrigin !== Constants.sprites.playerOne.key) {
 					this.bullets.remove(b);
-					this.playerOne.img.destroy();
+					playerOne.img.destroy();
 				}
 			});
 
-			Entity.handleCollision(this.playerTwo, b, () => {
-				if (b.firingOrigin !== Constants.sprites.playerTwo.key) {
-					this.bullets.remove(b);
-					this.playerTwo.img.destroy();
-				}
-			});
+			if (this.playerCount === 2) {
+				Entity.handleCollision(playerTwo, b, () => {
+					if (b.firingOrigin !== Constants.sprites.playerTwo.key) {
+						this.bullets.remove(b);
+						playerTwo.img.destroy();
+					}
+				});
+			}
 
 			this.enemies.all().forEach((e) => {
 				Entity.handleCollision(e, b, () => {
@@ -177,5 +188,12 @@ export class SpaceScene extends Phaser.Scene {
 		const { centerOfScreen } = Constants.coordinates;
 		const enemy = this.physics.add.sprite(centerOfScreen.x, centerOfScreen.y, Constants.sprites.enemyOne.key);
 		this.enemies.add(new Enemy(enemy, { positions, ...Constants.enemies.father.opts }));
+	}
+
+	_createPlayer(position, sprite, opts = {}) {
+		coordinateHelpers.toGame(position);
+		const img = this.physics.add.sprite(position.x, position.y, sprite);
+		const player = new Player(img, opts);
+		this.players.add(player);
 	}
 }

@@ -24,6 +24,8 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [x] Limit shots fired
 - [x] Create menu screen
 - [x] Enemies move according to paths (a la Galaga)
+- [ ] Enemies move on Bezier curves
+- [ ] Level editor scene
 - [ ] Explosion animations for players
 - [ ] Allow players to connect and move together
 - [ ] List of enemies and their paths is set for first level
