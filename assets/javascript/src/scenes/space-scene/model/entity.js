@@ -33,6 +33,14 @@ export class Entity {
 		this.setPosition({ x: img.x, y: img.y });
 	}
 
+	spriteKey() {
+		if (!this.img) {
+			return undefined;
+		}
+
+		return this.img.texture.key;
+	}
+
 	setRotation(angle) {
 		if (this.img) {
 			this.img.rotation = angle;

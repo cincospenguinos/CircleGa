@@ -5,6 +5,7 @@ import { Player } from './model/player.js';
 import { Enemy } from './model/enemy.js';
 import { Bullets } from './model/bullets.js';
 import { EntityCollection } from './services/entityCollection.js';
+import { CollisionValidation } from './services/collisionValidation.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -21,7 +22,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	preload() {
-		const { 
+		const {
 			background, playerOne, playerTwo,
 			gameTrack, redBullet, blueBullet,
 			enemyBullet, enemyOne
@@ -79,7 +80,7 @@ export class SpaceScene extends Phaser.Scene {
 		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
 		this._handleInput(playerOne, playerTwo);
-		this._handleCollisions(playerOne, playerTwo);
+		new CollisionValidation(this.players, this.enemies, this.bullets).handleCollisions();
 
 		this.players.update();
 		this.enemies.update();
@@ -114,69 +115,6 @@ export class SpaceScene extends Phaser.Scene {
 				this._fireBullet(playerTwo, Constants.sprites.playerTwo.key, Constants.sprites.blueBullet.key);
 			}
 		}
-	}
-
-	_handleCollisions(playerOne, playerTwo) {
-		if (!(playerOne || playerTwo)) return;
-		// player collision management
-		if (playerOne && playerTwo) {
-			Entity.handleCollision(playerOne, playerTwo, () => {
-				if (playerOne.canMove() && playerTwo.canMove()) {
-					playerOne.collidedWithPlayer();
-					playerTwo.collidedWithPlayer();
-				}
-			});
-		}
-
-		// Enemy collisions
-		this.enemies.all().forEach((e) => {
-			if (playerOne) {
-				Entity.handleCollision(playerOne, e, () => {
-					this.players.remove(playerOne);
-					this.enemies.remove(e);
-					console.log(`Killed ${++this.killCount}`);
-				});
-			}
-
-			if (playerTwo) {
-				Entity.handleCollision(playerTwo, e, () => {
-					this.players.remove(playerTwo);
-					this.enemies.remove(e);
-					console.log(`Killed ${++this.killCount}`);
-				});
-			}
-		});
-
-		// Bullet collisions
-		this.bullets.all().forEach((b) => {
-			if (playerOne) {
-				Entity.handleCollision(playerOne, b, () => {
-					if (b.firingOrigin !== Constants.sprites.playerOne.key) {
-						this.bullets.remove(b);
-						this.players.remove(playerOne);
-					}
-				});
-			}
-
-			if (playerTwo) {
-				Entity.handleCollision(playerTwo, b, () => {
-					if (b.firingOrigin !== Constants.sprites.playerTwo.key) {
-						this.bullets.remove(b);
-						this.players.remove(playerTwo);
-					}
-				});
-			}
-
-			this.enemies.all().forEach((e) => {
-				Entity.handleCollision(e, b, () => {
-					if (b.firingOrigin !== Constants.sprites.enemyOne.key) {
-						this.enemies.remove(e);
-						this.bullets.remove(b);
-						console.log(`Killed ${++this.killCount}`);
-					}
-				});
-			});
-		});
 	}
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {

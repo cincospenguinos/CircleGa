@@ -54,7 +54,6 @@ export class MenuScene extends Phaser.Scene {
 
 	makeSelection() {
 		const players = this.selection.current === 'onePlayer' ? 1 : 2;
-		console.log({ players });
 		this.backgroundMusic.stop();
 		this.scene.start(Constants.scenes.spaceScene, { players });
 	}
