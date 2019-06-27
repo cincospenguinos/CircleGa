@@ -52,3 +52,4 @@ Various pieces of enlightenment philosophy and excerpts of literature about the 
 * [Guns](https://opengameart.org/content/4-projectile-launches)
 * [Atmospheric sky sound](https://opengameart.org/content/red-eclipse-sounds)
 * [Another gun sound](https://opengameart.org/content/residue-sfx)
+* Down the line, let's use [Phoenix and Elixir](https://www.youtube.com/watch?v=I5L9_cXwBcU) for a multiplayer server
