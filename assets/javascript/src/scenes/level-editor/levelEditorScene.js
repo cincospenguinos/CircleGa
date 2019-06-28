@@ -40,24 +40,8 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		this.bezier = new Bezier(this.input, this.add.graphics(), { points });
 		this.bezier.draw();
-    this.movingPoint = this.physics.add.sprite(0, 0, Constants.sprites.enemyOne.key);
 
-    this.tween = this.tweens.add({
-        targets: { val: 0 },
-        val: 1,
-        duration: this.menu.getDuration(),
-        yoyo: false,
-        repeat: -1,
-        ease: "Linear",
-        callbackScope: this,
-        onUpdate: function(tween, target) {
-          const position = this.bezier.getTweenPoint(target.val);
-          const angle = Phaser.Math.Angle.Between(this.movingPoint.x, this.movingPoint.y, position.x, position.y) + Math.PI / 2;
-          this.movingPoint.x = position.x;
-          this.movingPoint.y = position.y;
-          this.movingPoint.rotation = angle;
-        }
-    });
+    this.run();
 	}
 
 	update() {
@@ -66,32 +50,49 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.update)) {
-			this.tweens.killAll();
-				this.tween = this.tweens.add({
-	        targets: { val: 0 },
-	        val: 1,
-	        duration: this.menu.getDuration(),
-	        yoyo: false,
-	        repeat: -1,
-	        ease: "Linear",
-	        callbackScope: this,
-	        onUpdate: function(tween, target) {
-	          const position = this.bezier.getTweenPoint(target.val);
-	          const angle = Phaser.Math.Angle.Between(this.movingPoint.x, this.movingPoint.y, position.x, position.y) + Math.PI / 2;
-	          this.movingPoint.x = position.x;
-	          this.movingPoint.y = position.y;
-	          this.movingPoint.rotation = angle;
-	        }
-	    });
+			this.run();
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.commit)) {
 			const json = JSON.stringify({
-				points: this.bezier.getPoints(),
+				amount: this.menu.getAmount(),
 				duration: this.menu.getDuration(),
+				points: this.bezier.getPoints(),
 			});
 
 			console.log(json);
+		}
+	}
+
+	run() {
+		if (this.sprites) {
+			this.sprites.forEach(s => s.destroy());
+			this.tweens.killAll();
+		}
+
+		this.sprites = [];
+		const amount = this.menu.getAmount();
+
+		for (let i = 0; i < amount; i++) {
+			const sprite = this.physics.add.sprite(0, 0, Constants.sprites.enemyOne.key);
+			this.tweens.add({
+				targets: { val: 0 },
+        val: 1,
+        duration: this.menu.getDuration(),
+        delay: i * this.menu.getDelay(),
+        yoyo: false,
+        repeat: -1,
+        ease: "Linear",
+        callbackScope: this,
+        onUpdate: function(tween, target) {
+          const position = this.bezier.getTweenPoint(target.val);
+          const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, position.x, position.y) + Math.PI / 2;
+          sprite.x = position.x;
+          sprite.y = position.y;
+          sprite.rotation = angle;
+        }
+			});
+			this.sprites.push(sprite);
 		}
 	}
 
