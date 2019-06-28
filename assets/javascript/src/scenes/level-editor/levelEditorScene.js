@@ -74,7 +74,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		const amount = this.menu.getAmount();
 
 		for (let i = 0; i < amount; i++) {
-			const sprite = this.physics.add.sprite(0, 0, Constants.sprites.enemyOne.key);
+			const sprite = this.physics.add.sprite(-50, -50, Constants.sprites.enemyOne.key);
 			this.tweens.add({
 				targets: { val: 0 },
         val: 1,
