@@ -16,6 +16,10 @@ export class PathMenu {
 		this.node.visible = !this.node.visible;
 	}
 
+	getDuration() {
+		return this.node.getChildByProperty('id', 'duration').value;
+	}
+
 	_createNode(opts) {
 		this.node.createFromHTML(html);
 		this.node.getChildByProperty('id', 'duration').value = opts.duration || 2000;
