@@ -18,7 +18,8 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		this.keys = this.input.keyboard.addKeys({
 			toggleMenu: 'zero',
-			update: 'enter',
+			update: 'nine',
+			commit: 'enter',
 		});
 	}
 
@@ -66,22 +67,31 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.update)) {
 			this.tweens.killAll();
-			this.tween = this.tweens.add({
-        targets: { val: 0 },
-        val: 1,
-        duration: this.menu.getDuration(),
-        yoyo: false,
-        repeat: -1,
-        ease: "Linear",
-        callbackScope: this,
-        onUpdate: function(tween, target) {
-          const position = this.bezier.getTweenPoint(target.val);
-          const angle = Phaser.Math.Angle.Between(this.movingPoint.x, this.movingPoint.y, position.x, position.y) + Math.PI / 2;
-          this.movingPoint.x = position.x;
-          this.movingPoint.y = position.y;
-          this.movingPoint.rotation = angle;
-        }
-    });
+				this.tween = this.tweens.add({
+	        targets: { val: 0 },
+	        val: 1,
+	        duration: this.menu.getDuration(),
+	        yoyo: false,
+	        repeat: -1,
+	        ease: "Linear",
+	        callbackScope: this,
+	        onUpdate: function(tween, target) {
+	          const position = this.bezier.getTweenPoint(target.val);
+	          const angle = Phaser.Math.Angle.Between(this.movingPoint.x, this.movingPoint.y, position.x, position.y) + Math.PI / 2;
+	          this.movingPoint.x = position.x;
+	          this.movingPoint.y = position.y;
+	          this.movingPoint.rotation = angle;
+	        }
+	    });
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.commit)) {
+			const json = JSON.stringify({
+				points: this.bezier.getPoints(),
+				duration: this.menu.getDuration(),
+			});
+
+			console.log(json);
 		}
 	}
 

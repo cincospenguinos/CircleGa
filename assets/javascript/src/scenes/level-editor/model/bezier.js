@@ -37,7 +37,7 @@ export class Bezier {
     this.graphics.strokePath();
 	}
 
-	setPoints(points) {
-
+	getPoints() {
+		return this.points.map(p => { return { x: p.x, y: p.y } });
 	}
 }
