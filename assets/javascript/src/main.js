@@ -19,6 +19,9 @@ const config = {
     		debug: true,
     	},
     },
+    dom: {
+      createContainer: Constants.config.runLevelEditor,
+    },
 };
 
 const game = new Phaser.Game(config);

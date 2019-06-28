@@ -1,5 +1,6 @@
 import { Constants } from '../../const/index.js';
 import { Bezier } from './model/bezier.js';
+import { PathMenu } from './view/pathMenu.js';
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
@@ -14,9 +15,16 @@ export class LevelEditorScene extends Phaser.Scene {
 		this.load.spritesheet(enemyOne.key, enemyOne.location, enemyOne.config);
 		this.load.spritesheet(playAndPause.key, playAndPause.location, playAndPause.config);
 		this.load.image(point.key, point.location, point.config);
+
+		this.keys = this.input.keyboard.addKeys({
+			toggleMenu: 'zero',
+		});
 	}
 
 	create() {
+		const menuNode = this.add.dom(200, 200, 'div', '');
+		this.menu = new PathMenu(menuNode);
+
 		const { centerOfScreen } = Constants.coordinates;
 		const colors = ["0x00ff00", "0x008800", "0x880000", "0xff0000"];
 		const points = [];
@@ -51,7 +59,11 @@ export class LevelEditorScene extends Phaser.Scene {
     });
 	}
 
-	update() {}
+	update() {
+		if (Phaser.Input.Keyboard.JustDown(this.keys.toggleMenu)) {
+			this.menu.toggle();
+		}
+	}
 
 	_createPoint(position, color) {
 		const point = this.add.image(position.x, position.y, Constants.sprites.point.key);
