@@ -17,8 +17,8 @@ export class LevelEditorScene extends Phaser.Scene {
 		this.load.image(point.key, point.location, point.config);
 
 		this.keys = this.input.keyboard.addKeys({
-			toggleMenu: 'zero',
-			update: 'nine',
+			toggleMenu: 'M',
+			update: 'U',
 			commit: 'enter',
 		});
 	}
