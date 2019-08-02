@@ -6,6 +6,7 @@ import { Enemy } from './model/enemy.js';
 import { Bullets } from './model/bullets.js';
 import { EntityCollection } from './services/entityCollection.js';
 import { CollisionValidation } from './services/collisionValidation.js';
+import { Level } from './model/level.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -22,6 +23,8 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	preload() {
+		this.load.json(Constants.keys.levels.levelOne, Constants.levels.levelOne.location);
+
 		const {
 			background, playerOne, playerTwo,
 			gameTrack, redBullet, blueBullet,
@@ -66,14 +69,17 @@ export class SpaceScene extends Phaser.Scene {
 			this._createPlayer(playerTwoPos, sprites.playerTwo);
 		}
 
-		this.input.on('pointerdown', (pointer) => {
-			console.log(`[${pointer.x}, ${pointer.y}]`);
-		});
+		this.level = new Level(this.cache.json.get(Constants.keys.levels.levelOne));
 	}
 
 	update() {
-		if (this.enemies.all().length < 1) {
-			this._spawnEnemy();
+		if (this.level.isComplete()) {
+			console.log('Level complete!');
+			return;
+		}
+
+		if (!this.level.aliensFleeing()) {
+			this.level.createAliens(this);
 		}
 
 		const playerOne = this.players.get(Constants.sprites.playerOne.key);

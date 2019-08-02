@@ -6,6 +6,7 @@ import { BRIEFINGS } from './briefings.js';
 import { SCENES } from './scenes.js';
 import { SOUNDS } from './sounds.js';
 import { TEXT } from './text.js';
+import { LEVELS, LEVEL_ORDER } from './levels.js';
 
 const extractKeys = (obj) => {
 	const keys = {};
@@ -28,6 +29,7 @@ const KEYS = {
 	scenes: extractKeys(SCENES),
 	sounds: extractKeys(SOUNDS),
 	text: extractKeys(TEXT),
+	levels: extractKeys(LEVELS),
 };
 
 export const Constants = {
@@ -41,4 +43,6 @@ export const Constants = {
 	sounds: appendKeysTo(SOUNDS),
 	sprites: appendKeysTo(SPRITES),
 	text: appendKeysTo(TEXT),
+	levels: LEVELS,
+	levelOrder: LEVEL_ORDER,
 };
