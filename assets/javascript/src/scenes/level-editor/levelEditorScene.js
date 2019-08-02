@@ -55,8 +55,9 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.commit)) {
 			const json = JSON.stringify({
-				amount: this.menu.getAmount(),
-				duration: this.menu.getDuration(),
+				amount: parseInt(this.menu.getAmount()),
+				duration: parseInt(this.menu.getDuration()),
+				delay: parseInt(this.menu.getDelay()),
 				points: this.bezier.getPoints(),
 			});
 

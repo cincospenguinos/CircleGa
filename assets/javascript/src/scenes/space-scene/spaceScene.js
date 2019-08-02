@@ -131,16 +131,6 @@ export class SpaceScene extends Phaser.Scene {
 		}
 	}
 
-	_spawnEnemy() {
-		const allPoints = Constants.enemies.father.positions;
-		const index = Math.floor(Math.random() * Math.floor(allPoints.length));
-		const positions = allPoints[index];
-
-		const { centerOfScreen } = Constants.coordinates;
-		const enemy = this.physics.add.sprite(centerOfScreen.x, centerOfScreen.y, Constants.sprites.enemyOne.key);
-		this.enemies.add(new Enemy(enemy, { positions, ...Constants.enemies.father.opts }));
-	}
-
 	_createPlayer(position, sprite, opts = {}) {
 		coordinateHelpers.toGame(position);
 		const img = this.physics.add.sprite(position.x, position.y, sprite);

@@ -12,7 +12,7 @@ export class Level {
 	}
 
 	aliensFleeing() {
-		return this.aliens && this.aliens.filter(a => a.isPlaying()).length === 0 || this.hasStarted;
+		return this.alienCount > 0;
 	}
 
 	createAliens(scene) {
@@ -54,6 +54,7 @@ export class Level {
 				},
 				onComplete: function(tween, target) {
 					sprite.destroy();
+					this.alienCount -= 1;
 				}
 			});
 
@@ -61,12 +62,11 @@ export class Level {
 			this.aliens.push(tween);
 		}
 
-
-		this.alientCount = amount;
+		this.alienCount = amount;
 		this.currentDataIndex += 1;
 	}
 
 	isComplete() {
-		return this.currentDataIndex >= this.levelData.length && this.aliens.filter(a => a.isPlaying()).length === 0;
+		return this.currentDataIndex >= this.levelData.length && !this.aliensFleeing();
 	}
 }
