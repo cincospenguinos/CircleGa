@@ -40,6 +40,9 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [ ] Music plays while the screen shows the text
 - [ ] The first group of text is shown after the first level
 - [ ] List of enemies and their paths is set for first level
+- [ ] There is a very short tutorial level that shows how to play
+	- [ ] Explains movement via text
+	- [ ] Explains firing via text
 - [ ] Add multiple levels
 - [ ] Change the text of the menu screen
 - [ ] Combination of players spritesheet
@@ -47,6 +50,10 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [ ] Explosion animations for players
 - [ ] Explosion animation for aliens
 - [ ] Death animation for the aliens
+- [ ] Sound effect for shot fired by player
+- [ ] Sound effect for shot fired by alien
+- [ ] Sound effect for alien death
+- [ ] Sound effect for alien explosion (could just be the same as player)
 
 ## Story
 
