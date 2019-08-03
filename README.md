@@ -29,15 +29,24 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [x] Level editor allows saving of path
 - [x] Enemies move on Bezier curves
 - [x] Level editor scene
-- [ ] Enemies collide with players again
-- [ ] Enemies collide with shots again
-- [ ] Explosion animations for players
+- [x] Enemies collide with players again
+- [x] Enemies collide with shots again
 - [ ] Allow players to connect and move together
+- [ ] Player collisions are better managed
+	- [ ] It handles momentum
+	- [ ] Momentum is lost in collision
+	- [ ] Players can't move through each other
+- [ ] There is a screen that shows text
+- [ ] Music plays while the screen shows the text
+- [ ] The first group of text is shown after the first level
 - [ ] List of enemies and their paths is set for first level
 - [ ] Add multiple levels
 - [ ] Change the text of the menu screen
 - [ ] Combination of players spritesheet
 - [ ] On connect--inverted color circle animation
+- [ ] Explosion animations for players
+- [ ] Explosion animation for aliens
+- [ ] Death animation for the aliens
 
 ## Story
 

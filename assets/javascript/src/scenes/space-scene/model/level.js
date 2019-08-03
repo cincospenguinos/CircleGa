@@ -1,5 +1,7 @@
 import { Constants } from '../../../const/index.js';
 import { isOutOfBounds } from '../../../helpers/coordinates.js';
+import { Enemy } from './enemy.js';
+import { EntityCollection } from '../services/entityCollection.js';
 
 export class Level {
 	constructor(levelData) {
@@ -8,7 +10,8 @@ export class Level {
 
 		this.alientCount = 0;
 		this.hasStarted = false;
-		this.aliens = null;
+		this.alienTweens = null;
+		this.enemies = null;
 	}
 
 	aliensFleeing() {
@@ -17,11 +20,12 @@ export class Level {
 
 	createAliens(scene) {
 		this.hasStarted = true;
-		if (this.aliens) {
-			this.aliens.forEach(a => a.remove());
+		if (this.alienTweens) {
+			this.alienTweens.forEach(a => a.remove());
 		}
 
-		this.aliens = [];
+		this.alienTweens = [];
+		this.enemies = new EntityCollection();
 
 		const {
 			amount,
@@ -35,6 +39,8 @@ export class Level {
 			const sprite = scene.physics.add.sprite(
 				Constants.coordinates.centerOfScreen.x, Constants.coordinates.centerOfScreen.y, 
 				Constants.sprites.enemyOne.key);
+			const enemy = new Enemy(sprite);
+
 			const tween = scene.tweens.add({
 				targets: { val: 0 },
 				val: 1,
@@ -53,17 +59,22 @@ export class Level {
 					sprite.rotation = angle;
 				},
 				onComplete: function(tween, target) {
-					sprite.destroy();
+					this.enemies.remove(enemy);
 					this.alienCount -= 1;
 				}
 			});
 
+			this.alienTweens.push(tween);
+			this.enemies.add(enemy);
 			tween.play();
-			this.aliens.push(tween);
 		}
 
 		this.alienCount = amount;
 		this.currentDataIndex += 1;
+	}
+
+	getAliens() {
+		return this.enemies;
 	}
 
 	isComplete() {

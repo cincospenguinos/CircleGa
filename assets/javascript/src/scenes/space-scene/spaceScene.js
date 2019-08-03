@@ -18,7 +18,6 @@ export class SpaceScene extends Phaser.Scene {
 
 		this.players = new EntityCollection();
 		this.bullets = new Bullets();
-		this.enemies = new EntityCollection();
 		this.killCount = 0;
 	}
 
@@ -86,10 +85,9 @@ export class SpaceScene extends Phaser.Scene {
 		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
 		this._handleInput(playerOne, playerTwo);
-		new CollisionValidation(this.players, this.enemies, this.bullets).handleCollisions();
+		new CollisionValidation(this.players, this.level.getAliens(), this.bullets).handleCollisions();
 
 		this.players.update();
-		this.enemies.update();
 		this.bullets.update();
 	}
 
