@@ -1,4 +1,5 @@
 import { Constants } from '../../const/index.js';
+import { GameState } from '../../model/gameState.js';
 
 export class MenuScene extends Phaser.Scene {
 	constructor() {
@@ -55,6 +56,7 @@ export class MenuScene extends Phaser.Scene {
 	makeSelection() {
 		const players = this.selection.current === 'onePlayer' ? 1 : 2;
 		this.backgroundMusic.stop();
+		GameState.init();
 		this.scene.start(Constants.scenes.spaceScene, { players });
 	}
 

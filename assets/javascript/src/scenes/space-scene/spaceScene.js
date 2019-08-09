@@ -1,4 +1,5 @@
 import { Constants } from '../../const/index.js';
+import { GameState } from '../../model/gameState.js';
 import * as coordinateHelpers from '../../helpers/coordinates.js';
 import { Entity } from './model/entity.js'
 import { Player } from './model/player.js';
@@ -74,6 +75,8 @@ export class SpaceScene extends Phaser.Scene {
 	update() {
 		if (this.level.isComplete()) {
 			console.log('Level complete!');
+			GameState.getInstance().levelComplete();
+			this.scene.start(Constants.scenes.textScene);
 			return;
 		}
 
