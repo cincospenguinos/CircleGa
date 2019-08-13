@@ -20,9 +20,12 @@ export class SpaceScene extends Phaser.Scene {
 		this.players = new EntityCollection();
 		this.bullets = new Bullets();
 		this.killCount = 0;
+
+		this.collisionValidation = new CollisionValidation(this.players, this.bullets);
 	}
 
 	preload() {
+		console.log(`Current level is ${GameState.getInstance().currentLevel}`);
 		this.load.json(Constants.keys.levels.levelOne, Constants.levels.levelOne.location);
 
 		const {
@@ -88,7 +91,7 @@ export class SpaceScene extends Phaser.Scene {
 		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
 		this._handleInput(playerOne, playerTwo);
-		new CollisionValidation(this.players, this.level.getAliens(), this.bullets).handleCollisions();
+		this.collisionValidation.handleCollisions(this.level.getAliens());
 
 		this.players.update();
 		this.bullets.update();

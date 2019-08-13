@@ -2,27 +2,26 @@ import { Constants } from '../../../const/index.js';
 import { Entity } from '../model/entity.js';
 
 export class CollisionValidation {
-	constructor(players, aliens, bullets) {
+	constructor(players, bullets) {
 		this.players = players;
-		this.aliens = aliens;
 		this.bullets = bullets;
 	}
 
-	handleCollisions() {
+	handleCollisions(aliens) {
 		const playerOne = this.players.get(Constants.sprites.playerOne.key);
 		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
 		this._playerToPlayer(playerOne, playerTwo);
-		this.aliens.all().forEach((a) => {
-			this._playerToEnemy(playerOne, a);
-			this._playerToEnemy(playerTwo, a);
+		aliens.all().forEach((a) => {
+			this._playerToEnemy(playerOne, aliens, a);
+			this._playerToEnemy(playerTwo, aliens, a);
 		});
 
 		this.bullets.all().forEach((b) => {
 			this._playerToBullet(playerOne, b);
 			this._playerToBullet(playerTwo, b);
 
-			this.aliens.all().forEach(a => this._enemyToBullet(a, b));
+			aliens.all().forEach(a => this._enemyToBullet(aliens, a, b));
 		});
 	}
 
@@ -37,11 +36,11 @@ export class CollisionValidation {
 		}
 	}
 
-	_playerToEnemy(player, alien) {
+	_playerToEnemy(player, aliens, alien) {
 		if (player) {
 			Entity.handleCollision(player, alien, () => {
 				this.players.remove(player);
-				this.aliens.remove(alien);
+				aliens.remove(alien);
 			});
 		}
 	}
@@ -57,10 +56,10 @@ export class CollisionValidation {
 		}
 	}
 
-	_enemyToBullet(enemy, bullet) {
+	_enemyToBullet(aliens, enemy, bullet) {
 		Entity.handleCollision(enemy, bullet, () => {
 			if (bullet.firingOrigin !== enemy.spriteKey()) {
-				this.aliens.remove(enemy);
+				aliens.remove(enemy);
 				this.bullets.remove(bullet);
 			}
 		});

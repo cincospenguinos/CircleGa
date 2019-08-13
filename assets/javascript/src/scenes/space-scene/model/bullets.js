@@ -28,7 +28,7 @@ export class Bullet extends Entity {
 }
 
 export class Bullets {
-	static BULLET_VEL = 10;
+	static BULLET_VEL = 15;
 
 	constructor() {
 		this.nextKey = 1;

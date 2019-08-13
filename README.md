@@ -36,6 +36,7 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 	- [ ] It handles momentum
 	- [ ] Momentum is lost in collision
 	- [ ] Players can't move through each other
+- [ ] Enemies fire bullets at players at certain intervals
 - [x] There is a screen that shows text
 - [ ] Music plays while the screen shows the text
 - [x] The first group of text is shown after the first level

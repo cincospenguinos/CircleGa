@@ -7,7 +7,7 @@ export class GameState {
 
 	static getInstance() {
 		return new GameState({
-			currentLevel: localStorage.getItem(CURRENT_LEVEL)
+			currentLevel: parseInt(localStorage.getItem(CURRENT_LEVEL)),
 		});
 	}
 
