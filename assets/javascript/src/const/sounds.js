@@ -13,6 +13,16 @@ export const SOUNDS = {
 			notes: 'Cut and distorted to fit in main menu track. Thank you, Michael and students!',
 		},
 	},
+	theMachine: {
+		location: `${soundsDir}/theMachine.mp3`,
+		config: {
+			loop: false,
+		},
+		meta: {
+			author: 'Andre LaFleur',
+			notes: 'Written with Muse Score, performed through Ableton',
+		},
+	},
 	switchOptions: {
 		location: `${soundsDir}/`,
 		config: {

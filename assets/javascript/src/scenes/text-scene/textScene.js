@@ -8,15 +8,19 @@ export class TextScene extends Phaser.Scene {
 
 	preload() {
 		this.excerpt = new TextExcerpt(Constants.text.indigenousExclusion);
+		this.load.audio(Constants.keys.sounds.theMachine, Constants.sounds.theMachine.location);
+	}
+
+	create() {
+		this.add.text(25, 25, this.excerpt.getText(), this.excerpt.getFont());
 		this.keys = this.input.keyboard.addKeys({
 			space: 'SPACE',
 			esc: 'ESC',
 			enter: 'ENTER',
 		});
-	}
 
-	create() {
-		this.add.text(25, 25, this.excerpt.getText(), this.excerpt.getFont());
+		this.backgroundMusic = this.sound.add(Constants.keys.sounds.theMachine, Constants.sounds.theMachine.config);
+		this.backgroundMusic.play();
 	}
 
 	update() {
@@ -31,6 +35,7 @@ export class TextScene extends Phaser.Scene {
 
 		if (moveOn) {
 			this.scene.start(Constants.scenes.spaceScene);
+			this.backgroundMusic.stop();
 			return;
 		}
 	}

@@ -31,19 +31,19 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [x] Level editor scene
 - [x] Enemies collide with players again
 - [x] Enemies collide with shots again
-- [ ] Enemies fire bullets at players at certain intervals
-- [ ] Allow players to connect and move together
-	- [ ] A single key for each flips connect/disconnect mode
-	- [ ] A separate sprite with a lit side shows up
-	- [ ] A separate sprite and connection animation plays/shows up
 - [x] Player collisions are better managed
 	- [x] It handles momentum
 	- [x] Momentum is lost in collision
 	- [x] Players can't move through each other
 - [x] There is a screen that shows text
-- [ ] Music plays while the screen shows the text
 - [x] The first group of text is shown after the first level
 - [x] List of enemies and their paths is set for first level
+- [ ] Enemies fire bullets at players at certain intervals
+- [ ] Allow players to connect and move together
+	- [ ] A single key for each flips connect/disconnect mode
+	- [ ] A separate sprite with a lit side shows up
+	- [ ] A separate sprite and connection animation plays/shows up
+- [ ] Music plays while the screen shows the text
 - [ ] There is a very short tutorial level that shows how to play
 	- [ ] Explains movement via text
 	- [ ] Explains firing via text
