@@ -31,12 +31,15 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [x] Level editor scene
 - [x] Enemies collide with players again
 - [x] Enemies collide with shots again
-- [ ] Allow players to connect and move together
-- [ ] Player collisions are better managed
-	- [ ] It handles momentum
-	- [ ] Momentum is lost in collision
-	- [ ] Players can't move through each other
 - [ ] Enemies fire bullets at players at certain intervals
+- [ ] Allow players to connect and move together
+	- [ ] A single key for each flips connect/disconnect mode
+	- [ ] A separate sprite with a lit side shows up
+	- [ ] A separate sprite and connection animation plays/shows up
+- [x] Player collisions are better managed
+	- [x] It handles momentum
+	- [x] Momentum is lost in collision
+	- [x] Players can't move through each other
 - [x] There is a screen that shows text
 - [ ] Music plays while the screen shows the text
 - [x] The first group of text is shown after the first level
@@ -55,6 +58,7 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 - [ ] Sound effect for shot fired by alien
 - [ ] Sound effect for alien death
 - [ ] Sound effect for alien explosion (could just be the same as player)
+- [ ] Sound effect for crashing into the other player (this helps make crashing appear as a negative consequence)
 
 ## Story
 

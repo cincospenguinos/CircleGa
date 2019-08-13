@@ -5,7 +5,8 @@ import * as coordinateHelpers from '../../../helpers/coordinates.js';
 export class Player extends Entity {
 	static MAX_VELOCITY = Math.PI / 64;
 	static MAX_COOLDOWN = 15;
-	static ACCELERATION = Math.PI / 1024
+	static ACCELERATION = Math.PI / 1024;
+	static MOVEMENT_COOLDOWN = 20;
 
 	constructor(img, opts) {
 		super(opts);
@@ -42,9 +43,16 @@ export class Player extends Entity {
 		this.direction = direction;
 	}
 
-	collidedWithPlayer() {
-		this.velocity = -this.velocity * 3 / 4;
-		this.moveCooldown = 20;
+	static handleCollision(playerOne, playerTwo) {
+		const tmp = playerOne.velocity;
+		playerOne.velocity = playerTwo.velocity;
+		playerTwo.velocity = tmp;
+
+		playerOne.velocity *= 7/8;
+		playerTwo.velocity *= 7/8;
+
+		playerOne.moveCooldown = Player.MOVEMENT_COOLDOWN;
+		playerTwo.moveCooldown = Player.MOVEMENT_COOLDOWN;
 	}
 
 	update() {

@@ -99,12 +99,14 @@ export class SpaceScene extends Phaser.Scene {
 
 	_handleInput(playerOne, playerTwo) {
 		if (playerOne) {
-			if (this.keys.p1Right.isDown) {
-				playerOne.accelerate(1);
-			} else if (this.keys.p1Left.isDown) {
-				playerOne.accelerate(-1);
-			} else if (this.keys.p1Slow.isDown) {
-				playerOne.slow();
+			if (playerOne.canMove()) {
+				if (this.keys.p1Right.isDown) {
+					playerOne.accelerate(1);
+				} else if (this.keys.p1Left.isDown) {
+					playerOne.accelerate(-1);
+				} else if (this.keys.p1Slow.isDown) {
+					playerOne.slow();
+				}
 			}
 
 			if (this.keys.p1Fire.isDown) {
@@ -113,12 +115,14 @@ export class SpaceScene extends Phaser.Scene {
 		}
 
 		if (playerTwo) {
-			if (this.keys.p2Right.isDown) {
-				playerTwo.accelerate(1);
-			} else if (this.keys.p2Left.isDown) {
-				playerTwo.accelerate(-1);
-			} else if (this.keys.p2Slow.isDown) {
-				playerTwo.slow();
+			if (playerTwo.canMove()) {
+				if (this.keys.p2Right.isDown) {
+					playerTwo.accelerate(1);
+				} else if (this.keys.p2Left.isDown) {
+					playerTwo.accelerate(-1);
+				} else if (this.keys.p2Slow.isDown) {
+					playerTwo.slow();
+				}
 			}
 
 			if (this.keys.p2Fire.isDown) {
@@ -128,7 +132,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
-		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
+		if (this.bullets.bulletCountFor(playerSpriteKey) < 3 && player.canFire()) {
 			const bullet = player.fireBullet();
 			const sprite = this.physics.add.sprite(bullet.x, bullet.y, bulletSpriteKey);
 			this.bullets.addBullet(sprite, playerSpriteKey);

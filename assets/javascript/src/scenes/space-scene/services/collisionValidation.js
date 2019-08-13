@@ -1,5 +1,6 @@
 import { Constants } from '../../../const/index.js';
 import { Entity } from '../model/entity.js';
+import { Player } from '../model/player.js';
 
 export class CollisionValidation {
 	constructor(players, bullets) {
@@ -29,8 +30,7 @@ export class CollisionValidation {
 		if (playerOne && playerTwo) {
 			Entity.handleCollision(playerOne, playerTwo, () => {
 				if (playerOne.canMove() && playerTwo.canMove()) {
-					playerOne.collidedWithPlayer();
-					playerTwo.collidedWithPlayer();
+					Player.handleCollision(playerOne, playerTwo);
 				}
 			});
 		}
