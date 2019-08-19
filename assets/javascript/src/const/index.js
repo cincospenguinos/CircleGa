@@ -43,6 +43,6 @@ export const Constants = {
 	sounds: appendKeysTo(SOUNDS),
 	sprites: appendKeysTo(SPRITES),
 	text: appendKeysTo(TEXT),
-	levels: LEVELS,
+	levels: appendKeysTo(LEVELS),
 	levelOrder: LEVEL_ORDER,
 };

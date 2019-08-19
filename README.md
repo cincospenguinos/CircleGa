@@ -9,6 +9,23 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 3. Run `bundle exec jekyll s`
 4. The game is now running on `localhost:4000`
 
+## Organization
+
+The organization of the game is as follows:
+
+* Tutorial level showing the ropes on how to play
+* Level 1
+* Story exposition 1
+* Level 2
+* Text exposition 1
+
+And then
+
+* Level
+* Story
+* Level
+* Text
+
 ### TODO
 
 - [x] Setup dev environment
@@ -43,10 +60,13 @@ An homage to Galaga. Most of this was built over a 10-12 hour period. We will be
 	- [ ] A single key for each flips connect/disconnect mode
 	- [ ] A separate sprite with a lit side shows up
 	- [ ] A separate sprite and connection animation plays/shows up
-- [ ] Music plays while the screen shows the text
+- [x] Music plays while the screen shows the text
+	- [ ] Create three separate pieces of music from the main machine rolls forward piece
+	- [ ] Associate one of the three with the text that is shown at each iteration
 - [ ] There is a very short tutorial level that shows how to play
 	- [ ] Explains movement via text
 	- [ ] Explains firing via text
+	- [ ] Tells you to fire at the natives via text
 - [ ] Add multiple levels
 - [ ] Change the text of the menu screen
 - [ ] Combination of players spritesheet

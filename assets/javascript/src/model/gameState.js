@@ -22,6 +22,10 @@ export class GameState {
 		this._save();
 	}
 
+	getCurrentLevelIndex() {
+		return this.currentLevel - 1;
+	}
+
 	_save() {
 		localStorage.setItem(CURRENT_LEVEL, this.currentLevel);
 	}

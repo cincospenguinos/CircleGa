@@ -15,7 +15,11 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	init(data) {
+		const gameState = GameState.getInstance();
+		const levelKey = Constants.levelOrder[gameState.getCurrentLevelIndex()];
+
 		this.playerCount = data.players;
+		this.currentLevel = Constants.levels[levelKey];
 
 		this.players = new EntityCollection();
 		this.bullets = new Bullets();
@@ -26,7 +30,7 @@ export class SpaceScene extends Phaser.Scene {
 
 	preload() {
 		console.log(`Current level is ${GameState.getInstance().currentLevel}`);
-		this.load.json(Constants.keys.levels.levelOne, Constants.levels.levelOne.location);
+		this.load.json(this.currentLevel.key, this.currentLevel.location);
 
 		const {
 			background, playerOne, playerTwo,
