@@ -1,9 +1,8 @@
+const textDir = 'assets/data/text';
+
 export const TEXT = {
 	indigenousExclusion: {
-		type: 'quote',
-		text: 'The concomitant exclusion of indigenous people from the ‘social contract’ and the perceived inability of ‘backward’ countries to govern has in turn been central to legitimising external rule over them – a practice that continues to this day.',
-		author: 'Anievas and Nisancioglu',
-		source: 'How the West Came to Rule',
+		location: `${textDir}/indigenousExclusion.json`,
 	},
 	neverStateOfNature: {
 		type: 'quote',
@@ -47,3 +46,7 @@ export const TEXT = {
 		url: 'https://scholarsarchive.byu.edu/cgi/viewcontent.cgi?article=2868&context=facpub',
 	}
 }
+
+export const TEXT_ORDER = [
+	'indigenousExclusion',
+];

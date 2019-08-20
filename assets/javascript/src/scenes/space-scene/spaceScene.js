@@ -29,7 +29,6 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	preload() {
-		console.log(`Current level is ${GameState.getInstance().currentLevel}`);
 		this.load.json(this.currentLevel.key, this.currentLevel.location);
 
 		const {

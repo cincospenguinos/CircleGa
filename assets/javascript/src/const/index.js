@@ -5,7 +5,7 @@ import { ENEMY_TYPES } from './enemies.js';
 import { BRIEFINGS } from './briefings.js';
 import { SCENES } from './scenes.js';
 import { SOUNDS } from './sounds.js';
-import { TEXT } from './text.js';
+import { TEXT, TEXT_ORDER } from './text.js';
 import { LEVELS, LEVEL_ORDER } from './levels.js';
 
 const extractKeys = (obj) => {
@@ -28,7 +28,7 @@ const KEYS = {
 	briefings: extractKeys(BRIEFINGS),
 	scenes: extractKeys(SCENES),
 	sounds: extractKeys(SOUNDS),
-	text: extractKeys(TEXT),
+	texts: extractKeys(TEXT),
 	levels: extractKeys(LEVELS),
 };
 
@@ -42,7 +42,8 @@ export const Constants = {
 	scenes: SCENES,
 	sounds: appendKeysTo(SOUNDS),
 	sprites: appendKeysTo(SPRITES),
-	text: appendKeysTo(TEXT),
+	texts: appendKeysTo(TEXT),
 	levels: appendKeysTo(LEVELS),
 	levelOrder: LEVEL_ORDER,
+	textOrder: TEXT_ORDER,
 };

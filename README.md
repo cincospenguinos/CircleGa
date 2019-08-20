@@ -67,6 +67,7 @@ And then
 	- [ ] Explains movement via text
 	- [ ] Explains firing via text
 	- [ ] Tells you to fire at the natives via text
+- [ ] Throw the texts we're going to use into the data directory instead of loading them all in memory
 - [ ] Add multiple levels
 - [ ] Change the text of the menu screen
 - [ ] Combination of players spritesheet
