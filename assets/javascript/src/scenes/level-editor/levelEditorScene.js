@@ -44,7 +44,7 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		this.input.on('pointerdown', (ptr) => {
 			if (this.keys.setFiringPoint.isDown) {
-				this.firingPoint = { x: ptr.x, y: ptr.y, type: 'game' };
+				this.firingPoint = { x: ptr.x, y: ptr.y };
 				console.log(`(${ptr.x}, ${ptr.y})`);
 			}
 		});
@@ -70,8 +70,12 @@ export class LevelEditorScene extends Phaser.Scene {
 				duration: parseInt(this.menu.getDuration()),
 				delay: parseInt(this.menu.getDelay()),
 				points: this.bezier.getPoints(),
+				firingPoint: this.firingPoint,
 			});
 
+			if (!this.firingPoint) {
+				console.warn('No firing point was set for this formation');
+			}
 			console.log(json);
 		}
 	}
