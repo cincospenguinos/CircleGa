@@ -135,7 +135,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
-		if (this.bullets.bulletCountFor(playerSpriteKey) < 3 && player.canFire()) {
+		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
 			const bullet = player.fireBullet();
 			const sprite = this.physics.add.sprite(bullet.x, bullet.y, bulletSpriteKey);
 			this.bullets.addBullet(sprite, playerSpriteKey);

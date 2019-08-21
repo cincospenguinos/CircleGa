@@ -26,6 +26,8 @@ And then
 * Level
 * Text
 
+This can be boiled down to simply level, text, level, text, where each text is either a story beat or a citation.
+
 ### TODO
 
 - [x] Setup dev environment
