@@ -1,5 +1,5 @@
 import { Constants } from '../../../const/index.js';
-import { isOutOfBounds } from '../../../helpers/coordinates.js';
+import { isOutOfBounds, distanceBetween } from '../../../helpers/coordinates.js';
 import { Enemy } from './enemy.js';
 import { EntityCollection } from '../services/entityCollection.js';
 
@@ -32,13 +32,15 @@ export class Level {
 			duration,
 			points,
 			delay,
+			firingPoint,
 		} = this.levelData[this.currentDataIndex];
+
 		const bezier = new Phaser.Curves.CubicBezier(points[0], points[1], points[2], points[3]);
+		const centerOfScreen = Constants.coordinates.centerOfScreen;
 
 		for (let i = 0; i < amount; i++) {
 			const sprite = scene.physics.add.sprite(
-				Constants.coordinates.centerOfScreen.x, Constants.coordinates.centerOfScreen.y, 
-				Constants.sprites.enemyOne.key);
+				centerOfScreen.x, centerOfScreen.y, Constants.sprites.enemyOne.key);
 			const enemy = new Enemy(sprite);
 
 			const tween = scene.tweens.add({
@@ -52,8 +54,12 @@ export class Level {
 				callbackScope: this,
 				onUpdate: function(tween, target) {
 					const position = bezier.getPoint(target.val);
-					const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, position.x, position.y) + Math.PI / 2;
 
+					if (this.isAtFiringPoint({ x: position.x, y: position.y })) {
+						scene.enemyFired(enemy);
+					}
+
+					const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, position.x, position.y) + Math.PI / 2;
 					sprite.x = position.x;
 					sprite.y = position.y;
 					sprite.rotation = angle;
@@ -73,8 +79,16 @@ export class Level {
 		this.currentDataIndex += 1;
 	}
 
+	isAtFiringPoint(point) {
+		return distanceBetween(this.getFiringPoint(), point) <= 5;
+	}
+
 	getAliens() {
 		return this.enemies;
+	}
+
+	getFiringPoint() {
+		return this.levelData[this.currentDataIndex - 1].firingPoint;
 	}
 
 	isComplete() {

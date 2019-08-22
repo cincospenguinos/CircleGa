@@ -28,7 +28,8 @@ export class Bullet extends Entity {
 }
 
 export class Bullets {
-	static BULLET_VEL = 15;
+	static PLAYER_BULLET_VEL = 15;
+	static ENEMY_BULLET_VEL = 10;
 
 	constructor() {
 		this.nextKey = 1;
@@ -80,8 +81,10 @@ export class Bullets {
 		const angle = Phaser.Math.Angle.Between(bulletImg.x, bulletImg.y, target.x, target.y) + Math.PI / 2;
 		bulletImg.rotation = angle;
 
-		const xVel = Bullets.BULLET_VEL * Math.cos(angle - Math.PI / 2);
-		const yVel = Bullets.BULLET_VEL * Math.sin(angle - Math.PI / 2);
+		const totalVel = firingOrigin === Constants.keys.sprites.enemyOne ? Bullets.ENEMY_BULLET_VEL : Bullets.PLAYER_BULLET_VEL;
+
+		const xVel = totalVel * Math.cos(angle - Math.PI / 2);
+		const yVel = totalVel * Math.sin(angle - Math.PI / 2);
 
 		const bullet = new Bullet(bulletImg, {
 			xVel,

@@ -100,6 +100,37 @@ export class SpaceScene extends Phaser.Scene {
 		this.bullets.update();
 	}
 
+	enemyFired(enemy) {
+		const enemyPosition = enemy.getPosition();
+		const playerToShoot = this._getPlayerToShoot(enemyPosition);
+
+		if (enemy.canFire() && playerToShoot) {
+			const sprite = this.physics.add.sprite(enemyPosition.x, enemyPosition.y, Constants.keys.sprites.enemyBullet);
+			this.bullets.addBullet(sprite, enemy.spriteKey(), playerToShoot.getPosition());
+			enemy.fireBullet();
+		}
+	}
+
+	_getPlayerToShoot(enemyPosition) {
+		if (this.players.count() == 0) {
+			return null;
+		}
+
+		if (this.players.count() == 1) {
+			return this.players.getAt(0);
+		}
+
+		const playerOne = this.players.get(Constants.sprites.playerOne.key);
+		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
+
+		if (coordinateHelpers.distanceBetween(playerOne.getPosition(), enemyPosition) < 
+			coordinateHelpers.distanceBetween(playerTwo.getPosition(), enemyPosition)) {
+			return playerOne;
+		}
+
+		return playerTwo;
+	}
+
 	_handleInput(playerOne, playerTwo) {
 		if (playerOne) {
 			if (playerOne.canMove()) {
@@ -136,8 +167,8 @@ export class SpaceScene extends Phaser.Scene {
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
 		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
-			const bullet = player.fireBullet();
-			const sprite = this.physics.add.sprite(bullet.x, bullet.y, bulletSpriteKey);
+			const bulletPosition = player.fireBullet();
+			const sprite = this.physics.add.sprite(bulletPosition.x, bulletPosition.y, bulletSpriteKey);
 			this.bullets.addBullet(sprite, playerSpriteKey);
 		}
 	}

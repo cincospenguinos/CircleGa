@@ -27,6 +27,10 @@ export class EntityCollection {
 		return toReturn;
 	}
 
+	getAt(index) {
+		return this.entities[index];
+	}
+
 	remove(entity) {
 		const index = this.entities.indexOf(entity);
 		if (index > -1) {
@@ -37,6 +41,10 @@ export class EntityCollection {
 
 	all() {
 		return this.entities;
+	}
+
+	count() {
+		return this.entities.length;
 	}
 
 	update() {
