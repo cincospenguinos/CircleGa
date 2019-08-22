@@ -30,12 +30,60 @@ This can be boiled down to simply level, text, level, text, where each text is e
 
 ## TODO
 
+- [ ] Create combined sprite of both players
+
 ### Art and Animation
+
+- [ ] Create a female alien sprite
+- [ ] Create a child alien sprite
+- [ ] Animate player movement
+- [ ] Animate male alien
+- [ ] Animate female alien
+- [ ] Explosion animations for players
+- [ ] Explosion animation for aliens
+- [ ] Death animation for the aliens
 
 ### Story
 
+- [ ] Who are the main characters?
+- [ ] What is the main conflict?
+- [ ] How does the story proceed?
+- [ ] Write the tutorial segment
+- [ ] Write the story beats
+
 ### Level design
 
+- [ ] There is a very short tutorial level that shows how to play
+	- [ ] Explains movement via text
+	- [ ] Explains firing via text
+	- [ ] Tells you to fire at the natives via text
+- [ ] Explore level design space created by the rules of the game
+- [ ] Change the text of the menu screen to whatever it is you decide, Andre
+
+
+### Code
+
+- [ ] Allow players to connect and move together
+	- [ ] A single key for each flips connect/disconnect mode
+	- [ ] A separate sprite with a lit side shows up
+	- [ ] A separate sprite and connection animation plays/shows up
+
+### Sound
+
+- [ ] Sound effect for shot fired by player
+- [ ] Sound effect for shot fired by alien
+- [ ] Sound effect for alien death
+- [ ] Sound effect for alien explosion (could just be the same as player)
+- [ ] Sound effect for crashing into the other player (this helps make crashing appear as a negative consequence)
+
+
+### Finished
+
+Just to keep my spirits up, I'm putting everything we've finished here.
+
+- [x] Music plays while the screen shows the text
+	- [x] Create three separate pieces of music from the main machine rolls forward piece
+- [x] Throw the texts we're going to use into the data directory instead of loading them all in memory
 - [x] Setup dev environment
 - [x] Get player on screen
 - [x] Player moves on screen
@@ -64,30 +112,6 @@ This can be boiled down to simply level, text, level, text, where each text is e
 - [x] The first group of text is shown after the first level
 - [x] List of enemies and their paths is set for first level
 - [x] Enemies fire bullets at players at certain intervals
-- [ ] Allow players to connect and move together
-	- [ ] A single key for each flips connect/disconnect mode
-	- [ ] A separate sprite with a lit side shows up
-	- [ ] A separate sprite and connection animation plays/shows up
-- [x] Music plays while the screen shows the text
-	- [x] Create three separate pieces of music from the main machine rolls forward piece
-	- [ ] Associate one of the three with the text that is shown at each iteration
-- [ ] There is a very short tutorial level that shows how to play
-	- [ ] Explains movement via text
-	- [ ] Explains firing via text
-	- [ ] Tells you to fire at the natives via text
-- [x] Throw the texts we're going to use into the data directory instead of loading them all in memory
-- [ ] Add multiple levels
-- [ ] Change the text of the menu screen
-- [ ] Combination of players spritesheet
-- [ ] On connect--inverted color circle animation
-- [ ] Explosion animations for players
-- [ ] Explosion animation for aliens
-- [ ] Death animation for the aliens
-- [ ] Sound effect for shot fired by player
-- [ ] Sound effect for shot fired by alien
-- [ ] Sound effect for alien death
-- [ ] Sound effect for alien explosion (could just be the same as player)
-- [ ] Sound effect for crashing into the other player (this helps make crashing appear as a negative consequence)
 
 ## Story
 
