@@ -11,8 +11,7 @@ export class TextScene extends Phaser.Scene {
 		const gameState = GameState.getInstance();
 		this.currentTextKey = Constants.textOrder[gameState.getCurrentTextIndex()];
 		this.load.json(this.currentTextKey, Constants.texts[this.currentTextKey].location);
-		// this.excerpt = new TextExcerpt(Constants.text.indigenousExclusion);
-		this.load.audio(Constants.keys.sounds.theMachine, Constants.sounds.theMachine.location);
+		this.load.audio(Constants.keys.sounds.theMachine1, Constants.sounds.theMachine1.location);
 	}
 
 	create() {
@@ -24,7 +23,7 @@ export class TextScene extends Phaser.Scene {
 			enter: 'ENTER',
 		});
 
-		this.backgroundMusic = this.sound.add(Constants.keys.sounds.theMachine, Constants.sounds.theMachine.config);
+		this.backgroundMusic = this.sound.add(Constants.keys.sounds.theMachine1, Constants.sounds.theMachine1.config);
 		this.backgroundMusic.play();
 	}
 

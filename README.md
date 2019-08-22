@@ -57,13 +57,13 @@ This can be boiled down to simply level, text, level, text, where each text is e
 - [x] There is a screen that shows text
 - [x] The first group of text is shown after the first level
 - [x] List of enemies and their paths is set for first level
-- [ ] Enemies fire bullets at players at certain intervals
+- [x] Enemies fire bullets at players at certain intervals
 - [ ] Allow players to connect and move together
 	- [ ] A single key for each flips connect/disconnect mode
 	- [ ] A separate sprite with a lit side shows up
 	- [ ] A separate sprite and connection animation plays/shows up
 - [x] Music plays while the screen shows the text
-	- [ ] Create three separate pieces of music from the main machine rolls forward piece
+	- [x] Create three separate pieces of music from the main machine rolls forward piece
 	- [ ] Associate one of the three with the text that is shown at each iteration
 - [ ] There is a very short tutorial level that shows how to play
 	- [ ] Explains movement via text
