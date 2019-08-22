@@ -104,7 +104,7 @@ export class SpaceScene extends Phaser.Scene {
 		const enemyPosition = enemy.getPosition();
 		const playerToShoot = this._getPlayerToShoot(enemyPosition);
 
-		if (enemy.canFire() && playerToShoot) {
+		if (enemy.canFire() && this.level.getAliens().contains(enemy) && playerToShoot) {
 			const sprite = this.physics.add.sprite(enemyPosition.x, enemyPosition.y, Constants.keys.sprites.enemyBullet);
 			this.bullets.addBullet(sprite, enemy.spriteKey(), playerToShoot.getPosition());
 			enemy.fireBullet();

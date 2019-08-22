@@ -31,6 +31,10 @@ export class EntityCollection {
 		return this.entities[index];
 	}
 
+	contains(entity) {
+		return this.entities.indexOf(entity) !== -1;
+	}
+
 	remove(entity) {
 		const index = this.entities.indexOf(entity);
 		if (index > -1) {

@@ -11,11 +11,12 @@ export class LevelEditorScene extends Phaser.Scene {
 	init(data) {}
 
 	preload() {
-		const { enemyOne, playAndPause, point } = Constants.sprites;
+		const { enemyOne, playAndPause, point, gameTrack } = Constants.sprites;
 
 		this.load.spritesheet(enemyOne.key, enemyOne.location, enemyOne.config);
 		this.load.spritesheet(playAndPause.key, playAndPause.location, playAndPause.config);
 		this.load.image(point.key, point.location, point.config);
+		this.load.image(gameTrack.key, gameTrack.location, gameTrack.config);
 
 		this.keys = this.input.keyboard.addKeys({
 			toggleMenu: 'M',
@@ -26,10 +27,12 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	create() {
+		const { centerOfScreen } = Constants.coordinates;
+		this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
+
 		const menuNode = this.add.dom(200, 200, 'div', '');
 		this.menu = new PathMenu(menuNode);
 
-		const { centerOfScreen } = Constants.coordinates;
 		const colors = ["0x00ff00", "0x008800", "0x880000", "0xff0000"];
 		const points = [];
 		points.push(this._createPoint(centerOfScreen, colors[0]));
