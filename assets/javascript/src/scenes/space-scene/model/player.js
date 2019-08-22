@@ -3,7 +3,7 @@ import { Constants } from '../../../const/index.js';
 import * as coordinateHelpers from '../../../helpers/coordinates.js';
 
 export class Player extends Entity {
-	static MAX_VELOCITY = Math.PI / 64;
+	static MAX_VELOCITY = Math.PI / 128;
 	static MAX_COOLDOWN = 15;
 	static ACCELERATION = Math.PI / 1024;
 	static MOVEMENT_COOLDOWN = 20;

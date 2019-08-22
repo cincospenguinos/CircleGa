@@ -28,7 +28,13 @@ And then
 
 This can be boiled down to simply level, text, level, text, where each text is either a story beat or a citation.
 
-### TODO
+## TODO
+
+### Art and Animation
+
+### Story
+
+### Level design
 
 - [x] Setup dev environment
 - [x] Get player on screen
@@ -69,7 +75,7 @@ This can be boiled down to simply level, text, level, text, where each text is e
 	- [ ] Explains movement via text
 	- [ ] Explains firing via text
 	- [ ] Tells you to fire at the natives via text
-- [ ] Throw the texts we're going to use into the data directory instead of loading them all in memory
+- [x] Throw the texts we're going to use into the data directory instead of loading them all in memory
 - [ ] Add multiple levels
 - [ ] Change the text of the menu screen
 - [ ] Combination of players spritesheet
