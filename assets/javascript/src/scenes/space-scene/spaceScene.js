@@ -94,15 +94,34 @@ export class SpaceScene extends Phaser.Scene {
 				const task = this.tutorial.getCurrentTask();
 
 				this.timeToHideTask = false;
+				this.currentTaskKey = task.key;
+
 				this.time.addEvent({
-					delay: 5000,
-					callback: () => { this.timeToHideTask = true; },
+					delay: task.timeToShow,
+					callback: () => {
+						this.timeToHideTask = true;
+
+						if (task.key === 'lastThing') {
+							this.tutorial.updateSubTask('lastThing', true);
+							this.tutorial.completeTask(task.key);
+						}
+
+						this._completeTask(task.key);
+					},
 					loop: false,
 				});
-				this.currentTaskKey = task.key;
+
 				this._showTask(task.text);
 				this.tutorial.showTask();
 			}
+
+			this.time.addEvent({
+				delay: 500,
+				callback: () => {
+					this._completeTask(this.currentTaskKey);
+				},
+				loop: true,
+			});
 		} else {
 			if (this.level.isComplete()) {
 				console.log('Level complete!');
@@ -154,19 +173,17 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_handleInput(playerOne, playerTwo) {
-		let playerOneHasMoved = false;
-		let playerTwoHasMoved = false || this.playerCount === 1;
-
 		if (playerOne) {
 			if (playerOne.canMove()) {
 				if (this.keys.p1Right.isDown) {
 					playerOne.accelerate(1);
-					playerOneHasMoved = true;
+					if (this.tutorial) { this.tutorial.updateSubTask('playerOneHasMoved', true); }
 				} else if (this.keys.p1Left.isDown) {
 					playerOne.accelerate(-1);
-					playerOneHasMoved = true;
+					if (this.tutorial) { this.tutorial.updateSubTask('playerOneHasMoved', true); }
 				} else if (this.keys.p1Slow.isDown) {
 					playerOne.slow();
+					if (this.tutorial) { this.tutorial.updateSubTask('playerOneHasSlowed', true); }
 				}
 			}
 
@@ -179,25 +196,18 @@ export class SpaceScene extends Phaser.Scene {
 			if (playerTwo.canMove()) {
 				if (this.keys.p2Right.isDown) {
 					playerTwo.accelerate(1);
-					playerTwoHasMoved = true;
+					if (this.tutorial) { this.tutorial.updateSubTask('playerTwoHasMoved', true); }
 				} else if (this.keys.p2Left.isDown) {
 					playerTwo.accelerate(-1);
-					playerTwoHasMoved = true;
+					if (this.tutorial) { this.tutorial.updateSubTask('playerTwoHasMoved', true); }
 				} else if (this.keys.p2Slow.isDown) {
 					playerTwo.slow();
+					if (this.tutorial) { this.tutorial.updateSubTask('playerTwoHasSlowed', true); }
 				}
 			}
 
 			if (this.keys.p2Fire.isDown) {
 				this._fireBullet(playerTwo, Constants.sprites.playerTwo.key, Constants.sprites.blueBullet.key);
-			}
-		}
-
-		if (this.tutorial && playerOneHasMoved && playerTwoHasMoved) {
-			this.tutorial.completeTask('movement');
-
-			if (this.currentTaskKey === 'movement') {
-				this._hideTask();
 			}
 		}
 	}
@@ -207,9 +217,14 @@ export class SpaceScene extends Phaser.Scene {
 		this.currentText.x -= this.currentText.width / 2;
 	}
 
-	_hideTask() {
-		if (this.timeToHideTask && this.tutorial.currentTaskComplete()) {
+	_completeTask(key) {
+		if (this.timeToHideTask && !this.tutorial.hasFinished() && this.tutorial.currentTaskComplete(key)) {
 			this.currentText.destroy();
+			this.tutorial.nextTask();
+
+			if (this.tutorial.hasFinished()) {
+				this.finishedTutorial = true;
+			}
 		}
 	}
 
