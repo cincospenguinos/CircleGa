@@ -53,10 +53,6 @@ This can be boiled down to simply level, text, level, text, where each text is e
 
 ### Level design
 
-- [ ] There is a very short tutorial level that shows how to play
-	- [ ] Explains movement via text
-	- [ ] Explains firing via text
-	- [ ] Tells you to fire at the natives via text
 - [ ] Explore level design space created by the rules of the game
 - [ ] Change the text of the menu screen to whatever it is you decide, Andre
 
@@ -112,6 +108,10 @@ Just to keep my spirits up, I'm putting everything we've finished here.
 - [x] The first group of text is shown after the first level
 - [x] List of enemies and their paths is set for first level
 - [x] Enemies fire bullets at players at certain intervals
+- [x] There is a very short tutorial level that shows how to play
+	- [x] Explains movement via text
+	- [x] Explains firing via text
+	- [x] Tells you to fire at the natives via text
 
 ## Story
 
