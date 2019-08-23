@@ -19,6 +19,12 @@ export class Tutorial {
 			timeToShow: 3000,
 		},
 		{
+			key: 'fire',
+			singlePlayerText: 'Press up arrow to fire',
+			twoPlayerText: 'Press up arrow to fire (W if you are blue)',
+			timeToShow: 3000,
+		},
+		{
 			key: 'lastThing',
 			singlePlayerText: "Don't let them escape",
 			twoPlayerText: "Don't let them escape",

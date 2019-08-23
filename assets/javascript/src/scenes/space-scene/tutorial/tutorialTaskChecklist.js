@@ -8,12 +8,15 @@ export class TutorialTaskChecklist {
 			playerTwoHasMoved: false || playerCount === 1,
 			playerOneHasSlowed: false,
 			playerTwoHasSlowed: false || playerCount === 1,
+			playerOneHasFired: false,
+			playerTwoHasFired: false || playerCount === 1,
 			lastThing: false,
 		};
 
 		this.tasks = {
 			movement: ['playerOneHasMoved', 'playerTwoHasMoved'],
 			slowDown: ['playerOneHasSlowed', 'playerTwoHasSlowed'],
+			fire: ['playerOneHasFired', 'playerTwoHasFired'],
 			lastThing: ['lastThing'],
 		};
 	}

@@ -223,12 +223,18 @@ export class SpaceScene extends Phaser.Scene {
 			this.tutorial.nextTask();
 
 			if (this.tutorial.hasFinished()) {
+				this.time.destroy();
 				this.finishedTutorial = true;
 			}
 		}
 	}
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
+		if (this.tutorial) {
+			if (playerSpriteKey === Constants.keys.sprites.playerOne) { this.tutorial.updateSubTask('playerOneHasFired', true); }
+			if (playerSpriteKey === Constants.keys.sprites.playerTwo) { this.tutorial.updateSubTask('playerTwoHasFired', true); }
+		}
+
 		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
 			const bulletPosition = player.fireBullet();
 			const sprite = this.physics.add.sprite(bulletPosition.x, bulletPosition.y, bulletSpriteKey);
