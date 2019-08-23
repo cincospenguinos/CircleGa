@@ -8,6 +8,7 @@ import { Bullets } from './model/bullets.js';
 import { EntityCollection } from './services/entityCollection.js';
 import { CollisionValidation } from './services/collisionValidation.js';
 import { Level } from './model/level.js';
+import { Tutorial } from './tutorial/tutorial.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -24,6 +25,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.players = new EntityCollection();
 		this.bullets = new Bullets();
 		this.killCount = 0;
+		this.finishedTutorial = gameState.hasFinishedTutorial();
 
 		this.collisionValidation = new CollisionValidation(this.players, this.bullets);
 	}
@@ -75,27 +77,47 @@ export class SpaceScene extends Phaser.Scene {
 			this._createPlayer(playerTwoPos, sprites.playerTwo);
 		}
 
-		this.level = new Level(this.cache.json.get(Constants.keys.levels.levelOne));
+		this.level = new Level(this.cache.json.get(this.currentLevel.key));
+		if (!this.finishedTutorial) {
+			this.tutorial = new Tutorial({
+				playerCount: this.playerCount,
+			});
+		}
 	}
 
 	update() {
-		if (this.level.isComplete()) {
-			console.log('Level complete!');
-			GameState.getInstance().levelComplete();
-			this.scene.start(Constants.scenes.textScene);
-			return;
-		}
-
-		if (!this.level.aliensFleeing()) {
-			this.level.createAliens(this);
-		}
-
 		const playerOne = this.players.get(Constants.sprites.playerOne.key);
 		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
+		if (!this.finishedTutorial) {
+			if (!this.tutorial.taskShown()) {
+				const task = this.tutorial.getCurrentTask();
+
+				this.timeToHideTask = false;
+				this.time.addEvent({
+					delay: 5000,
+					callback: () => { this.timeToHideTask = true; },
+					loop: false,
+				});
+				this.currentTaskKey = task.key;
+				this._showTask(task.text);
+				this.tutorial.showTask();
+			}
+		} else {
+			if (this.level.isComplete()) {
+				console.log('Level complete!');
+				GameState.getInstance().levelComplete();
+				this.scene.start(Constants.scenes.textScene);
+				return;
+			}
+
+			if (!this.level.aliensFleeing()) {
+				this.level.createAliens(this);
+			}
+		}
+
 		this._handleInput(playerOne, playerTwo);
 		this.collisionValidation.handleCollisions(this.level.getAliens());
-
 		this.players.update();
 		this.bullets.update();
 	}
@@ -132,12 +154,17 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_handleInput(playerOne, playerTwo) {
+		let playerOneHasMoved = false;
+		let playerTwoHasMoved = false || this.playerCount === 1;
+
 		if (playerOne) {
 			if (playerOne.canMove()) {
 				if (this.keys.p1Right.isDown) {
 					playerOne.accelerate(1);
+					playerOneHasMoved = true;
 				} else if (this.keys.p1Left.isDown) {
 					playerOne.accelerate(-1);
+					playerOneHasMoved = true;
 				} else if (this.keys.p1Slow.isDown) {
 					playerOne.slow();
 				}
@@ -152,8 +179,10 @@ export class SpaceScene extends Phaser.Scene {
 			if (playerTwo.canMove()) {
 				if (this.keys.p2Right.isDown) {
 					playerTwo.accelerate(1);
+					playerTwoHasMoved = true;
 				} else if (this.keys.p2Left.isDown) {
 					playerTwo.accelerate(-1);
+					playerTwoHasMoved = true;
 				} else if (this.keys.p2Slow.isDown) {
 					playerTwo.slow();
 				}
@@ -162,6 +191,25 @@ export class SpaceScene extends Phaser.Scene {
 			if (this.keys.p2Fire.isDown) {
 				this._fireBullet(playerTwo, Constants.sprites.playerTwo.key, Constants.sprites.blueBullet.key);
 			}
+		}
+
+		if (this.tutorial && playerOneHasMoved && playerTwoHasMoved) {
+			this.tutorial.completeTask('movement');
+
+			if (this.currentTaskKey === 'movement') {
+				this._hideTask();
+			}
+		}
+	}
+
+	_showTask(text) {
+		this.currentText = this.add.text(Constants.coordinates.centerOfScreen.x, Constants.coordinates.centerOfScreen.y, text);
+		this.currentText.x -= this.currentText.width / 2;
+	}
+
+	_hideTask() {
+		if (this.timeToHideTask && this.tutorial.currentTaskComplete()) {
+			this.currentText.destroy();
 		}
 	}
 

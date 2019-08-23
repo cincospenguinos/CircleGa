@@ -11,7 +11,7 @@ export class Level {
 		this.alientCount = 0;
 		this.hasStarted = false;
 		this.alienTweens = null;
-		this.enemies = null;
+		this.enemies = new EntityCollection();
 	}
 
 	aliensFleeing() {

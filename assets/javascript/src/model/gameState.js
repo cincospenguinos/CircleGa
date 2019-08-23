@@ -1,16 +1,19 @@
 const CURRENT_LEVEL = 'current_level';
 const CURRENT_TEXT = 'current_text';
+const FINISHED_TUTORIAL = false;
 
 export class GameState {
 	constructor(opts) {
 		this.currentLevel = opts.currentLevel;
 		this.currentText = opts.currentText;
+		this.finishedTutorial = opts.finishedTutorial;
 	}
 
 	static getInstance() {
 		return new GameState({
 			currentLevel: parseInt(localStorage.getItem(CURRENT_LEVEL)),
 			currentText: parseInt(localStorage.getItem(CURRENT_TEXT)),
+			finishedTutorial: (localStorage.getItem(FINISHED_TUTORIAL) == 'true'),
 		});
 	}
 
@@ -18,6 +21,7 @@ export class GameState {
 		new GameState({
 			currentLevel: 1,
 			currentText: 0,
+			finishedTutorial: false,
 		})._save();
 	}
 
@@ -31,6 +35,11 @@ export class GameState {
 		this._save();
 	}
 
+	finishedTutorial() {
+		this.finishedTutorial = true;
+		this._save();
+	}
+
 	getCurrentLevelIndex() {
 		return this.currentLevel - 1;
 	}
@@ -39,8 +48,13 @@ export class GameState {
 		return this.currentText;
 	}
 
+	hasFinishedTutorial() {
+		return this.finishedTutorial;
+	}
+
 	_save() {
 		localStorage.setItem(CURRENT_LEVEL, this.currentLevel);
 		localStorage.setItem(CURRENT_TEXT, this.currentText);
+		localStorage.setItem(FINISHED_TUTORIAL, this.finishedTutorial);
 	}
 }
