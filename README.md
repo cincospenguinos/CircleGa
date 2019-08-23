@@ -63,6 +63,8 @@ This can be boiled down to simply level, text, level, text, where each text is e
 	- [ ] A single key for each flips connect/disconnect mode
 	- [ ] A separate sprite with a lit side shows up
 	- [ ] A separate sprite and connection animation plays/shows up
+- [ ] Fix how aliens come in
+	* They should not sit in the center until the moment they are moving--explore using a preload function on the tween or something
 
 ### Sound
 
