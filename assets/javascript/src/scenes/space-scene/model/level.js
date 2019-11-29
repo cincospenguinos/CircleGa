@@ -39,8 +39,8 @@ export class Level {
 		const centerOfScreen = Constants.coordinates.centerOfScreen;
 
 		for (let i = 0; i < amount; i++) {
-			const sprite = scene.physics.add.sprite(
-				centerOfScreen.x, centerOfScreen.y, Constants.sprites.enemyOne.key);
+			const sprite = scene.physics.add.sprite(centerOfScreen.x, centerOfScreen.y, Constants.sprites.enemyOne.key);
+			sprite.setVisible(false);
 			const enemy = new Enemy(sprite);
 
 			const tween = scene.tweens.add({
@@ -53,6 +53,10 @@ export class Level {
 				ease: "Linear",
 				callbackScope: this,
 				onUpdate: function(tween, target) {
+					if (!sprite.visible) {
+						sprite.setVisible(true);
+					}
+
 					const position = bezier.getPoint(target.val);
 
 					if (this.isAtFiringPoint({ x: position.x, y: position.y })) {

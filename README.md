@@ -55,7 +55,7 @@ This can be boiled down to simply level, text, level, text, where each text is e
 
 - [ ] Explore level design space created by the rules of the game
 - [ ] Change the text of the menu screen to whatever it is you decide, Andre
-
+- [ ] Create a set of levels that teach the level design space and how to properly play the game
 
 ### Code
 
@@ -63,8 +63,6 @@ This can be boiled down to simply level, text, level, text, where each text is e
 	- [ ] A single key for each flips connect/disconnect mode
 	- [ ] A separate sprite with a lit side shows up
 	- [ ] A separate sprite and connection animation plays/shows up
-- [ ] Fix how aliens come in
-	* They should not sit in the center until the moment they are moving--explore using a preload function on the tween or something
 
 ### Sound
 
@@ -74,11 +72,11 @@ This can be boiled down to simply level, text, level, text, where each text is e
 - [ ] Sound effect for alien explosion (could just be the same as player)
 - [ ] Sound effect for crashing into the other player (this helps make crashing appear as a negative consequence)
 
-
 ### Finished
 
 Just to keep my spirits up, I'm putting everything we've finished here.
 
+- [x] Fix how aliens come in
 - [x] Music plays while the screen shows the text
 	- [x] Create three separate pieces of music from the main machine rolls forward piece
 - [x] Throw the texts we're going to use into the data directory instead of loading them all in memory
@@ -117,11 +115,11 @@ Just to keep my spirits up, I'm putting everything we've finished here.
 
 ## Story
 
-In a far and distant galaxy, an empire is growing. It holds its home star as its symbol, the representation of their dying god.
+In a distant place in space, you control a drone dedicated to subjugation and eradication of other persons. Your drone is owned by a large trading company seeking
+Uranium, and the guy who owns the company just happened to find some on a planet on the outskirts of a star system. You are ordered to go and destroy them.
 
-You play as a star commander, ordered by your distant Lord to eradicate an alien race. You are promised a piece of land in exchange for your services.
-
-The game opens with a briefing, and then the opening level. Each level consists of a set of enemies to fight, and an intermittent screen that is either a report from your commanding lord, or an excerpt from an old text from a lost world.
+This isn't explicitly explained to you, by the way. This is explained through opportunities to discuss with the mercenary leader. I haven't decided to what extent
+the game will include a story here or if I'll build it into a bigger thing in something like Godot.
 
 ### Why this story?
 

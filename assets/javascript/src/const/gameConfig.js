@@ -7,4 +7,5 @@ export const DIMENSIONS = {
 
 export const CONFIG = {
 	runLevelEditor: false,
+	debugPhysics: false,
 };

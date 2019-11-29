@@ -17,7 +17,7 @@ const config = {
     	default: 'arcade',
     	arcade: {
     		gravity: {},
-    		debug: true,
+    		debug: Constants.config.debugPhysics,
     	},
     },
     dom: {
