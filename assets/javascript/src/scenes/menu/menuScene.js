@@ -23,6 +23,8 @@ export class MenuScene extends Phaser.Scene {
 		this.load.image(Constants.keys.sprites.mainMenu, menuSprite.location);
 
 		this.load.audio(Constants.keys.sounds.mainMenu, Constants.sounds.mainMenu.location);
+		this.load.audio(Constants.keys.sounds.switchOptions, Constants.sounds.switchOptions.location);
+		this.load.audio(Constants.keys.sounds.acceptOption, Constants.sounds.acceptOption.location);
 
 		this.keys = this.input.keyboard.addKeys({
 			up: 'up',
@@ -38,6 +40,9 @@ export class MenuScene extends Phaser.Scene {
 		this.backgroundMusic = this.sound.add(Constants.keys.sounds.mainMenu, Constants.sounds.mainMenu.config);
 		this.backgroundMusic.play();
 
+		this.switchOptionSound = this.sound.add(Constants.keys.sounds.switchOptions, Constants.sounds.switchOptions.config);
+		this.acceptOptionSound = this.sound.add(Constants.keys.sounds.acceptOption, Constants.sounds.acceptOption.config);
+
 		this.graphics = this.add.graphics();
 	}
 
@@ -46,10 +51,13 @@ export class MenuScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.up)) {
 			this._toggleSelection();
+			this.switchOptionSound.play();
 		} else if (Phaser.Input.Keyboard.JustDown(this.keys.down)) {
 			this._toggleSelection();
+			this.switchOptionSound.play();
 		} else if (Phaser.Input.Keyboard.JustDown(this.keys.select)) {
 			this.makeSelection();
+			this.acceptOptionSound.play();
 		}
 	}
 
@@ -57,7 +65,9 @@ export class MenuScene extends Phaser.Scene {
 		const players = this.selection.current === 'onePlayer' ? 1 : 2;
 		this.backgroundMusic.stop();
 		GameState.init();
-		this.scene.start(Constants.scenes.spaceScene, { players });
+
+		setTimeout(() => this.scene.start(Constants.scenes.spaceScene, { players }), 500);
+		this.scene.pause();
 	}
 
 	drawSelection() {

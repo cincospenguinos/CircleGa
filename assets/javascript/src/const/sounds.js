@@ -44,27 +44,29 @@ export const SOUNDS = {
 		},
 	},
 	switchOptions: {
-		location: `${soundsDir}/`,
+		location: `${soundsDir}/switchOptions.mp3`,
 		config: {
 			loop: false,
+			volume: 0.1,
 		},
 		meta: {
 			author: 'pauliuw',
-			license: 'n/a',
+			license: 'Public Domain CC0',
 			url: 'https://opengameart.org/content/gun-reload-lock-or-click-sound',
-			notes: '',
+			notes: 'Used to as the toggle sound in the main menu. Thank you, pauliuw!',
 		},
 	},
-	otherSwitchOptions: {
-		location: `${soundsDir}/`,
+	acceptOption: {
+		location: `${soundsDir}/selectOption.mp3`,
 		config: {
 			loop: false,
+			volume: 0.1,
 		},
 		meta: {
 			author: 'Arthur',
 			license: 'Attribution-ShareAlike 3.0 Unported',
 			url: 'https://opengameart.org/content/sci-fi-shwop-1',
-			notes: 'Do not forget to include a link to the license',
+			notes: 'Thanks, Arthur! See https://creativecommons.org/licenses/by-sa/3.0/legalcode',
 		},
 	}
 };
