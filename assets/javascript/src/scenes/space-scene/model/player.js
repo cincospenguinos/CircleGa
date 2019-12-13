@@ -9,13 +9,11 @@ export class Player extends Entity {
 	static MOVEMENT_COOLDOWN = 20;
 
 	constructor(img, opts) {
-		super(opts);
+		super({ img, ...opts });
 		this.direction = 0;
 		this.velocity = 0;
 		this.fireCooldown = 0;
 		this.moveCooldown = 0;
-
-		this.setImg(img);
 	}
 
 	accelerate(direction) {

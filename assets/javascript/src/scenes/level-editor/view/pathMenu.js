@@ -58,5 +58,6 @@ export class PathMenu {
 		this.node.getChildByProperty('id', 'duration').value = opts.duration || 2000;
 		this.node.getChildByProperty('id', 'amount').value = opts.amount || 1;
 		this.node.getChildByProperty('id', 'delay').value = opts.delay || 300;
+		this.node.visible = false;
 	}
 }

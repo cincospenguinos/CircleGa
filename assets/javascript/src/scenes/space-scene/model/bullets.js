@@ -4,13 +4,11 @@ import * as coordinateHelpers from '../../../helpers/coordinates.js';
 
 export class Bullet extends Entity {
 	constructor(img, opts = {}) {
-		super(opts);
+		super({ img, ...opts });
 
 		this.firingOrigin = opts.firingOrigin;
 		this.xVel = opts.xVel;
 		this.yVel = opts.yVel;
-
-		this.setImg(img);
 	}
 
 	update() {

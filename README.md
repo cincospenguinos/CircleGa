@@ -30,7 +30,8 @@ This can be boiled down to simply level, text, level, text, where each text is e
 
 ## TODO
 
-- [ ] Create combined sprite of both players
+- [ ] Make the ring larger--covering almost the whole screen
+	* It's hard to maneuver with too little space, and I'd like to explore having the ring be bigger
 
 ### Art and Animation
 

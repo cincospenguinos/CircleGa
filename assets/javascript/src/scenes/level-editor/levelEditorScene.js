@@ -1,7 +1,11 @@
 import { Constants } from '../../const/index.js';
-import { Bezier } from './model/bezier.js';
+import { EnemyPath } from './model/enemyPath.js';
 import { PathMenu } from './view/pathMenu.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
+
+// TODO: Handle a firing point
+// TODO: Add a red star
+// TODO: Add a blue star
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
@@ -22,7 +26,6 @@ export class LevelEditorScene extends Phaser.Scene {
 			toggleMenu: 'M',
 			update: 'U',
 			commit: 'enter',
-			setFiringPoint: 'F',
 		});
 	}
 
@@ -32,28 +35,7 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		const menuNode = this.add.dom(200, 200, 'div', '');
 		this.menu = new PathMenu(menuNode);
-
-		const colors = ["0x00ff00", "0x008800", "0x880000", "0xff0000"];
-		const points = [];
-		points.push(this._createPoint(centerOfScreen, colors[0]));
-
-		for (let i = 1; i < 4; i++) {
-			const position = { x: 100 * (i + 1), y: 100 * (i + 1) };
-			const point = this._createPoint(position, colors[i]);
-			points.push(point);
-		}
-
-		this.firingPoint = null;
-
-		this.input.on('pointerdown', (ptr) => {
-			if (this.keys.setFiringPoint.isDown) {
-				this.firingPoint = { x: ptr.x, y: ptr.y };
-				console.log(`(${ptr.x}, ${ptr.y})`);
-			}
-		});
-
-		this.bezier = new Bezier(this.input, this.add.graphics(), { points });
-		this.bezier.draw();
+		this.enemyPath = new EnemyPath(this);
 
     this.run();
 	}
@@ -68,18 +50,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.commit)) {
-			const json = JSON.stringify({
-				amount: parseInt(this.menu.getAmount()),
-				duration: parseInt(this.menu.getDuration()),
-				delay: parseInt(this.menu.getDelay()),
-				points: this.bezier.getPoints(),
-				firingPoint: this.firingPoint,
-			});
-
-			if (!this.firingPoint) {
-				console.warn('No firing point was set for this formation');
-			}
-			console.log(json);
+			this.enemyPath.commitCurrentSet();
 		}
 	}
 
@@ -95,6 +66,9 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		for (let i = 0; i < amount; i++) {
 			const sprite = this.physics.add.sprite(-50, -50, Constants.sprites.enemyOne.key);
+			sprite.setScale(Constants.dimensions.scale.sprite);
+			sprite.setScale(0.75);
+
 			this.tweens.add({
 				targets: { val: 0 },
         val: 1,
@@ -105,11 +79,7 @@ export class LevelEditorScene extends Phaser.Scene {
         ease: "Linear",
         callbackScope: this,
         onUpdate: function(tween, target) {
-          const position = this.bezier.getTweenPoint(target.val);
-
-          if (scene.firingPoint && distanceBetween({ x: position.x, y: position.y, type: game }, scene.firingPoint) <= 5) {
-          	console.log('pew!'); // TODO: Fire the bullet here!
-          }
+          const position = this.enemyPath.bezier.getTweenPoint(target.val);
 
           const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, position.x, position.y) + Math.PI / 2;
           sprite.x = position.x;

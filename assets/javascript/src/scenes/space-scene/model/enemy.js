@@ -4,9 +4,8 @@ import { distanceBetween, parameterizedDistance } from '../../../helpers/coordin
 
 export class Enemy extends Entity {
 	constructor(img, opts) {
-		super(opts);
+		super({ img, ...opts });
 
-		this.setImg(img);
 		this.shotsFired = 0;
 	}
 

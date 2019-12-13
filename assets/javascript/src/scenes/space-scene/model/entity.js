@@ -4,6 +4,10 @@ export class Entity {
 	constructor(opts = {}) {
 		this.img = opts.img || null;
 		this.coordinates = opts.coordinates || null;
+
+		if (this.img) {
+			this.img.setScale(Constants.dimensions.scale.sprite); // TODO: This eventualy should not be here, since we want things to match how we want them
+		}
 	}
 
 	getPosition() {
