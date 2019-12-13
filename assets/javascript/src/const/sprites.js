@@ -62,7 +62,7 @@ export const SPRITES = {
 		config: {
 			frameWidth: 1080,
 			frameHeight: 920,
-		}
+		},
 	},
 	playAndPause: {
 		location: `${spriteDir}/playAndPause.png`,
@@ -76,6 +76,20 @@ export const SPRITES = {
 		config: {
 			frameWidth: 32,
 			frameHeight: 32,
-		}
-	}
+		},
+	},
+	redStar: {
+		location: `${spriteDir}/redStar.png`,
+		config: {
+			frameWidth: 32,
+			frameHeight: 32,
+		},
+	},
+	blueStar: {
+		location: `${spriteDir}/blueStar.png`,
+		config: {
+			frameWidth: 32,
+			frameHeight: 32,
+		},
+	},
 };

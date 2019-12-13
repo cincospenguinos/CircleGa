@@ -10,11 +10,7 @@ export class Bezier {
 		this.showPoints = true;
 		this.input = input;
 		this.input.setDraggable(this.points);
-		this.input.on('drag', (_, point, posX, posY) => {
-			point.x = posX;
-			point.y = posY;
-			this.draw();
-		});
+		this.input.on('drag', () => this.draw());
 		this.bezierCurve = new Phaser.Curves.CubicBezier(this.points[0], this.points[1], this.points[2], this.points[3]);
 	}
 
