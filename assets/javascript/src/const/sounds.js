@@ -68,5 +68,24 @@ export const SOUNDS = {
 			url: 'https://opengameart.org/content/sci-fi-shwop-1',
 			notes: 'Thanks, Arthur! See https://creativecommons.org/licenses/by-sa/3.0/legalcode',
 		},
+	},
+	maleScream: {
+		location: `${soundsDir}/maleScream.mp3`,
+		config: {
+			loop: false,
+		},
+		meta: {
+			author: 'congusbongus',
+			license: 'Attribution-ShareAlike 3.0 Unported',
+			url: 'https://opengameart.org/content/aargh-male-screams',
+			notes: 'Cut and distorted to make this sound. Thank you, congusbongus!',
+		},
+	},
+	cryingBaby: {
+		location: `${soundsDir}/childScream.mp3`,
+		meta: {
+			url: 'https://www.youtube.com/watch?v=qS7nqwGt4-I',
+			notes: 'Chopped up and distorted to fit the other screams. This one was hard for me to make, and harder for me to include.',
+		}
 	}
 };
