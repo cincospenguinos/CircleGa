@@ -1,11 +1,10 @@
 import { Constants } from '../../const/index.js';
+import { Enemy } from '../space-scene/model/enemy.js';
 import { EnemyPath } from './model/enemyPath.js';
 import { PathMenu } from './view/pathMenu.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 
 // TODO: Handle a firing point
-// TODO: Add a red star
-// TODO: Add a blue star
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
@@ -55,7 +54,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.update)) {
-			this.run();
+			// TODO: Update properly
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.commit)) {
@@ -64,40 +63,17 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	run() {
-		if (this.sprites) {
-			this.sprites.forEach(s => s.destroy());
-			this.tweens.killAll();
-		}
-
-		this.sprites = [];
-		const amount = this.menu.getAmount();
-		let scene = this;
-
-		for (let i = 0; i < amount; i++) {
-			const sprite = this.physics.add.sprite(-50, -50, Constants.sprites.enemyOne.key);
-			sprite.setScale(Constants.dimensions.scale.sprite);
-			sprite.setScale(0.75);
-
-			this.tweens.add({
-				targets: { val: 0 },
-        val: 1,
-        duration: this.menu.getDuration(),
-        delay: i * this.menu.getDelay(),
-        yoyo: false,
-        repeat: -1,
-        ease: "Linear",
-        callbackScope: this,
-        onUpdate: function(tween, target) {
-          const position = this.enemyPath.bezier.getTweenPoint(target.val);
-
-          const angle = Phaser.Math.Angle.Between(sprite.x, sprite.y, position.x, position.y) + Math.PI / 2;
-          sprite.x = position.x;
-          sprite.y = position.y;
-          sprite.rotation = angle;
-        }
-			});
-			this.sprites.push(sprite);
-		}
+		const enemy = new Enemy({
+			scene: this,
+			x: -100,
+			y: -100,
+			key: Constants.sprites.enemyOne.key,
+			path: this.enemyPath,
+			tweenConfig: {
+				duration: this.menu.getDuration(),
+				delay: this.menu.getDelay(),
+			}
+		});
 	}
 
 	_createPoint(position, color) {
