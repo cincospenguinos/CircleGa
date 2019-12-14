@@ -17,6 +17,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		super({ key: Constants.scenes.levelEditorScene });
 
 		this.beziers = [];
+		this.tweenConfig = {};
 	}
 
 	init(data) {}
@@ -50,7 +51,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		const blueStar = this.add.sprite(700, 50, Constants.sprites.blueStar.key).setInteractive({ draggable: true });
 
 		const menuNode = this.add.dom(200, 200, 'div', '');
-		this.menu = new PathMenu(menuNode);
+		this.menu = new PathMenu(menuNode, (a, b, c) => this._updateTweenConfig(a, b, c));
 		this.bezier = new Bezier(this, { points: DEFAULT_POINTS });
 	}
 
@@ -78,6 +79,7 @@ export class LevelEditorScene extends Phaser.Scene {
 			y: centerOfScreen.y,
 			key: Constants.sprites.enemyOne.key,
 			path,
+			tweenConfig: this.tweenConfig,
 		});
 	}
 
@@ -94,5 +96,13 @@ export class LevelEditorScene extends Phaser.Scene {
 		this.bezier.disable();
 		this.beziers.push(this.bezier);
 		this.bezier = new Bezier(this, { points: nextPoints });
+	}
+
+	_updateTweenConfig(duration, amount, delay) {
+		this.tweenConfig = {
+			duration,
+			amount,
+			delay,
+		};
 	}
 }

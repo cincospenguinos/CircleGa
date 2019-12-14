@@ -7,14 +7,15 @@ export class Enemy extends Entity {
 		super(config);
 
 		this.path = config.path;
+		this.tweenConfig = config.tweenConfig || {};
 		this._executeMovement();
 	}
 
 	_executeMovement() {
 		const tweens = this._generateTweens();
 		this.currentTimeline = this.scene.tweens.timeline({
-			duration: 3000,
 			tweens,
+			...this.tweenConfig,
 			onComplete: () => {
 				this.destroy();
 			},

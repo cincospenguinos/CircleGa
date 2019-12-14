@@ -28,12 +28,14 @@ const html = `
 		<div class="item">
 			<label for="delay">Delay: <input id="delay" name="delay" type="number" class="input" /></label>
 		</div>
+		<button id='update-items'>Update</button>
 	</div>
 `;
 
 export class PathMenu {
-	constructor(domNode, opts = {}) {
+	constructor(domNode, updateCallback, opts = {}) {
 		this.node = domNode;
+		this.updateCallback = updateCallback;
 		this._createNode(opts);
 	}
 
@@ -58,6 +60,7 @@ export class PathMenu {
 		this.node.getChildByProperty('id', 'duration').value = opts.duration || 2000;
 		this.node.getChildByProperty('id', 'amount').value = opts.amount || 1;
 		this.node.getChildByProperty('id', 'delay').value = opts.delay || 300;
+		this.node.getChildByID('update-items').addEventListener('click', () => this.updateCallback(this.getDuration(), this.getAmount(), this.getDelay()));
 		this.node.visible = false;
 	}
 }
