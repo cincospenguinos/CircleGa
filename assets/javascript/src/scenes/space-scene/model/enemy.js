@@ -29,7 +29,6 @@ export class Enemy extends Entity {
 			duration: 3000,
 			tweens,
 		});
-		console.log(tweens);
 	}
 
 	_generateTweens() {

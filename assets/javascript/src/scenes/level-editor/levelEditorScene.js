@@ -1,10 +1,16 @@
 import { Constants } from '../../const/index.js';
 import { Enemy } from '../space-scene/model/enemy.js';
-import { EnemyPath } from './model/enemyPath.js';
+import { Bezier } from './model/bezier.js';
+// import { EnemyPath } from './model/enemyPath.js';
 import { PathMenu } from './view/pathMenu.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 
-// TODO: Handle a firing point
+const DEFAULT_POINTS = [
+	{ x: 100, y: 100 },
+	{ x: 100, y: 200 },
+	{ x: 100, y: 300 },
+	{ x: 100, y: 400 },
+];
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
@@ -24,8 +30,7 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		this.keys = this.input.keyboard.addKeys({
 			toggleMenu: 'M',
-			update: 'U',
-			commit: 'enter',
+			execute: 'E',
 		});
 
 		this.input.on('drag', (_, point, posX, posY) => {
@@ -43,9 +48,7 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		const menuNode = this.add.dom(200, 200, 'div', '');
 		this.menu = new PathMenu(menuNode);
-		this.enemyPath = new EnemyPath(this);
-
-    this.run();
+		this.bezier = new Bezier(this, { points: DEFAULT_POINTS });
 	}
 
 	update() {
@@ -53,37 +56,8 @@ export class LevelEditorScene extends Phaser.Scene {
 			this.menu.toggle();
 		}
 
-		if (Phaser.Input.Keyboard.JustDown(this.keys.update)) {
-			// TODO: Update properly
+		if (Phaser.Input.Keyboard.JustDown(this.keys.execute)) {
+
 		}
-
-		if (Phaser.Input.Keyboard.JustDown(this.keys.commit)) {
-			this.enemyPath.commitCurrentSet();
-			this.enemy.destroy();
-			this.run();
-		}
-	}
-
-	run() {
-		this.enemy = new Enemy({
-			scene: this,
-			x: -100,
-			y: -100,
-			key: Constants.sprites.enemyOne.key,
-			allPoints: this.enemyPath.getPaths(),
-			bezier: this.enemyPath.bezier,
-			tweenConfig: {
-				duration: this.menu.getDuration(),
-				delay: this.menu.getDelay(),
-			}
-		});
-	}
-
-	_createPoint(position, color) {
-		const point = this.add.image(position.x, position.y, Constants.sprites.point.key);
-		point.setTint(color);
-		point.setInteractive();
-
-		return point;
 	}
 }

@@ -3,14 +3,17 @@
  *
  * Manages bezier curve shennanigans.
  */
+import { Constants } from '../../../const/index.js';
 export class Bezier {
-	constructor(input, graphics, opts = {}) {
-		this.points = opts.points;
-		this.graphics = graphics;
+	constructor(scene, opts = {}) {
+		this.scene = scene;
+		this.graphics = this.scene.add.graphics();
 		this.showPoints = true;
-		this.input = input;
-		this.input.setDraggable(this.points);
-		this.input.on('drag', () => this.draw());
+
+		this.points = this._gameObjsFrom(opts.points);
+
+		this.scene.input.setDraggable(this.points);
+		this.scene.input.on('drag', () => this.draw());
 		this.bezierCurve = new Phaser.Curves.CubicBezier(this.points[0], this.points[1], this.points[2], this.points[3]);
 	}
 
@@ -45,5 +48,18 @@ export class Bezier {
 		this.points.forEach(p => p.destroy());
 		this.showPoints = false;
 		this.draw();
+	}
+
+	_gameObjsFrom(points) {
+		const colors = ['0x00ff00', '0x99ff00', '0xff9900', '0xff0000'];
+
+		return points.map((position, index) => {
+			const pos = index === 0 ? Constants.coordinates.centerOfScreen : position;
+
+			const point = this.scene.add.image(pos.x, pos.y, Constants.sprites.point.key);
+			point.setTint(colors[index]);
+			point.setInteractive();
+			return point;
+		});
 	}
 }
