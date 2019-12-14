@@ -60,22 +60,39 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.execute)) {
-			// TODO: Run the enemy
+			this._runEnemy();
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.createBezier)) {
-			const previousPoints = this.bezier.getPoints();
-			const nextPoints = DEFAULT_POINTS.map((position, index) => {
-				if (index === 0) {
-					return { x: previousPoints[3].x, y: previousPoints[3].y };
-				}
-
-				return { x: position.x, y: position.y};
-			});
-
-			this.bezier.disable();
-			this.beziers.push(this.bezier);
-			this.bezier = new Bezier(this, { points: nextPoints });
+			this._addNewBezier();
 		}
+	}
+
+	_runEnemy() {
+		const { centerOfScreen } = Constants.coordinates;
+		const path = this.beziers.concat(this.bezier);
+
+		new Enemy({
+			scene: this,
+			x: centerOfScreen.x,
+			y: centerOfScreen.y,
+			key: Constants.sprites.enemyOne.key,
+			path,
+		});
+	}
+
+	_addNewBezier() {
+		const previousPoints = this.bezier.getPoints();
+		const nextPoints = DEFAULT_POINTS.map((position, index) => {
+			if (index === 0) {
+				return { x: previousPoints[3].x, y: previousPoints[3].y };
+			}
+
+			return { x: position.x, y: position.y};
+		});
+
+		this.bezier.disable();
+		this.beziers.push(this.bezier);
+		this.bezier = new Bezier(this, { points: nextPoints });
 	}
 }

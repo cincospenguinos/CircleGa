@@ -6,33 +6,25 @@ export class Enemy extends Entity {
 	constructor(config) {
 		super(config);
 
-		this.allPoints = config.allPoints;
-		this.bezier = config.bezier;
-		this.tweenConfig = config.tweenConfig;
-
-		this._setupMovement();
+		this.path = config.path;
+		this._executeMovement();
 	}
 
-	move(tween, target) {
-		const position = this.bezier.getTweenPoint(target.val);
-		const angle = Phaser.Math.Angle.Between(this.x, this.y, position.x, position.y) + Math.PI / 2;
-
-		this.setX(position.x);
-		this.setY(position.y);
-		this.setRotation(angle);
-	}
-
-	_setupMovement() {
-		const tweens = this._generateTweens(this.allPoints);
+	_executeMovement() {
+		const tweens = this._generateTweens();
 		this.currentTimeline = this.scene.tweens.timeline({
-			loop: -1,
 			duration: 3000,
 			tweens,
+			onComplete: () => {
+				this.destroy();
+			},
 		});
 	}
 
 	_generateTweens() {
-		return this.allPoints.map((position, index) => {
+		return this.path.map((bezier, index) => {
+			const points = bezier.getPoints();
+
 			return {
 				targets: { val: 0 },
 				val: 1,
@@ -41,12 +33,19 @@ export class Enemy extends Entity {
 				callbackScope: this,
 				onStart: () => {
 					if (index === 0) {
-						const initialPosition = this.allPoints[0];
+						const initialPosition = points[0];
 						this.setX(initialPosition.x);
 						this.setY(initialPosition.y);
 					}
 				},
-				onUpdate: this.move,
+				onUpdate: (tween, target) => {
+					const position = bezier.getTweenPoint(target.val);
+					const angle = Phaser.Math.Angle.Between(this.x, this.y, position.x, position.y) + Math.PI / 2;
+
+					this.setX(position.x);
+					this.setY(position.y);
+					this.setRotation(angle);
+				},
 			}
 		});
 	}
