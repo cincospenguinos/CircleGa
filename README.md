@@ -133,3 +133,4 @@ Various pieces of enlightenment philosophy and excerpts of literature about the 
 * [Atmospheric sky sound](https://opengameart.org/content/red-eclipse-sounds)
 * [Another gun sound](https://opengameart.org/content/residue-sfx)
 * Down the line, let's use [Phoenix and Elixir](https://www.youtube.com/watch?v=I5L9_cXwBcU) for a multiplayer server
+* [Check out this thing about shaders!](https://www.dynetisgames.com/2018/12/09/shaders-phaser-3/)

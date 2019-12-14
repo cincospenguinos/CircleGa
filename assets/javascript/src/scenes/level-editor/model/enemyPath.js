@@ -14,6 +14,10 @@ export class EnemyPath {
 		throw 'Implement me!';
 	}
 
+	getPaths() {
+		return this.paths.concat([this.bezier.getPoints()]);
+	}
+
 	commitCurrentSet() {
 		const oldPoints = this.bezier.getPoints();
 		this.bezier.disable();

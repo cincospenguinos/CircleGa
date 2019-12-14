@@ -59,16 +59,19 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.commit)) {
 			this.enemyPath.commitCurrentSet();
+			this.enemy.destroy();
+			this.run();
 		}
 	}
 
 	run() {
-		const enemy = new Enemy({
+		this.enemy = new Enemy({
 			scene: this,
 			x: -100,
 			y: -100,
 			key: Constants.sprites.enemyOne.key,
-			path: this.enemyPath,
+			allPoints: this.enemyPath.getPaths(),
+			bezier: this.enemyPath.bezier,
 			tweenConfig: {
 				duration: this.menu.getDuration(),
 				delay: this.menu.getDelay(),
