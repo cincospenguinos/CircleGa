@@ -1,7 +1,6 @@
 import { Constants } from '../../const/index.js';
 import { Enemy } from '../space-scene/model/enemy.js';
 import { Bezier } from './model/bezier.js';
-// import { EnemyPath } from './model/enemyPath.js';
 import { PathMenu } from './view/pathMenu.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 
@@ -18,6 +17,10 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		this.beziers = [];
 		this.tweenConfig = {};
+		this.stars = {
+			red: [],
+			blue: [],
+		};
 	}
 
 	init(data) {}
@@ -35,6 +38,8 @@ export class LevelEditorScene extends Phaser.Scene {
 			toggleMenu: 'M',
 			execute: 'E',
 			createBezier: 'SPACE',
+			redStar: 'R',
+			blueStar: 'B',
 		});
 
 		this.input.on('drag', (_, point, posX, posY) => {
@@ -46,9 +51,6 @@ export class LevelEditorScene extends Phaser.Scene {
 	create() {
 		const { centerOfScreen } = Constants.coordinates;
 		this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
-
-		const redStar = this.add.sprite(500, 50, Constants.sprites.redStar.key).setInteractive({ draggable: true });
-		const blueStar = this.add.sprite(700, 50, Constants.sprites.blueStar.key).setInteractive({ draggable: true });
 
 		const menuNode = this.add.dom(200, 200, 'div', '');
 		this.menu = new PathMenu(menuNode, (a, b, c) => this._updateTweenConfig(a, b, c));
@@ -66,6 +68,14 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.createBezier)) {
 			this._addNewBezier();
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.redStar)) {
+			this._addStar(Constants.sprites.redStar.key, this.stars.red);
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.blueStar)) {
+			this._addStar(Constants.sprites.blueStar.key, this.stars.blue);
 		}
 	}
 
@@ -104,5 +114,10 @@ export class LevelEditorScene extends Phaser.Scene {
 			amount,
 			delay,
 		};
+	}
+
+	_addStar(spriteKey, set) {
+		const star = this.add.sprite(this.input.x, this.input.y, spriteKey).setInteractive({ draggable: true });
+		set.push(star);
 	}
 }
