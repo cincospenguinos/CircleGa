@@ -6,7 +6,7 @@ import { PathMenu } from './view/pathMenu.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 
 const DEFAULT_POINTS = [
-	{ x: 100, y: 100 },
+	Constants.coordinates.centerOfScreen,
 	{ x: 100, y: 200 },
 	{ x: 100, y: 300 },
 	{ x: 100, y: 400 },
@@ -15,6 +15,8 @@ const DEFAULT_POINTS = [
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
 		super({ key: Constants.scenes.levelEditorScene });
+
+		this.beziers = [];
 	}
 
 	init(data) {}
@@ -31,6 +33,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		this.keys = this.input.keyboard.addKeys({
 			toggleMenu: 'M',
 			execute: 'E',
+			createBezier: 'SPACE',
 		});
 
 		this.input.on('drag', (_, point, posX, posY) => {
@@ -57,7 +60,22 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.execute)) {
+			// TODO: Run the enemy
+		}
 
+		if (Phaser.Input.Keyboard.JustDown(this.keys.createBezier)) {
+			const previousPoints = this.bezier.getPoints();
+			const nextPoints = DEFAULT_POINTS.map((position, index) => {
+				if (index === 0) {
+					return { x: previousPoints[3].x, y: previousPoints[3].y };
+				}
+
+				return { x: position.x, y: position.y};
+			});
+
+			this.bezier.disable();
+			this.beziers.push(this.bezier);
+			this.bezier = new Bezier(this, { points: nextPoints });
 		}
 	}
 }

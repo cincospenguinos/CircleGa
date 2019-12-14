@@ -134,3 +134,17 @@ Various pieces of enlightenment philosophy and excerpts of literature about the 
 * [Another gun sound](https://opengameart.org/content/residue-sfx)
 * Down the line, let's use [Phoenix and Elixir](https://www.youtube.com/watch?v=I5L9_cXwBcU) for a multiplayer server
 * [Check out this thing about shaders!](https://www.dynetisgames.com/2018/12/09/shaders-phaser-3/)
+
+## Ideas
+
+* The ending
+	* When not killing anyone, have the end scene of the natives sitting and eating in camps with wagons--living, but not happy
+	* When killing one or more, show the number of graves as a reflection of the number of men, women, and children
+* The commissioner breaks the fourth wall and explains that the only way to win is to not play
+* Two players and one leaves
+	* Does not disrupt balance--the single player is now doing double duty
+	* BALANCE FOR TWO PLAYERS--that's important, homie
+
+
+> It's the Fight Club problem! Let's avoid the Fight Club problem!
+>     -- Stefano

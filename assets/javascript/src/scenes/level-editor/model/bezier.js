@@ -54,9 +54,7 @@ export class Bezier {
 		const colors = ['0x00ff00', '0x99ff00', '0xff9900', '0xff0000'];
 
 		return points.map((position, index) => {
-			const pos = index === 0 ? Constants.coordinates.centerOfScreen : position;
-
-			const point = this.scene.add.image(pos.x, pos.y, Constants.sprites.point.key);
+			const point = this.scene.add.image(position.x, position.y, Constants.sprites.point.key);
 			point.setTint(colors[index]);
 			point.setInteractive();
 			return point;
