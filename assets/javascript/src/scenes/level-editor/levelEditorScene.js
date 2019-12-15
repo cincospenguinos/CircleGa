@@ -1,6 +1,7 @@
 import { Constants } from '../../const/index.js';
 import { Enemy } from '../space-scene/model/enemy.js';
 import { Bezier } from './model/bezier.js';
+import { Level } from './model/level.js';
 import { PathMenu } from './view/pathMenu.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 
@@ -10,6 +11,10 @@ const DEFAULT_POINTS = [
 	{ x: 100, y: 300 },
 	{ x: 100, y: 400 },
 ];
+
+// TODO: We need to figure out a way to clear out a previous path and save completed paths so that the level editor can be a large set
+// of paths, along with the various details behind each of them
+// Oh man, this is going to be soooooooo much better than what I had initially planned
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
@@ -22,8 +27,6 @@ export class LevelEditorScene extends Phaser.Scene {
 			blue: [],
 		};
 	}
-
-	init(data) {}
 
 	preload() {
 		const { enemyOne, point, gameTrack, redStar, blueStar } = Constants.sprites;
@@ -40,6 +43,7 @@ export class LevelEditorScene extends Phaser.Scene {
 			createBezier: 'SPACE',
 			redStar: 'R',
 			blueStar: 'B',
+			export: 'ENTER',
 		});
 
 		this.input.on('drag', (_, point, posX, posY) => {
@@ -58,6 +62,10 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	update() {
+		this._handleInput();
+	}
+
+	_handleInput() {
 		if (Phaser.Input.Keyboard.JustDown(this.keys.toggleMenu)) {
 			this.menu.toggle();
 		}
@@ -76,6 +84,18 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.blueStar)) {
 			this._addStar(Constants.sprites.blueStar.key, this.stars.blue);
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.export)) {
+			const path = this.beziers.concat(this.bezier);
+			const stars = Object.keys(this.stars)
+				.map((starColor) => this.stars[starColor].map(s => {
+					return { x: s.x, y: s.y, color: starColor };
+				}))
+				.flat();
+
+			const level = new Level(path, stars);
+			console.log(level.toJson());
 		}
 	}
 
