@@ -20,6 +20,7 @@ export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
 		super({ key: Constants.scenes.levelEditorScene });
 
+		this.paths = [];
 		this.beziers = [];
 		this.tweenConfig = {};
 		this.stars = {
@@ -44,6 +45,7 @@ export class LevelEditorScene extends Phaser.Scene {
 			redStar: 'R',
 			blueStar: 'B',
 			export: 'ENTER',
+			nextPath: 'N',
 		});
 
 		this.input.on('drag', (_, point, posX, posY) => {
@@ -87,7 +89,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.export)) {
-			const path = this.beziers.concat(this.bezier);
+			const path = this._getCurrentPath();
 			const stars = Object.keys(this.stars)
 				.map((starColor) => this.stars[starColor].map(s => {
 					return { x: s.x, y: s.y, color: starColor };
@@ -97,11 +99,19 @@ export class LevelEditorScene extends Phaser.Scene {
 			const level = new Level(path, stars);
 			console.log(level.toJson());
 		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.nextPath)) {
+			const path = this._getCurrentPath();
+			path.forEach(b => b.erase());
+			this.paths.push(path);
+			this.beziers = [];
+			this.bezier = new Bezier(this, { points: DEFAULT_POINTS });
+		}
 	}
 
 	_runEnemy() {
 		const { centerOfScreen } = Constants.coordinates;
-		const path = this.beziers.concat(this.bezier);
+		const path = this._getCurrentPath();
 
 		new Enemy({
 			scene: this,
@@ -132,12 +142,16 @@ export class LevelEditorScene extends Phaser.Scene {
 		this.tweenConfig = {
 			duration,
 			amount,
-			delay,
+			// delay, // TODO: delay is being used incorrectly. We want to create that number of enemies, spaced across that delay
 		};
 	}
 
 	_addStar(spriteKey, set) {
 		const star = this.add.sprite(this.input.x, this.input.y, spriteKey).setInteractive({ draggable: true });
 		set.push(star);
+	}
+
+	_getCurrentPath() {
+		return this.beziers.concat(this.bezier);
 	}
 }

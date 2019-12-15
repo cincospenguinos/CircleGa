@@ -15,6 +15,16 @@ export class Level {
 	}
 
 	static fromJson(json) {
-
+		/*
+		{
+		  "stars": [{ "x": 100, "y": 200, "key": "redStar" }],
+		  "enemies": [{
+		    "duration": 1000,
+		    "amount": 3,
+		    "delay": 300,
+		    "points": [{}, {}, {}, {}],
+		  }]
+		}
+		*/
 	}
 }

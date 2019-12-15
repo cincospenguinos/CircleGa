@@ -21,6 +21,11 @@ export class Bezier {
 		return this.bezierCurve.getPoint(val);
 	}
 
+	erase() {
+		this.graphics.setVisible(false);
+		this.points.forEach(p => p.setVisible(false));
+	}
+
 	draw() {
 		this.graphics.clear();
     this.graphics.lineStyle(4, 0xffffff);
