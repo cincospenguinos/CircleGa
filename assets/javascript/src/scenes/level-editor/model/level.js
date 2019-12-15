@@ -5,12 +5,14 @@ export class Level {
 	}
 
 	toJson() {
-		const points = this.path.map(bezier => bezier.getPoints());
+		const enemies = this.path.map((p) => { 
+			return { duration: p.duration, amount: p.amount, points: p.bezier.getPoints() };
+		});
 		const stars = this.stars;
 
 		return JSON.stringify({
 			stars,
-			enemies: points,
+			enemies,
 		});
 	}
 

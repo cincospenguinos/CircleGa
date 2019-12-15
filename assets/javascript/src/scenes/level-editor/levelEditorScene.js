@@ -12,17 +12,17 @@ const DEFAULT_POINTS = [
 	{ x: 100, y: 400 },
 ];
 
-// TODO: We need to figure out a way to clear out a previous path and save completed paths so that the level editor can be a large set
-// of paths, along with the various details behind each of them
-// Oh man, this is going to be soooooooo much better than what I had initially planned
-
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
 		super({ key: Constants.scenes.levelEditorScene });
 
 		this.paths = [];
 		this.beziers = [];
-		this.tweenConfig = {};
+		this.tweenConfig = {
+			duration: 500,
+			amount: 1,
+			// delay: 300, // TODO: Fix the delay or something
+		};
 		this.stars = {
 			red: [],
 			blue: [],
@@ -89,10 +89,10 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.export)) {
-			const path = this._getCurrentPath();
+			const path = this.beziers.concat(this._getEnemyPathFrom(this.bezier));
 			const stars = Object.keys(this.stars)
 				.map((starColor) => this.stars[starColor].map(s => {
-					return { x: s.x, y: s.y, color: starColor };
+					return { x: s.x, y: s.y, key: s.texture.key };
 				}))
 				.flat();
 
@@ -101,8 +101,8 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.nextPath)) {
-			const path = this._getCurrentPath();
-			path.forEach(b => b.erase());
+			this._getCurrentPath().forEach(b => b.erase());
+			const path = this.beziers.concat(this.bezier);
 			this.paths.push(path);
 			this.beziers = [];
 			this.bezier = new Bezier(this, { points: DEFAULT_POINTS });
@@ -134,7 +134,10 @@ export class LevelEditorScene extends Phaser.Scene {
 		});
 
 		this.bezier.disable();
-		this.beziers.push(this.bezier);
+
+		const enemyPath = this._getEnemyPathFrom(this.bezier);
+
+		this.beziers.push(enemyPath);
 		this.bezier = new Bezier(this, { points: nextPoints });
 	}
 
@@ -152,6 +155,14 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	_getCurrentPath() {
-		return this.beziers.concat(this.bezier);
+		return this.beziers.map(p => p.bezier).concat(this.bezier);
+	}
+
+	_getEnemyPathFrom(bezier) {
+		return {
+			duration: this.tweenConfig.duration,
+			amount: this.tweenConfig.amount,
+			bezier,
+		};
 	}
 }
