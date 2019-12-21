@@ -96,7 +96,7 @@ export class LevelEditorScene extends Phaser.Scene {
 				}))
 				.flat();
 
-			const level = new Level(path, stars);
+			const level = new Level(this, path, stars);
 			console.log(level.toJson());
 		}
 

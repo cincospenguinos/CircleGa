@@ -4,6 +4,7 @@
  * Manages bezier curve shennanigans.
  */
 import { Constants } from '../../../const/index.js';
+
 export class Bezier {
 	constructor(scene, opts = {}) {
 		this.scene = scene;
