@@ -1,18 +1,25 @@
 import { Bezier } from './bezier.js';
 
 export class Level {
-	constructor(scene, path, stars) {
-		this.path = path;
+	constructor(scene, lines, stars) {
+		this.lines = lines;
 		this.stars = stars;
 		this.scene = scene;
 	}
 
 	toJson() {
 		// TODO: Delay needs to be included
-		const enemies = this.path.map((p) => {
-			return { duration: p.duration, amount: p.amount, points: p.bezier.getPoints() };
+		const enemies = this.lines.map((p) => {
+			const points = p.paths.map(b => b.getPoints());
+			return { duration: p.duration, amount: p.amount, points, };
 		});
-		const stars = this.stars;
+
+		const stars = Object.keys(this.stars).map((starKey) => {
+			const starSet = this.stars[starKey];
+			return starSet.map((star) => {
+				return { color: starKey, x: star.x, y: star.y };
+			});
+		});
 
 		return JSON.stringify({
 			stars,
@@ -26,7 +33,12 @@ export class Level {
 		const stars = data.stars;
 		const path = data.enemies.map((enemyData) => {
 			const { duration, amount, points } = enemyData;
-			return { duration, amount, bezier: new Bezier(scene, { points }), };
+
+			return {
+				duration,
+				amount,
+				bezier: new Bezier(scene, points),
+			};
 		});
 
 		return new Level(scene, path, stars);

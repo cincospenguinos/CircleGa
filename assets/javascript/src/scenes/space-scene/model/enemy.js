@@ -6,7 +6,7 @@ export class Enemy extends Entity {
 	constructor(config) {
 		super(config);
 
-		this.path = config.path;
+		this.line = config.line;
 		this.tweenConfig = config.tweenConfig || {};
 		this._executeMovement();
 	}
@@ -15,7 +15,7 @@ export class Enemy extends Entity {
 		const tweens = this._generateTweens();
 		this.currentTimeline = this.scene.tweens.timeline({
 			tweens,
-			...this.tweenConfig,
+			duration: this.tweenConfig.duration,
 			onComplete: () => {
 				this.destroy();
 			},
@@ -23,7 +23,7 @@ export class Enemy extends Entity {
 	}
 
 	_generateTweens() {
-		return this.path.map((bezier, index) => {
+		return this.line.map((bezier, index) => {
 			const points = bezier.getPoints();
 
 			return {

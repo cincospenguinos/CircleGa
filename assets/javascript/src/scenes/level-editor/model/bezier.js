@@ -6,12 +6,12 @@
 import { Constants } from '../../../const/index.js';
 
 export class Bezier {
-	constructor(scene, opts = {}) {
+	constructor(scene, positions) {
 		this.scene = scene;
 		this.graphics = this.scene.add.graphics();
 		this.showPoints = true;
 
-		this.points = this._gameObjsFrom(opts.points);
+		this.points = this._gameObjsFrom(positions);
 
 		this.scene.input.setDraggable(this.points);
 		this.scene.input.on('drag', () => this.draw());
