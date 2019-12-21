@@ -4,6 +4,7 @@ import { Bezier } from './model/bezier.js';
 import { Level } from './model/level.js';
 import { PathMenu } from './view/pathMenu.js';
 import { LevelDataView } from './view/levelDataView.js';
+import { InputView } from './view/inputView.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 import { LevelFactory } from './model/levelFactory.js';
 
@@ -28,6 +29,17 @@ export class LevelEditorScene extends Phaser.Scene {
 			red: [],
 			blue: [],
 		};
+
+		this.keyMapping = {
+			toggleMenu: 'M',
+			execute: 'E',
+			createBezier: 'SPACE',
+			redStar: 'R',
+			blueStar: 'B',
+			export: 'ENTER',
+			nextPath: 'N',
+			showInputView: 'H',
+		};
 	}
 
 	preload() {
@@ -39,15 +51,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		this.load.image(redStar.key, redStar.location, redStar.config);
 		this.load.image(blueStar.key, blueStar.location, blueStar.config);
 
-		this.keys = this.input.keyboard.addKeys({
-			toggleMenu: 'M',
-			execute: 'E',
-			createBezier: 'SPACE',
-			redStar: 'R',
-			blueStar: 'B',
-			export: 'ENTER',
-			nextPath: 'N',
-		});
+		this.keys = this.input.keyboard.addKeys(this.keyMapping);
 
 		this.input.on('drag', (_, point, posX, posY) => {
 			point.x = posX;
@@ -64,6 +68,9 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		const levelDataNode = this.add.dom(350, 350, 'div', '');
 		this.levelDataView = new LevelDataView(levelDataNode);
+
+		const inputViewNode = this.add.dom(centerOfScreen.x, 700, 'div', '');
+		this.inputView = new InputView(inputViewNode, this.keyMapping);
 		this.factory = new LevelFactory(this);
 	}
 
@@ -100,6 +107,10 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.nextPath)) {
 			this.factory.newPath();
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.showInputView)) {
+			this.inputView.toggle();
 		}
 	}
 
