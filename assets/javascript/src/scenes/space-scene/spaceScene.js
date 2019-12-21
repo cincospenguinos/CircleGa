@@ -64,20 +64,20 @@ export class SpaceScene extends Phaser.Scene {
 
 	create() {
 		const sprites = Constants.keys.sprites;
-		const { centerOfScreen, topOfRing } = Constants.coordinates;
-		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(topOfRing));
+		const { centerOfScreen, bottomOfRing } = Constants.coordinates;
+		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(bottomOfRing));
 
 		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.background);
 		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.gameTrack);
 
-		this._createPlayer(playerOnePos, sprites.playerOne);
+		const playerOne = this._createPlayer(playerOnePos, sprites.playerOne);
+		this.players.add(playerOne);
 
 		if (this.playerCount == 2) {
 			const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
-			this._createPlayer(playerTwoPos, sprites.playerTwo);
+			this.playerTwo = this._createPlayer(playerTwoPos, sprites.playerTwo);
 		}
 
-		this.level = new Level(this.cache.json.get(this.currentLevel.key));
 		if (!this.finishedTutorial) {
 			this.tutorial = new Tutorial({
 				playerCount: this.playerCount,
@@ -123,20 +123,11 @@ export class SpaceScene extends Phaser.Scene {
 				loop: true,
 			});
 		} else {
-			if (this.level.isComplete()) {
-				console.log('Level complete!');
-				GameState.getInstance().levelComplete();
-				this.scene.start(Constants.scenes.textScene);
-				return;
-			}
-
-			if (!this.level.aliensFleeing()) {
-				this.level.createAliens(this);
-			}
+			
 		}
 
 		this._handleInput(playerOne, playerTwo);
-		this.collisionValidation.handleCollisions(this.level.getAliens());
+		// this.collisionValidation.handleCollisions(this.level.getAliens());
 		this.players.update();
 		this.bullets.update();
 	}
@@ -242,10 +233,12 @@ export class SpaceScene extends Phaser.Scene {
 		}
 	}
 
-	_createPlayer(position, sprite, opts = {}) {
-		coordinateHelpers.toGame(position);
-		const img = this.physics.add.sprite(position.x, position.y, sprite);
-		const player = new Player(img, opts);
-		this.players.add(player);
+	_createPlayer(position, key, opts = {}) {
+		return new Player({
+			scene: this,
+			x: position.x,
+			y: position.y,
+			key,
+		});
 	}
 }

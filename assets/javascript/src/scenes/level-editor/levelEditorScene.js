@@ -1,7 +1,5 @@
 import { Constants } from '../../const/index.js';
 import { Enemy } from '../space-scene/model/enemy.js';
-import { Bezier } from './model/bezier.js';
-import { Level } from './model/level.js';
 import { PathMenu } from './view/pathMenu.js';
 import { LevelDataView } from './view/levelDataView.js';
 import { InputView } from './view/inputView.js';

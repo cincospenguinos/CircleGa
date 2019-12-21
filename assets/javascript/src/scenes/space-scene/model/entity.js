@@ -1,7 +1,7 @@
 import { Constants } from '../../../const/index.js';
 import * as coordinateHelper from '../../../helpers/coordinates.js';
 
-export class Entity extends Phaser.GameObjects﻿.Sprite {
+export class Entity extends Phaser.GameObjects.Sprite {
 	constructor(config) {
 		super(config.scene, config.x, config.y, config.key);
 		
@@ -10,5 +10,9 @@ export class Entity extends Phaser.GameObjects﻿.Sprite {
 		this.scene.add.existing(this);
 		this.scene.physics.add.existing(this);
 		this.setScale(Constants.dimensions.scale.sprite);
+	}
+
+	getPosition() {
+		return { x: this.x, y: this.y, type: 'game' };
 	}
 }

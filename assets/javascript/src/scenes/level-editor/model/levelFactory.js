@@ -1,6 +1,6 @@
 import { Constants } from '../../../const/index.js';
-import { Level } from './level.js';
-import { Bezier } from './bezier.js';
+import { Level } from '../../space-scene/model/level.js';
+import { Bezier } from '../../space-scene/model/bezier.js';
 
 /**
  * Okay, we need to name some shit:

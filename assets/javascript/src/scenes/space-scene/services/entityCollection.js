@@ -18,7 +18,7 @@ export class EntityCollection {
 	get(spriteKey) {
 		let toReturn = undefined;
 		this.entities.forEach(e => {
-			if (e.img.texture.key === spriteKey) { 
+			if (e.texture.key === spriteKey) { 
 				toReturn = e;
 				return;
 			}
@@ -38,7 +38,7 @@ export class EntityCollection {
 	remove(entity) {
 		const index = this.entities.indexOf(entity);
 		if (index > -1) {
-			entity.img.destroy();
+			entity.destroy();
 		  this.entities.splice(index, 1);
 		}
 	}
@@ -64,13 +64,7 @@ export class EntityCollection {
 		this.entities = this.entities.filter((e) => !toRemove.includes(e));
 
 		toRemove.forEach((e) => {
-			e.img.destroy();
+			e.destroy();
 		});
-	}
-
-	_entityIsOutOfBounds(entity) {
-		const position = entity.getPosition();
-		const screen = Constants.dimensions.screen;
-		return position.x < 0 || position.y < 0 || position.x > screen.width || position.y > screen.height;
 	}
 }
