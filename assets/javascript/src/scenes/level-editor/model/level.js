@@ -19,7 +19,7 @@ export class Level {
 			return starSet.map((star) => {
 				return { color: starKey, x: star.x, y: star.y };
 			});
-		});
+		}).flat();
 
 		return JSON.stringify({
 			stars,

@@ -3,6 +3,7 @@ import { Enemy } from '../space-scene/model/enemy.js';
 import { Bezier } from './model/bezier.js';
 import { Level } from './model/level.js';
 import { PathMenu } from './view/pathMenu.js';
+import { LevelDataView } from './view/levelDataView.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 import { LevelFactory } from './model/levelFactory.js';
 
@@ -60,6 +61,9 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		const menuNode = this.add.dom(200, 200, 'div', '');
 		this.menu = new PathMenu(menuNode, (a, b, c) => this._updateTweenConfig(a, b, c));
+
+		const levelDataNode = this.add.dom(350, 350, 'div', '');
+		this.levelDataView = new LevelDataView(levelDataNode);
 		this.factory = new LevelFactory(this);
 	}
 
@@ -82,16 +86,16 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.redStar)) {
 			this.factory.addStar('red');
-			// this._addStar(Constants.sprites.redStar.key, this.stars.red);
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.blueStar)) {
 			this.factory.addStar('blue');
-			// this._addStar(Constants.sprites.blueStar.key, this.stars.blue);
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.export)) {
-			console.log(this.factory.getLevel().toJson());
+			const level = this.factory.getLevel();
+			const json = level.toJson();
+			this.levelDataView.show(json);
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.nextPath)) {
