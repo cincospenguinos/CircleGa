@@ -64,7 +64,6 @@ export class Player extends Entity {
 		this.setRotation(Phaser.Math.Angle.Between(position.x, position.y, 
 			centerOfScreen.x, centerOfScreen.y) + Math.PI / 2);
 
-		// update the cooldown
 		this.fireCooldown--;
 		this.moveCooldown--;
 	}

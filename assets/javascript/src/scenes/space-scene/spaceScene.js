@@ -23,7 +23,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.currentLevel = Constants.levels[levelKey];
 
 		this.players = new EntityCollection();
-		this.bullets = new Bullets();
+		this.bullets = new Bullets(this);
 		this.killCount = 0;
 		this.finishedTutorial = gameState.hasFinishedTutorial();
 
@@ -75,7 +75,8 @@ export class SpaceScene extends Phaser.Scene {
 
 		if (this.playerCount == 2) {
 			const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
-			this.playerTwo = this._createPlayer(playerTwoPos, sprites.playerTwo);
+			const playerTwo = this._createPlayer(playerTwoPos, sprites.playerTwo);
+			this.players.add(playerTwo);
 		}
 
 		if (!this.finishedTutorial) {
@@ -228,8 +229,7 @@ export class SpaceScene extends Phaser.Scene {
 
 		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
 			const bulletPosition = player.fireBullet();
-			const sprite = this.physics.add.sprite(bulletPosition.x, bulletPosition.y, bulletSpriteKey);
-			this.bullets.addBullet(sprite, playerSpriteKey);
+			this.bullets.addBullet(playerSpriteKey, bulletPosition);
 		}
 	}
 
