@@ -1,14 +1,40 @@
+import { Constants } from '../../../const/index.js';
 import { Bezier } from './bezier.js';
+import { Enemy } from './enemy.js';
+
+const STAR_KEYS = {
+	red: Constants.keys.sprites.redStar,
+	blue: Constants.keys.sprites.blueStar,
+};
 
 export class Level {
 	constructor(scene, lines, stars) {
 		this.lines = lines;
 		this.stars = stars;
 		this.scene = scene;
+
+		this.enemies = [];
 	}
 
-	play() {
-		
+	draw() {
+		this.stars.forEach((s) => {
+			const spriteKey = STAR_KEYS[s.color];
+			this.scene.add.sprite(s.x, s.y, spriteKey);
+		});
+	}
+
+	start() {
+		this.complete = false;
+		this.currentLineIndex = 0;
+		this._runLine();
+	}
+
+	isComplete() {
+		return this.complete;
+	}
+
+	getAliens() {
+		return this.enemies;
 	}
 
 	toJson() {
@@ -31,20 +57,34 @@ export class Level {
 		});
 	}
 
-	static fromJson(scene, json) {
-		const data = JSON.parse(json);
+	_runLine() {
+		if (this.currentLineIndex < this.lines.length) {
+			const currentLine = this.lines[this.currentLineIndex];
+			const firstPosition = currentLine.paths[0].getPoints()[0];
 
-		const stars = data.stars;
-		const path = data.enemies.map((enemyData) => {
-			const { duration, amount, points } = enemyData;
-
-			return {
-				duration,
-				amount,
-				bezier: new Bezier(scene, points),
+			const completionCallback = () => {
+				this.currentLineIndex++;
+				this.scene.time.addEvent({
+					delay: 1000,
+					callbackScope: this,
+					loop:false,
+					callback: () => this._runLine(),
+				});
 			};
-		});
 
-		return new Level(scene, path, stars);
+			this.enemies.push(new Enemy({
+				scene: this.scene,
+				x: firstPosition.x,
+				y: firstPosition.y,
+				lines: currentLine.paths,
+				tweenConfig: {
+					duration: currentLine.duration,
+				},
+				completionCallback,
+				key: Constants.keys.sprites.enemyOne
+			}));
+		} else {
+			this.complete = true;
+		}
 	}
 }

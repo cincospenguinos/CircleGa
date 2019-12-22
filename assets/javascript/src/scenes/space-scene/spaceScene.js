@@ -9,6 +9,7 @@ import { EntityCollection } from './services/entityCollection.js';
 import { CollisionValidation } from './services/collisionValidation.js';
 import { Level } from './model/level.js';
 import { Tutorial } from './tutorial/tutorial.js';
+import { Bezier } from './model/bezier.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -20,7 +21,7 @@ export class SpaceScene extends Phaser.Scene {
 		const levelKey = Constants.levelOrder[gameState.getCurrentLevelIndex()];
 
 		this.playerCount = data.players;
-		this.currentLevel = Constants.levels[levelKey];
+		this.levelInfo = Constants.levels[levelKey];
 
 		this.players = new EntityCollection();
 		this.bullets = new Bullets(this);
@@ -31,16 +32,19 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.json(this.currentLevel.key, this.currentLevel.location);
+		this.load.json(this.levelInfo.key, this.levelInfo.location);
 
 		const {
 			background, playerOne, playerTwo,
 			gameTrack, redBullet, blueBullet,
-			enemyBullet, enemyOne
+			enemyBullet, enemyOne, redStar,
+			blueStar,
 		} = Constants.sprites;
 
 		this.load.image(gameTrack.key, gameTrack.location);
 		this.load.image(background.key, background.location);
+		this.load.image(redStar.key, redStar.location, redStar.config);
+		this.load.image(blueStar.key, blueStar.location, blueStar.config);
 		this.load.spritesheet(playerOne.key, playerOne.location, playerOne.config);
 		this.load.spritesheet(playerTwo.key, playerTwo.location, playerTwo.config);
 		this.load.spritesheet(redBullet.key, redBullet.location, redBullet.config);
@@ -79,89 +83,25 @@ export class SpaceScene extends Phaser.Scene {
 			this.players.add(playerTwo);
 		}
 
-		if (!this.finishedTutorial) {
-			this.tutorial = new Tutorial({
-				playerCount: this.playerCount,
-			});
-		}
+		this.currentLevel = this._createLevel();
+		this.currentLevel.draw();
+		this.time.addEvent({
+			delay: 1000,
+			callback: () => { this.currentLevel.start() },
+			callbackScope: this,
+			loop: false,
+		});
 	}
 
 	update() {
 		const playerOne = this.players.get(Constants.sprites.playerOne.key);
 		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
-		if (!this.finishedTutorial) {
-			if (!this.tutorial.taskShown()) {
-				const task = this.tutorial.getCurrentTask();
-
-				this.timeToHideTask = false;
-				this.currentTaskKey = task.key;
-
-				this.time.addEvent({
-					delay: task.timeToShow,
-					callback: () => {
-						this.timeToHideTask = true;
-
-						if (task.key === 'lastThing') {
-							this.tutorial.updateSubTask('lastThing', true);
-							this.tutorial.completeTask(task.key);
-						}
-
-						this._completeTask(task.key);
-					},
-					loop: false,
-				});
-
-				this._showTask(task.text);
-				this.tutorial.showTask();
-			}
-
-			this.time.addEvent({
-				delay: 500,
-				callback: () => {
-					this._completeTask(this.currentTaskKey);
-				},
-				loop: true,
-			});
-		} else {
-			
-		}
-
 		this._handleInput(playerOne, playerTwo);
-		// this.collisionValidation.handleCollisions(this.level.getAliens());
+		// TODO: Fix this
+		this.collisionValidation.handleCollisions(this.currentLevel.getAliens());
 		this.players.update();
 		this.bullets.update();
-	}
-
-	enemyFired(enemy) {
-		const enemyPosition = enemy.getPosition();
-		const playerToShoot = this._getPlayerToShoot(enemyPosition);
-
-		if (enemy.canFire() && this.level.getAliens().contains(enemy) && playerToShoot) {
-			const sprite = this.physics.add.sprite(enemyPosition.x, enemyPosition.y, Constants.keys.sprites.enemyBullet);
-			this.bullets.addBullet(sprite, enemy.spriteKey(), playerToShoot.getPosition());
-			enemy.fireBullet();
-		}
-	}
-
-	_getPlayerToShoot(enemyPosition) {
-		if (this.players.count() == 0) {
-			return null;
-		}
-
-		if (this.players.count() == 1) {
-			return this.players.getAt(0);
-		}
-
-		const playerOne = this.players.get(Constants.sprites.playerOne.key);
-		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
-
-		if (coordinateHelpers.distanceBetween(playerOne.getPosition(), enemyPosition) < 
-			coordinateHelpers.distanceBetween(playerTwo.getPosition(), enemyPosition)) {
-			return playerOne;
-		}
-
-		return playerTwo;
 	}
 
 	_handleInput(playerOne, playerTwo) {
@@ -204,23 +144,6 @@ export class SpaceScene extends Phaser.Scene {
 		}
 	}
 
-	_showTask(text) {
-		this.currentText = this.add.text(Constants.coordinates.centerOfScreen.x, Constants.coordinates.centerOfScreen.y, text);
-		this.currentText.x -= this.currentText.width / 2;
-	}
-
-	_completeTask(key) {
-		if (this.timeToHideTask && !this.tutorial.hasFinished() && this.tutorial.currentTaskComplete(key)) {
-			this.currentText.destroy();
-			this.tutorial.nextTask();
-
-			if (this.tutorial.hasFinished()) {
-				this.time.destroy();
-				this.finishedTutorial = true;
-			}
-		}
-	}
-
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
 		if (this.tutorial) {
 			if (playerSpriteKey === Constants.keys.sprites.playerOne) { this.tutorial.updateSubTask('playerOneHasFired', true); }
@@ -240,5 +163,21 @@ export class SpaceScene extends Phaser.Scene {
 			y: position.y,
 			key,
 		});
+	}
+
+	_createLevel() {
+		const levelData = this.cache.json.get(this.levelInfo.key);
+
+		const stars = levelData.stars;
+		const enemies = levelData.enemies.map((enemyData) => {
+
+			return {
+				duration: enemyData.duration,
+				amount: enemyData.amount,
+				paths: enemyData.points.map(p => new Bezier(this, p, { editMode: false })),
+			}
+		});
+
+		return new Level(this, enemies, stars);
 	}
 }

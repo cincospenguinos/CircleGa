@@ -60,7 +60,9 @@ export class PathMenu {
 		this.node.getChildByProperty('id', 'duration').value = opts.duration || 2000;
 		this.node.getChildByProperty('id', 'amount').value = opts.amount || 1;
 		this.node.getChildByProperty('id', 'delay').value = opts.delay || 300;
-		this.node.getChildByID('update-items').addEventListener('click', () => this.updateCallback(this.getDuration(), this.getAmount(), this.getDelay()));
+		this.node.getChildByID('update-items')
+			.addEventListener('click', () => this.updateCallback(this.getAmount(), 
+				this.getDuration(), this.getDelay()));
 		this.node.visible = false;
 	}
 }

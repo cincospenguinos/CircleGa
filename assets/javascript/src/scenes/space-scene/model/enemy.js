@@ -6,8 +6,9 @@ export class Enemy extends Entity {
 	constructor(config) {
 		super(config);
 
-		this.line = config.line;
+		this.lines = config.lines;
 		this.tweenConfig = config.tweenConfig || {};
+		this.completionCallback = config.completionCallback;
 		this._executeMovement();
 	}
 
@@ -18,12 +19,13 @@ export class Enemy extends Entity {
 			duration: this.tweenConfig.duration,
 			onComplete: () => {
 				this.destroy();
+				this.completionCallback();
 			},
 		});
 	}
 
 	_generateTweens() {
-		return this.line.map((bezier, index) => {
+		return this.lines.map((bezier, index) => {
 			const points = bezier.getPoints();
 
 			return {

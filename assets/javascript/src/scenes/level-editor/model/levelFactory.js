@@ -76,6 +76,14 @@ export class LevelFactory {
 		return new Level(this.scene, this.lines, this.stars);
 	}
 
+	updateTweenConfig(amount, duration, delay) {
+		this.tweenConfig = {
+			amount,
+			duration,
+			// delay,
+		}
+	}
+
 	_nextPositions() {
 		const previousPosition = this.currentPath.getPoints()[3];
 		return DEFAULT_POINTS.map((position, index) => {

@@ -62,7 +62,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
 
 		const menuNode = this.add.dom(200, 200, 'div', '');
-		this.menu = new PathMenu(menuNode, (a, b, c) => this._updateTweenConfig(a, b, c));
+		this.menu = new PathMenu(menuNode, (amount, duration, delay) => this.factory.updateTweenConfig(amount, duration, delay));
 
 		const levelDataNode = this.add.dom(350, 350, 'div', '');
 		this.levelDataView = new LevelDataView(levelDataNode);
@@ -124,13 +124,5 @@ export class LevelEditorScene extends Phaser.Scene {
 			line,
 			tweenConfig: this.tweenConfig,
 		});
-	}
-
-	_updateTweenConfig(duration, amount, delay) {
-		this.tweenConfig = {
-			duration,
-			amount,
-			// delay, // TODO: delay is being used incorrectly. We want to create that number of enemies, spaced across that delay
-		};
 	}
 }
