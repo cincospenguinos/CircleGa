@@ -1,6 +1,7 @@
 import { Constants } from '../../../const/index.js';
 import { Bezier } from './bezier.js';
 import { Enemy } from './enemy.js';
+import { EntityCollection } from '../services/entityCollection.js';
 
 const STAR_KEYS = {
 	red: Constants.keys.sprites.redStar,
@@ -34,7 +35,7 @@ export class Level {
 	}
 
 	getAliens() {
-		return this.enemies;
+		return new EntityCollection(this.enemies);
 	}
 
 	toJson() {

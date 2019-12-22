@@ -7,8 +7,8 @@ import { Constants } from '../../../const/index.js';
 import { isOutOfBounds } from '../../../helpers/coordinates.js';
 
 export class EntityCollection {
-	constructor() {
-		this.entities = [];
+	constructor(entities = undefined) {
+		this.entities = entities || [];
 	}
 
 	add(entity) {

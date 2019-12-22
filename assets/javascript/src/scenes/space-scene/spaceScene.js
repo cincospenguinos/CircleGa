@@ -98,7 +98,6 @@ export class SpaceScene extends Phaser.Scene {
 		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
 		this._handleInput(playerOne, playerTwo);
-		// TODO: Fix this
 		this.collisionValidation.handleCollisions(this.currentLevel.getAliens());
 		this.players.update();
 		this.bullets.update();
