@@ -114,14 +114,14 @@ export class LevelEditorScene extends Phaser.Scene {
 
 	_runEnemy() {
 		const { centerOfScreen } = Constants.coordinates;
-		const line = this.factory.getCurrentLine();
+		const lines = this.factory.getCurrentLine();
 
 		new Enemy({
 			scene: this,
 			x: centerOfScreen.x,
 			y: centerOfScreen.y,
 			key: Constants.sprites.enemyOne.key,
-			line,
+			lines,
 			tweenConfig: this.tweenConfig,
 		});
 	}

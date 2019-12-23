@@ -19,7 +19,10 @@ export class Enemy extends Entity {
 			duration: this.tweenConfig.duration,
 			onComplete: () => {
 				this.destroy();
-				this.completionCallback();
+				
+				if (this.completionCallback) {
+					this.completionCallback();
+				}
 			},
 		});
 	}
