@@ -39,10 +39,9 @@ export class Level {
 	}
 
 	toJson() {
-		// TODO: Delay needs to be included
 		const enemies = this.lines.map((p) => {
 			const points = p.paths.map(b => b.getPoints());
-			return { duration: p.duration, amount: p.amount, points, };
+			return { duration: p.duration, amount: p.amount, delay: p.delay, points, };
 		});
 
 		const stars = Object.keys(this.stars).map((starKey) => {
@@ -58,34 +57,58 @@ export class Level {
 		});
 	}
 
+	// TODO: There is still something just a little bit fishy with how things are working
+	// here. The first line works just fine, but then the next line has like five or six
+	// enemies and it just turns into a mess. I think this needs to be rewritten
 	_runLine() {
 		if (this.currentLineIndex < this.lines.length) {
 			const currentLine = this.lines[this.currentLineIndex];
-			const firstPosition = currentLine.paths[0].getPoints()[0];
 
-			const completionCallback = () => {
-				this.currentLineIndex++;
+			const enemyProps = this._enemyPropsFor(currentLine);
+
+			for (let i = 0; i < currentLine.amount; i++) {
+				const completionCallback = () => {
+					if (i === currentLine.amount - 1) {
+						this.currentLineIndex++;
+					}
+
+					this.scene.time.addEvent({
+						delay: 1000,
+						callbackScope: this,
+						loop: false,
+						callback: () => this._runLine(),
+					});
+				};
+
+				enemyProps.completionCallback = completionCallback;
+
 				this.scene.time.addEvent({
-					delay: 1000,
+					delay: i * currentLine.delay,
 					callbackScope: this,
-					loop:false,
-					callback: () => this._runLine(),
+					loop: false,
+					callback: () => {
+						this.enemies.push(new Enemy(enemyProps));
+					},
 				});
-			};
-
-			this.enemies.push(new Enemy({
-				scene: this.scene,
-				x: firstPosition.x,
-				y: firstPosition.y,
-				lines: currentLine.paths,
-				tweenConfig: {
-					duration: currentLine.duration,
-				},
-				completionCallback,
-				key: Constants.keys.sprites.enemyOne
-			}));
+			}
 		} else {
 			this.complete = true;
 		}
+	}
+
+	_enemyPropsFor(line) {
+		const { duration, delay } = line;
+		const firstPosition = line.paths[0].getPoints()[0];
+
+		return {
+			scene: this.scene,
+			x: firstPosition.x,
+			y: firstPosition.y,
+			lines: line.paths,
+			tweenConfig: {
+				duration,
+			},
+			key: Constants.keys.sprites.enemyOne
+		};
 	}
 }

@@ -169,10 +169,11 @@ export class SpaceScene extends Phaser.Scene {
 
 		const stars = levelData.stars;
 		const enemies = levelData.enemies.map((enemyData) => {
-
+			const { duration, delay, amount } = enemyData;
 			return {
-				duration: enemyData.duration,
-				amount: enemyData.amount,
+				duration,
+				delay,
+				amount,
 				paths: enemyData.points.map(p => new Bezier(this, p, { editMode: false })),
 			}
 		});

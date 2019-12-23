@@ -9,6 +9,6 @@ export const DIMENSIONS = {
 }
 
 export const CONFIG = {
-	runLevelEditor: true,
+	runLevelEditor: false,
 	debugPhysics: true,
 };

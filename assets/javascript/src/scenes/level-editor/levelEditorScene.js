@@ -22,6 +22,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		this.tweenConfig = {
 			duration: 500,
 			amount: 1,
+			delay: 300,
 		};
 		this.stars = {
 			red: [],

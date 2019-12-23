@@ -32,7 +32,7 @@ export class LevelFactory {
 		this.tweenConfig = {
 			duration: 500,
 			amount: 1,
-			// TODO: delay
+			delay: 300,
 		};
 		this.stars = {
 			red: [],
@@ -80,7 +80,7 @@ export class LevelFactory {
 		this.tweenConfig = {
 			amount,
 			duration,
-			// delay,
+			delay,
 		}
 	}
 
