@@ -50,7 +50,7 @@ export class Bullets {
 		const index = this.bullets.indexOf(bullet);
 		if (index > -1) {
 			this.originCounts[bullet.firingOrigin] ? this.originCounts[bullet.firingOrigin] -= 1 : this.originCounts[bullet.firingOrigin] = 0;
-			bullet.img.destroy();
+			bullet.destroy();
 		  this.bullets.splice(index, 1);
 		}
 	}

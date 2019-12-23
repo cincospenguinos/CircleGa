@@ -48,7 +48,7 @@ export class CollisionValidation {
 	_playerToBullet(player, bullet) {
 		if (player) {
 			Entity.handleCollision(player, bullet, () => {
-				if (bullet.firingOrigin !== player.spriteKey()) {
+				if (bullet.firingOrigin !== player.texture.key) {
 					this.bullets.remove(bullet);
 					this.players.remove(player);
 				}
@@ -58,7 +58,7 @@ export class CollisionValidation {
 
 	_enemyToBullet(aliens, enemy, bullet) {
 		Entity.handleCollision(enemy, bullet, () => {
-			if (enemy.img.visible && bullet.firingOrigin !== enemy.spriteKey()) {
+			if (enemy.visible && bullet.firingOrigin !== enemy.texture.key) {
 				aliens.remove(enemy);
 				this.bullets.remove(bullet);
 			}
