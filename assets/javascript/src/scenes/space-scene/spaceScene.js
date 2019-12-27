@@ -115,7 +115,6 @@ export class SpaceScene extends Phaser.Scene {
 		}
 
 		if (this.currentLevel.isComplete()) {
-			// TODO: Perhaps start the music here? Maybe some kind of sound?
 			this.time.addEvent({
 				delay: 2500,
 				callback: () => { this._completeLevel() },
@@ -209,7 +208,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_completeLevel() {
-		GameState.getInstance().levelComplete();
+		// GameState.getInstance().levelComplete();
 		this.scene.start(Constants.scenes.textScene, {});
 	}
 }

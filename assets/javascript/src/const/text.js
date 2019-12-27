@@ -26,4 +26,6 @@ export const TEXT = {
 
 export const TEXT_ORDER = [
 	'indigenousExclusion',
+	'consumersBuyStolenGoods',
+	'mormonsAndAmericanIndians',
 ];

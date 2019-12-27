@@ -46,7 +46,7 @@ export class TextExcerpt {
 	getFont() {
 		return {
 			fontFamily: 'Arial',
-			fontSize: '30px',
+			fontSize: '24px',
 		}
 	}
 

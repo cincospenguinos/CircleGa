@@ -16,7 +16,7 @@ export class TextScene extends Phaser.Scene {
 
 	create() {
 		const excerpt = new TextExcerpt(this.cache.json.get(this.currentTextKey));
-		this.add.text(25, 25, excerpt.getText(), excerpt.getFont());
+		this._showText(excerpt);
 		this.keys = this.input.keyboard.addKeys({
 			space: 'SPACE',
 			esc: 'ESC',
@@ -43,5 +43,18 @@ export class TextScene extends Phaser.Scene {
 			this.backgroundMusic.stop();
 			return;
 		}
+	}
+
+	_showText(excerpt) {
+		const { width, height } = Constants.dimensions.screen;
+		this.add.text(25, 25, excerpt.getText(), excerpt.getFont());
+
+		const sourceFont = {...excerpt.getFont(), font: 'italic 24px Arial' };
+		const source = this.add.text(0, height - 25, excerpt.getSource(), sourceFont);
+		source.x = width - source.width;
+
+		const author = this.add.text(0, height - 50,
+			`--- ${excerpt.getAuthor() || 'Author Unknown'}`, excerpt.getFont());
+		author.x = width - source.width;
 	}
 }

@@ -1,6 +1,6 @@
-# CircleGa
+# dest.MF
 
-An homage to Galaga. Most of this was built over a 10-12 hour period. We will be adding to it though if it's fun.
+An homage to Galaga.
 
 ## Starting the project
 
@@ -32,7 +32,6 @@ This can be boiled down to simply level, text, level, text, where each text is e
 
 - [ ] Make the ring larger--covering almost the whole screen
 	* It's hard to maneuver with too little space, and I'd like to explore having the ring be bigger
-- [ ] Figure out when the enemies will fire
 
 ### Art and Animation
 
@@ -114,6 +113,8 @@ Just to keep my spirits up, I'm putting everything we've finished here.
 	- [x] Explains movement via text
 	- [x] Explains firing via text
 	- [x] Tells you to fire at the natives via text
+- [x] Figure out when the enemies will fire
+	* When they pass through a green star, I think that's when they'll fire, and it's something the player can watch for
 
 ## Story
 
