@@ -52,7 +52,7 @@ export class Tutorial {
 			loop: false,
 		});
 
-		if (Object.keys(this.tasks) === 0) {
+		if (Object.keys(this.tasks) === 0 && !this.complete) {
 			this._tutorialCompleted();
 		}
 	}

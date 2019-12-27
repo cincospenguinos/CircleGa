@@ -113,6 +113,16 @@ export class SpaceScene extends Phaser.Scene {
 		if (this.tutorial.isComplete() && !this.levelStarted) {
 			this._startLevel();
 		}
+
+		if (this.currentLevel.isComplete()) {
+			// TODO: Perhaps start the music here? Maybe some kind of sound?
+			this.time.addEvent({
+				delay: 2500,
+				callback: () => { this._completeLevel() },
+				callbackScope: this,
+				loop: false,
+			});
+		}
 	}
 
 	_handleInput(playerOne, playerTwo) {
@@ -155,6 +165,7 @@ export class SpaceScene extends Phaser.Scene {
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
 		this.tutorial.completeTask('firing');
+
 		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
 			const bulletPosition = player.fireBullet();
 			this.bullets.addBullet(playerSpriteKey, bulletPosition);
@@ -195,5 +206,10 @@ export class SpaceScene extends Phaser.Scene {
 			callbackScope: this,
 			loop: false,
 		});
+	}
+
+	_completeLevel() {
+		GameState.getInstance().levelComplete();
+		this.scene.start(Constants.scenes.textScene, {});
 	}
 }
