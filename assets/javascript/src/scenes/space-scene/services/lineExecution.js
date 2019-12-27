@@ -11,6 +11,7 @@ export class LineExecution {
 		this.started = false;
 		this.complete = false;
 		this.playersDead = config.playersDead || false;
+		this.amountLeft = this.currentLine.amount;
 	}
 
 	execute() {
@@ -23,7 +24,7 @@ export class LineExecution {
 					const enemy = new Enemy({
 						...props,
 						completionCallback: () => {
-							this.complete = true;
+							this.amountLeft -= 1;
 						},
 					});
 
@@ -37,7 +38,7 @@ export class LineExecution {
 	}
 
 	isComplete() {
-		return this.enemies.length === 0 && this.started || this.complete;
+		return this.amountLeft === 0;
 	}
 
 	_enemyProps() {

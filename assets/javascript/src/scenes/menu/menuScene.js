@@ -8,8 +8,8 @@ export class MenuScene extends Phaser.Scene {
 
 	init() {
 		this.selection = {
-			onePlayer: { x: 145, y: 445, type: 'game' },
-			twoPlayer: { x: 145, y: 476, type: 'game' },
+			onePlayer: { x: 165, y: 385, type: 'game' },
+			twoPlayer: { x: 165, y: 405, type: 'game' },
 			flicker: {
 				colors: [0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFA, 0xFFFFAF, 0xFFFAFF, 0xFFAFFF, 0xFAFFFF, 0xAFFFFF],
 				currentIndex: 0,
@@ -35,7 +35,8 @@ export class MenuScene extends Phaser.Scene {
 
 	create() {
 		const center = Constants.coordinates.centerOfScreen;
-		this.add.image(center.x, center.y, Constants.keys.sprites.mainMenu);
+		const menu = this.add.image(center.x, center.y, Constants.keys.sprites.mainMenu);
+		menu.scale = Constants.dimensions.scale.sprite;
 
 		this.backgroundMusic = this.sound.add(Constants.keys.sounds.mainMenu, Constants.sounds.mainMenu.config);
 		this.backgroundMusic.play();

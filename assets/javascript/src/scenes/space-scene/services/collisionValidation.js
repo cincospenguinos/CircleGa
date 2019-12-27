@@ -59,6 +59,10 @@ export class CollisionValidation {
 	_enemyToBullet(aliens, enemy, bullet) {
 		Entity.handleCollision(enemy, bullet, () => {
 			if (enemy.visible && bullet.firingOrigin !== enemy.texture.key) {
+				if (enemy.completionCallback) {
+					enemy.completionCallback();
+				}
+
 				aliens.remove(enemy);
 				this.bullets.remove(bullet);
 			}
