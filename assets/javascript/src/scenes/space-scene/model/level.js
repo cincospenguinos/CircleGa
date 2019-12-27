@@ -1,6 +1,7 @@
 import { Constants } from '../../../const/index.js';
 import { Bezier } from './bezier.js';
 import { Enemy } from './enemy.js';
+import { LineExecution } from '../services/lineExecution.js';
 import { EntityCollection } from '../services/entityCollection.js';
 
 const STAR_KEYS = {
@@ -15,6 +16,7 @@ export class Level {
 		this.scene = scene;
 
 		this.enemies = [];
+		this.lock = false;
 	}
 
 	draw() {
@@ -30,12 +32,23 @@ export class Level {
 		this._runLine();
 	}
 
+	update() {
+		if (!this.complete) {
+			if (this.currentLine && this.currentLine.isComplete() && !this.lock) {
+				this.lock = true;
+				this.currentLineIndex++;
+				this._runLine();
+			}
+		}
+	}
+
 	isComplete() {
 		return this.complete;
 	}
 
 	getAliens() {
-		return new EntityCollection(this.enemies);
+		const aliens = this.currentLine ? this.currentLine.enemies : [];
+		return new EntityCollection(aliens);
 	}
 
 	toJson() {
@@ -57,58 +70,14 @@ export class Level {
 		});
 	}
 
-	// TODO: There is still something just a little bit fishy with how things are working
-	// here. The first line works just fine, but then the next line has like five or six
-	// enemies and it just turns into a mess. I think this needs to be rewritten
 	_runLine() {
 		if (this.currentLineIndex < this.lines.length) {
 			const currentLine = this.lines[this.currentLineIndex];
-
-			const enemyProps = this._enemyPropsFor(currentLine);
-
-			for (let i = 0; i < currentLine.amount; i++) {
-				const completionCallback = () => {
-					if (i === currentLine.amount - 1) {
-						this.currentLineIndex++;
-					}
-
-					this.scene.time.addEvent({
-						delay: 1000,
-						callbackScope: this,
-						loop: false,
-						callback: () => this._runLine(),
-					});
-				};
-
-				enemyProps.completionCallback = completionCallback;
-
-				this.scene.time.addEvent({
-					delay: i * currentLine.delay,
-					callbackScope: this,
-					loop: false,
-					callback: () => {
-						this.enemies.push(new Enemy(enemyProps));
-					},
-				});
-			}
+			this.currentLine = new LineExecution(this.scene, currentLine);
+			this.currentLine.execute();
+			this.lock = false;
 		} else {
 			this.complete = true;
 		}
-	}
-
-	_enemyPropsFor(line) {
-		const { duration, delay } = line;
-		const firstPosition = line.paths[0].getPoints()[0];
-
-		return {
-			scene: this.scene,
-			x: firstPosition.x,
-			y: firstPosition.y,
-			lines: line.paths,
-			tweenConfig: {
-				duration,
-			},
-			key: Constants.keys.sprites.enemyOne
-		};
 	}
 }

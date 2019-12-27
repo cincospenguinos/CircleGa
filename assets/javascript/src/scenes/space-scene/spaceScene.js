@@ -101,6 +101,8 @@ export class SpaceScene extends Phaser.Scene {
 		this.collisionValidation.handleCollisions(this.currentLevel.getAliens());
 		this.players.update();
 		this.bullets.update();
+
+		this.currentLevel.update();
 	}
 
 	_handleInput(playerOne, playerTwo) {
