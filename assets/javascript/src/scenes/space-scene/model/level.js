@@ -27,6 +27,7 @@ export class Level {
 	}
 
 	start() {
+		this.started = true;
 		this.complete = false;
 		this.currentLineIndex = 0;
 		this._runLine();

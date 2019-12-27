@@ -35,8 +35,8 @@ export class GameState {
 		this._save();
 	}
 
-	finishedTutorial() {
-		this.finishedTutorial = true;
+	setTutorialFinished(bool) {
+		this.finishedTutorial = bool;
 		this._save();
 	}
 

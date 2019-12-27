@@ -8,7 +8,7 @@ import { Bullets } from './model/bullets.js';
 import { EntityCollection } from './services/entityCollection.js';
 import { CollisionValidation } from './services/collisionValidation.js';
 import { Level } from './model/level.js';
-import { Tutorial } from './tutorial/tutorial.js';
+import { Tutorial } from './model/tutorial.js';
 import { Bezier } from './model/bezier.js';
 
 export class SpaceScene extends Phaser.Scene {
@@ -27,6 +27,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.bullets = new Bullets(this);
 		this.killCount = 0;
 		this.finishedTutorial = gameState.hasFinishedTutorial();
+		this.levelStarted = false;
 
 		this.collisionValidation = new CollisionValidation(this.players, this.bullets);
 	}
@@ -83,14 +84,14 @@ export class SpaceScene extends Phaser.Scene {
 			this.players.add(playerTwo);
 		}
 
+		this.tutorial = new Tutorial(this);
+
 		this.currentLevel = this._createLevel();
 		this.currentLevel.draw();
-		this.time.addEvent({
-			delay: 1000,
-			callback: () => { this.currentLevel.start() },
-			callbackScope: this,
-			loop: false,
-		});
+
+		if (this.tutorial.isComplete()) {
+			this._startLevel();
+		}
 	}
 
 	update() {
@@ -107,24 +108,30 @@ export class SpaceScene extends Phaser.Scene {
 		}
 
 		this.currentLevel.update();
+		this.tutorial.update();
+
+		if (this.tutorial.isComplete() && !this.levelStarted) {
+			this._startLevel();
+		}
 	}
 
 	_handleInput(playerOne, playerTwo) {
 		if (playerOne) {
 			if (playerOne.canMove()) {
 				if (this.keys.p1Right.isDown) {
+					this.tutorial.completeTask('movement');
 					playerOne.accelerate(1);
-					if (this.tutorial) { this.tutorial.updateSubTask('playerOneHasMoved', true); }
 				} else if (this.keys.p1Left.isDown) {
+					this.tutorial.completeTask('movement');
 					playerOne.accelerate(-1);
-					if (this.tutorial) { this.tutorial.updateSubTask('playerOneHasMoved', true); }
 				} else if (this.keys.p1Slow.isDown) {
+					this.tutorial.completeTask('slowing');
 					playerOne.slow();
-					if (this.tutorial) { this.tutorial.updateSubTask('playerOneHasSlowed', true); }
 				}
 			}
 
 			if (this.keys.p1Fire.isDown) {
+				this.tutorial.completeTask('firing');
 				this._fireBullet(playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
 			}
 		}
@@ -133,13 +140,10 @@ export class SpaceScene extends Phaser.Scene {
 			if (playerTwo.canMove()) {
 				if (this.keys.p2Right.isDown) {
 					playerTwo.accelerate(1);
-					if (this.tutorial) { this.tutorial.updateSubTask('playerTwoHasMoved', true); }
 				} else if (this.keys.p2Left.isDown) {
 					playerTwo.accelerate(-1);
-					if (this.tutorial) { this.tutorial.updateSubTask('playerTwoHasMoved', true); }
 				} else if (this.keys.p2Slow.isDown) {
 					playerTwo.slow();
-					if (this.tutorial) { this.tutorial.updateSubTask('playerTwoHasSlowed', true); }
 				}
 			}
 
@@ -150,11 +154,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
-		if (this.tutorial) {
-			if (playerSpriteKey === Constants.keys.sprites.playerOne) { this.tutorial.updateSubTask('playerOneHasFired', true); }
-			if (playerSpriteKey === Constants.keys.sprites.playerTwo) { this.tutorial.updateSubTask('playerTwoHasFired', true); }
-		}
-
+		this.tutorial.completeTask('firing');
 		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
 			const bulletPosition = player.fireBullet();
 			this.bullets.addBullet(playerSpriteKey, bulletPosition);
@@ -185,5 +185,15 @@ export class SpaceScene extends Phaser.Scene {
 		});
 
 		return new Level(this, enemies, stars);
+	}
+
+	_startLevel() {
+		this.levelStarted = true;
+		this.time.addEvent({
+			delay: 1000,
+			callback: () => { this.currentLevel.start() },
+			callbackScope: this,
+			loop: false,
+		});
 	}
 }
