@@ -46,6 +46,10 @@ export class Level {
 		return this.complete;
 	}
 
+	setPlayersDead(bool) {
+		this.playersDead = bool;
+	}
+
 	getAliens() {
 		const aliens = this.currentLine ? this.currentLine.enemies : [];
 		return new EntityCollection(aliens);
@@ -73,7 +77,7 @@ export class Level {
 	_runLine() {
 		if (this.currentLineIndex < this.lines.length) {
 			const currentLine = this.lines[this.currentLineIndex];
-			this.currentLine = new LineExecution(this.scene, currentLine);
+			this.currentLine = new LineExecution(this.scene, currentLine, { playersDead: this.playersDead });
 			this.currentLine.execute();
 			this.lock = false;
 		} else {

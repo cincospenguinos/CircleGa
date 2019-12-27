@@ -3,13 +3,14 @@ import { EntityCollection } from './entityCollection.js';
 import { Enemy } from '../model/enemy.js';
 
 export class LineExecution {
-	constructor(scene, line) {
+	constructor(scene, line, config = {}) {
 		this.scene = scene;
 		this.currentLine = line;
 
 		this.enemies = [];
 		this.started = false;
 		this.complete = false;
+		this.playersDead = config.playersDead || false;
 	}
 
 	execute() {
@@ -42,6 +43,7 @@ export class LineExecution {
 	_enemyProps() {
 		const { duration, delay } = this.currentLine;
 		const firstPosition = this.currentLine.paths[0].getPoints()[0];
+		const trueDuration = this.playersDead ? duration / 2 : duration;
 
 		return {
 			scene: this.scene,
@@ -49,7 +51,7 @@ export class LineExecution {
 			y: firstPosition.y,
 			lines: this.currentLine.paths,
 			tweenConfig: {
-				duration,
+				duration: trueDuration,
 			},
 			key: Constants.keys.sprites.enemyOne
 		};

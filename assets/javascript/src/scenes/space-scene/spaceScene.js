@@ -102,6 +102,10 @@ export class SpaceScene extends Phaser.Scene {
 		this.players.update();
 		this.bullets.update();
 
+		if (!playerOne && !playerTwo) {
+			this.currentLevel.setPlayersDead(true);
+		}
+
 		this.currentLevel.update();
 	}
 
