@@ -1,4 +1,5 @@
 import { Constants } from '../../../const/index.js';
+import { Response } from './response.js';
 
 const END_TRANSMISSION = '__end_transmission__';
 
@@ -19,36 +20,38 @@ export class Communication {
 	show() {
 		this.scene.add.text(25, 25, this.currentMessage.text);
 
+		this.responses = [];
 		this.currentResponses.forEach((r, index) => {
 			const x = Constants.coordinates.centerOfScreen.x;
 			const y = Constants.dimensions.screen.height - 30 * (index + 1);
-			const position = { x, y };
 
-			const response = this.scene.add.text(position.x, position.y - 8, r.text);
-			response.setTint(0xFF4444);
-
-			const border = this.scene.add.image(position.x, position.y, Constants.keys.sprites.communicationBorder);
-			border.setInteractive();
-			border.setTint(0x000000);
-
-			border.on('pointerover', () => {
-				border.setTint(0xFF0000);
-				response.setTint(0xFF0000);
-			});
-
-			border.on('pointerout', () => {
-				border.setTint(0x000000);
-				response.setTint(0xFF4444);
-			});
-
-			border.on('pointerdown', () => {
-				this.selectedResponse(r.key);
+			const responseObj = new Response({
+				scene: this.scene,
+				x,
+				y,
+				responseKey: r.key,
+				text: r.text,
+				key: Constants.keys.sprites.communicationBorder,
+				onSelect: () => {
+					console.log('yo');
+				}
 			});
 		});
 	}
 
+	endTransmission() {
+		console.log('Transmission ended.');
+	}
+
 	selectedResponse(key) {
-		console.log(key);
+		// TODO: Move response up to next line
+		this._clearOldResponses();
+
+		const nextMessageKey = this._mappings[key];
+
+		if (nextMessageKey === END_TRANSMISSION) {
+			this.endTransmission();
+		}
 	}
 
 	isComplete() {
@@ -64,5 +67,10 @@ export class Communication {
 
 				return this._responses[key];
 			});
+	}
+
+	_clearOldResponses() {
+		this.responses.forEach(obj => obj.destroy());
+		this.responses = [];
 	}
 }
