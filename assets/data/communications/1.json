@@ -1,0 +1,20 @@
+{
+	"messages": {
+		"excellentWork": { "text": "Excellent work. I'm proud of you.", "responses": ["forWhat", "ofCourse"] },
+		"removedOutpost": { "text": "For removing that outpost. We've been plagued by them for weeks.", "responses": ["whatNext"] },
+		"yourTask": { "text": "Your task is to move in closer to the planet. The craters are rich with ore, and that needs to be secured.", "responses": ["yesSir"] }
+	},
+	"responses": {
+		"forWhat": { "key": "forWhat", "text": "For what?", "responses": ["removedOutpost"] },
+		"ofCourse": { "key": "ofCourse", "text": "Of course.", "responses": ["yourTask"] },
+		"whatNext": { "key": "whatNext", "text": "What next?", "responses": ["yourTask"] },
+		"yesSir": { "key": "yesSir", "text": "Yes, sir.", "responses": ["__end_transmission__"] }
+	},
+	"mappings": {
+		"forWhat": "removedOutpost",
+		"ofCourse": "yourTask",
+		"whatNext": "yourTask",
+		"yesSir": "__end_transmission__"
+	},
+	"firstMessageKey": "excellentWork"
+}
