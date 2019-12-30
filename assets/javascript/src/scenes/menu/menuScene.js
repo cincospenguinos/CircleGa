@@ -63,6 +63,8 @@ export class MenuScene extends Phaser.Scene {
 				}
 			});
 		});
+
+		this.scene.start(Constants.scenes.communicationScene, {});
 	}
 
 	update() {

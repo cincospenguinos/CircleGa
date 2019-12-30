@@ -92,4 +92,11 @@ export const SPRITES = {
 			frameHeight: 32,
 		},
 	},
+	communicationBorder: {
+		location: `${spriteDir}/communicationBorder.png`,
+		config: {
+			frameWidth: 900,
+			frameHeight: 30,
+		}
+	}
 };
