@@ -1,5 +1,6 @@
 import { Constants } from '../../../const/index.js';
 import { Response } from './response.js';
+import { Printer } from '../services/printer.js';
 
 const END_TRANSMISSION = {
 	key: '__end_transmission__',
@@ -17,11 +18,13 @@ export class Communication {
 		this.currentMessage = this._messages[data.firstMessageKey];
 		this.currentResponses = this._getCurrentResponses();
 
+		this.printer = new Printer(this.scene);
+
 		this.complete = false;
 	}
 
 	show() {
-		this.scene.add.text(25, 25, this.currentMessage.text);
+		this.printer.printMessage(this.currentMessage.text);
 
 		this.responses = [];
 		this.currentResponses.forEach((r, index) => {
@@ -31,8 +34,7 @@ export class Communication {
 
 			const responseObj = new Response({
 				scene: this.scene,
-				x,
-				y,
+				x, y,
 				text: r.text,
 				key: Constants.keys.sprites.communicationBorder,
 				onSelect,
@@ -43,9 +45,7 @@ export class Communication {
 	}
 
 	selectedResponse(key) {
-		const selectedResponse = this.scene.add.text(25, 50, this._responses[key].text);
-		selectedResponse.setTint(0xFF2222);
-
+		this.printer.printResponse(this._responses[key].text);
 		this._clearOldResponses();
 
 		const nextMessageKey = this._mappings[key];
@@ -56,7 +56,8 @@ export class Communication {
 	}
 
 	endTransmission() {
-		this.scene.add.text(25, 75, END_TRANSMISSION.text);
+		this.printer.printMessage(END_TRANSMISSION.text);
+		this.complete = true;
 	}
 
 	isComplete() {
