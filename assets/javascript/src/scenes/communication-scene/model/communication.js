@@ -1,5 +1,7 @@
 import { Constants } from '../../../const/index.js';
 
+const END_TRANSMISSION = '__end_transmission__';
+
 export class Communication {
 	constructor(scene, data) {
 		this.scene = scene;
@@ -14,7 +16,7 @@ export class Communication {
 		this.complete = false;
 	}
 
-	show () {
+	show() {
 		this.scene.add.text(25, 25, this.currentMessage.text);
 
 		this.currentResponses.forEach((r, index) => {
@@ -40,10 +42,13 @@ export class Communication {
 			});
 
 			border.on('pointerdown', () => {
-				// TODO: This
-				console.log(`Selected response ${r.text}`);
+				this.selectedResponse(r.key);
 			});
 		});
+	}
+
+	selectedResponse(key) {
+		console.log(key);
 	}
 
 	isComplete() {

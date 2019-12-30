@@ -3,7 +3,7 @@
 		"hello": { "text": "Hello there!", "responses": ["hi"] }
 	},
 	"responses": {
-		"hi": { "text": "Hi!", "responses": ["__end_transmission__"] }
+		"hi": { "key": "hi", "text": "Hi!", "responses": ["__end_transmission__"] }
 	},
 	"mappings": {
 		"hi": "__end_transmission__"
