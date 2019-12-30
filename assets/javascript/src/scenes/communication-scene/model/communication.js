@@ -7,6 +7,16 @@ const END_TRANSMISSION = {
 	text: '45 78 63 65 70 74 69 6f 6e 20 69 6e 20 74 68 72 65 61 64 20 22 6d 61 69 6e 22 20 6a 61 76 61 2e 6e 65 74 2e 53 6f 63 6b 65 74 45 78 63 65 70 74 69 6f 6e 3a 20 53 6f 63 6b 65 74 20 63 6c 6f 73 65 64',
 }
 
+/**
+ * Okay, so this is how it works:
+ *
+ * - The JSON file has four keys and four values: messages, responses, mappings, and firstMessageKey
+ * - The first three are hashes, the last is a single string
+ * - Each message or response has a text value, a key, and an array of strings representing response keys
+ * - The mappings hash simply maps responses from the player to other messages to be printed
+ * - The first message key is the first message to present to the player
+ * - This class simply holds and presents all of that information in a nice way
+ */
 export class Communication {
 	constructor(scene, data) {
 		this.scene = scene;
@@ -26,11 +36,11 @@ export class Communication {
 	show() {
 		this.printer.printMessage(this.currentMessage.text);
 
-		this.responses = [];
+		this.presentedResponses = [];
 		this.currentResponses.forEach((r, index) => {
 			const x = Constants.coordinates.centerOfScreen.x;
 			const y = Constants.dimensions.screen.height - 30 * (index + 1);
-			const onSelect = () => this.selectedResponse(r.key);
+			const onSelect = () => this.responseSelected(r.key);
 
 			const responseObj = new Response({
 				scene: this.scene,
@@ -40,11 +50,11 @@ export class Communication {
 				onSelect,
 			});
 
-			this.responses.push(responseObj);
+			this.presentedResponses.push(responseObj);
 		});
 	}
 
-	selectedResponse(key) {
+	responseSelected(key) {
 		this.printer.printResponse(this._responses[key].text);
 		this._clearOldResponses();
 
@@ -52,7 +62,12 @@ export class Communication {
 
 		if (nextMessageKey === END_TRANSMISSION.key) {
 			this.endTransmission();
+			return;
 		}
+
+		this.currentMessage = this._messages[nextMessageKey];
+		this.currentResponses = this._getCurrentResponses();
+		this.show();
 	}
 
 	endTransmission() {
@@ -76,7 +91,7 @@ export class Communication {
 	}
 
 	_clearOldResponses() {
-		this.responses.forEach(obj => obj.destroy());
-		this.responses = [];
+		this.presentedResponses.forEach(obj => obj.destroy());
+		this.presentedResponses = [];
 	}
 }

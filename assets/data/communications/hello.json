@@ -1,12 +1,17 @@
 {
 	"messages": {
-		"hello": { "text": "Hello there!", "responses": ["hi"] }
+		"hello": { "text": "Hello there!", "responses": ["hi"] },
+		"howAreYou": { "text": "How are you?", "responses": ["imGood", "imBad"] }
 	},
 	"responses": {
-		"hi": { "key": "hi", "text": "Hi!", "responses": ["__end_transmission__"] }
+		"hi": { "key": "hi", "text": "Hi!", "responses": ["howAreYou"] },
+		"imGood": { "key": "imGood", "text": "I'm good, thank you!", "responses": ["__end_transmission__"] },
+		"imBad": { "key": "imBad", "text": "I'm bad, thanks!", "responses": ["__end_transmission__"] }
 	},
 	"mappings": {
-		"hi": "__end_transmission__"
+		"hi": "howAreYou",
+		"imGood": "__end_transmission__",
+		"imBad": "__end_transmission__"
 	},
 	"firstMessageKey": "hello"
 }
