@@ -16,7 +16,12 @@ export class Response extends Phaser.GameObjects.Image {
 		this.setInteractive();
 		this.on('pointerover', () => this._onHover());
 		this.on('pointerout', () => this._onOut());
-		this.on('pointerdown', () => this.onSelect(this.responseKey));
+		this.on('pointerdown', () => this.onSelect());
+	}
+
+	destroy() {
+		this.responseText.destroy();
+		super.destroy();
 	}
 
 	_onHover() {

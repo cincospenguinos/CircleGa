@@ -1,7 +1,10 @@
 import { Constants } from '../../../const/index.js';
 import { Response } from './response.js';
 
-const END_TRANSMISSION = '__end_transmission__';
+const END_TRANSMISSION = {
+	key: '__end_transmission__',
+	text: '45 78 63 65 70 74 69 6f 6e 20 69 6e 20 74 68 72 65 61 64 20 22 6d 61 69 6e 22 20 6a 61 76 61 2e 6e 65 74 2e 53 6f 63 6b 65 74 45 78 63 65 70 74 69 6f 6e 3a 20 53 6f 63 6b 65 74 20 63 6c 6f 73 65 64',
+}
 
 export class Communication {
 	constructor(scene, data) {
@@ -24,34 +27,36 @@ export class Communication {
 		this.currentResponses.forEach((r, index) => {
 			const x = Constants.coordinates.centerOfScreen.x;
 			const y = Constants.dimensions.screen.height - 30 * (index + 1);
+			const onSelect = () => this.selectedResponse(r.key);
 
 			const responseObj = new Response({
 				scene: this.scene,
 				x,
 				y,
-				responseKey: r.key,
 				text: r.text,
 				key: Constants.keys.sprites.communicationBorder,
-				onSelect: () => {
-					console.log('yo');
-				}
+				onSelect,
 			});
+
+			this.responses.push(responseObj);
 		});
 	}
 
-	endTransmission() {
-		console.log('Transmission ended.');
-	}
-
 	selectedResponse(key) {
-		// TODO: Move response up to next line
+		const selectedResponse = this.scene.add.text(25, 50, this._responses[key].text);
+		selectedResponse.setTint(0xFF2222);
+
 		this._clearOldResponses();
 
 		const nextMessageKey = this._mappings[key];
 
-		if (nextMessageKey === END_TRANSMISSION) {
+		if (nextMessageKey === END_TRANSMISSION.key) {
 			this.endTransmission();
 		}
+	}
+
+	endTransmission() {
+		this.scene.add.text(25, 75, END_TRANSMISSION.text);
 	}
 
 	isComplete() {
