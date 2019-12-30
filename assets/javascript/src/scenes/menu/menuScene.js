@@ -1,5 +1,6 @@
 import { Constants } from '../../const/index.js';
 import { GameState } from '../../model/gameState.js';
+import { KonamiCodeListener } from './konamiCodeListener.js';
 
 export class MenuScene extends Phaser.Scene {
 	constructor() {
@@ -16,6 +17,16 @@ export class MenuScene extends Phaser.Scene {
 			},
 			current: 'onePlayer',
 		}
+
+		this.keyValues = {
+			up: 'up',
+			down: 'down',
+			select: 'enter',
+			left: 'left',
+			right: 'right',
+			b: 'B',
+			a: 'A',
+		};
 	}
 
 	preload() {
@@ -26,11 +37,7 @@ export class MenuScene extends Phaser.Scene {
 		this.load.audio(Constants.keys.sounds.switchOptions, Constants.sounds.switchOptions.location);
 		this.load.audio(Constants.keys.sounds.acceptOption, Constants.sounds.acceptOption.location);
 
-		this.keys = this.input.keyboard.addKeys({
-			up: 'up',
-			down: 'down',
-			select: 'enter',
-		});
+		this.keys = this.input.keyboard.addKeys(this.keyValues);
 	}
 
 	create() {
@@ -45,6 +52,17 @@ export class MenuScene extends Phaser.Scene {
 		this.acceptOptionSound = this.sound.add(Constants.keys.sounds.acceptOption, Constants.sounds.acceptOption.config);
 
 		this.graphics = this.add.graphics();
+
+		this.konami = new KonamiCodeListener();
+
+		Object.keys(this.keyValues).forEach((keyName) => {
+			const keyObj = this.keys[keyName];
+			keyObj.addListener('down', () => {
+				if (this.konami.keyPressed(keyName) || this.konami.isComplete()) {
+					this.scene.start(Constants.scenes.levelEditorScene, {});
+				}
+			});
+		});
 	}
 
 	update() {
