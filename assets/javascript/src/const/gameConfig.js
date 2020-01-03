@@ -18,4 +18,5 @@ export const ORDER = [
 	'level-2',
 	'level-3',
 	'communication-1',
+	'end',
 ];

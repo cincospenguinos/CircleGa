@@ -4,4 +4,5 @@ export const SCENES = {
 	levelEditorScene: 'LevelEditorScene',
 	textScene: 'TextScene',
 	communicationScene: 'CommunicationScene',
+	endScene: 'EndScene',
 };

@@ -7,10 +7,8 @@ const FINISHED_TUTORIAL = false;
 
 export class GameState {
 	constructor(opts) {
-		this.currentLevel = opts.currentLevel;
-		this.currentText = opts.currentText;
+		this.index = opts.index || 0;
 		this.finishedTutorial = opts.finishedTutorial;
-		this.index = 0;
 	}
 
 	static getInstance() {
@@ -29,6 +27,10 @@ export class GameState {
 	}
 
 	textShown() {
+		this.index += 1;
+	}
+
+	communicationComplete() {
 		this.index += 1;
 	}
 
@@ -73,6 +75,8 @@ export class GameState {
 				return Constants.scenes.textScene;
 			case 'communication':
 				return Constants.scenes.communicationScene;
+			case 'end':
+				return Constants.scenes.endScene;
 			default:
 				throw `No scene for ${key}`;
 		}

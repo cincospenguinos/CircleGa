@@ -3,19 +3,21 @@ import { TextExcerpt } from './model/textExcerpt.js';
 import { GameState } from '../../model/gameState.js';
 
 export class TextScene extends Phaser.Scene {
+	init(data) {
+		this.textKey = data.content;
+	}
+
 	constructor() {
 		super({ key: Constants.scenes.textScene });
 	}
 
 	preload() {
-		const gameState = GameState.getInstance();
-		this.currentTextKey = Constants.textOrder[gameState.getCurrentTextIndex()];
-		this.load.json(this.currentTextKey, Constants.texts[this.currentTextKey].location);
+		this.load.json(this.textKey, `assets/data/text/${this.textKey}`);
 		this.load.audio(Constants.keys.sounds.theMachine1, Constants.sounds.theMachine1.location);
 	}
 
 	create() {
-		const excerpt = new TextExcerpt(this.cache.json.get(this.currentTextKey));
+		const excerpt = new TextExcerpt(this.cache.json.get(this.textKey));
 		this._showText(excerpt);
 		this.keys = this.input.keyboard.addKeys({
 			space: 'SPACE',
