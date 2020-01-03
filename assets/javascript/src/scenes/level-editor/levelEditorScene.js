@@ -19,11 +19,6 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		this.paths = [];
 		this.beziers = [];
-		this.tweenConfig = {
-			duration: 500,
-			amount: 1,
-			delay: 300,
-		};
 		this.stars = {
 			red: [],
 			blue: [],
@@ -116,6 +111,7 @@ export class LevelEditorScene extends Phaser.Scene {
 	_runEnemy() {
 		const { centerOfScreen } = Constants.coordinates;
 		const lines = this.factory.getCurrentLine();
+		const tweenConfig = this.factory.getTweenConfig();
 
 		new Enemy({
 			scene: this,
@@ -123,7 +119,7 @@ export class LevelEditorScene extends Phaser.Scene {
 			y: centerOfScreen.y,
 			key: Constants.sprites.enemyOne.key,
 			lines,
-			tweenConfig: this.tweenConfig,
+			tweenConfig,
 		});
 	}
 }

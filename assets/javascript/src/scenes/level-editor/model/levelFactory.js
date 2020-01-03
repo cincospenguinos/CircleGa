@@ -54,6 +54,7 @@ export class LevelFactory {
 		this.lines.push({
 			duration: this.tweenConfig.duration,
 			amount: this.tweenConfig.amount,
+			delay: this.tweenConfig.delay,
 			paths: this.paths,
 		});
 
@@ -82,6 +83,10 @@ export class LevelFactory {
 			duration,
 			delay,
 		}
+	}
+
+	getTweenConfig() {
+		return this.tweenConfig;
 	}
 
 	_nextPositions() {
