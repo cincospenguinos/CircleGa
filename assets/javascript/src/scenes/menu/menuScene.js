@@ -63,8 +63,6 @@ export class MenuScene extends Phaser.Scene {
 				}
 			});
 		});
-
-		this.scene.start(Constants.scenes.communicationScene, {});
 	}
 
 	update() {
@@ -87,7 +85,8 @@ export class MenuScene extends Phaser.Scene {
 		this.backgroundMusic.stop();
 		GameState.init();
 
-		setTimeout(() => this.scene.start(Constants.scenes.spaceScene, { players }), 500);
+		const nextScene = GameState.nextSceneInfo({ players });
+		setTimeout(() => this.scene.start(nextScene.key, nextScene), 500);
 		this.scene.pause();
 	}
 

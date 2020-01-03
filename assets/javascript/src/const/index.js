@@ -1,5 +1,5 @@
 import { SPRITES } from './sprites.js';
-import { DIMENSIONS, CONFIG } from './gameConfig.js';
+import { DIMENSIONS, CONFIG, ORDER } from './gameConfig.js';
 import { COORDINATES } from './coordinates.js';
 import { ENEMY_TYPES } from './enemies.js';
 import { BRIEFINGS } from './briefings.js';
@@ -47,6 +47,7 @@ export const Constants = {
 	texts: appendKeysTo(TEXT),
 	levels: appendKeysTo(LEVELS),
 	levelOrder: LEVEL_ORDER,
+	order: ORDER,
 	textOrder: TEXT_ORDER,
 	communications: appendKeysTo(COMMUNICATIONS),
 };

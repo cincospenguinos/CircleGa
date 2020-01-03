@@ -18,10 +18,9 @@ export class SpaceScene extends Phaser.Scene {
 
 	init(data) {
 		const gameState = GameState.getInstance();
-		const levelKey = Constants.levelOrder[gameState.getCurrentLevelIndex()];
 
 		this.playerCount = data.players;
-		this.levelInfo = Constants.levels[levelKey];
+		this.levelInfo = data.content;
 
 		this.players = new EntityCollection();
 		this.bullets = new Bullets(this);
@@ -33,7 +32,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	preload() {
-		this.load.json(this.levelInfo.key, this.levelInfo.location);
+		this._loadLevel();
 
 		const {
 			background, playerOne, playerTwo,
@@ -124,6 +123,11 @@ export class SpaceScene extends Phaser.Scene {
 		}
 	}
 
+	_loadLevel() {
+		this.levelKey = this.levelInfo.replace('.json', '-level');
+		this.load.json(this.levelKey, `assets/data/levels/${this.levelInfo}`);
+	}
+
 	_handleInput(playerOne, playerTwo) {
 		if (playerOne) {
 			if (playerOne.canMove()) {
@@ -181,7 +185,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_createLevel() {
-		const levelData = this.cache.json.get(this.levelInfo.key);
+		const levelData = this.cache.json.get(this.levelKey);
 
 		const stars = levelData.stars;
 		const enemies = levelData.enemies.map((enemyData) => {
@@ -208,7 +212,7 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_completeLevel() {
-		// GameState.getInstance().levelComplete();
+		GameState.getInstance().levelComplete();
 		this.scene.start(Constants.scenes.textScene, {});
 	}
 }
