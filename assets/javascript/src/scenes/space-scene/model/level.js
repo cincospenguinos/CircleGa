@@ -31,8 +31,7 @@ export class Level {
 	start() {
 		this.started = true;
 		this.currentLineIndex = 0;
-		this._runLine();
-		debugger;
+		setTimeout(() => this._runLine(), 1000);
 	}
 
 	update() {

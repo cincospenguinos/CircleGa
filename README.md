@@ -30,6 +30,9 @@ This can be boiled down to simply level, text, level, text, where each text is e
 
 ## TODO
 
+- [ ] Fix transitions
+	* I like the idea of having to accept a transmission when migrating to a communication scene,
+	  and the text just appearing on screen when it's time
 - [ ] Make the ring larger--covering almost the whole screen
 	* It's hard to maneuver with too little space, and I'd like to explore having the ring be bigger
 
@@ -44,19 +47,9 @@ This can be boiled down to simply level, text, level, text, where each text is e
 - [ ] Explosion animation for aliens
 - [ ] Death animation for the aliens
 
-### Story
-
-- [ ] Who are the main characters?
-- [ ] What is the main conflict?
-- [ ] How does the story proceed?
-- [ ] Write the tutorial segment
-- [ ] Write the story beats
-
 ### Level design
 
-- [ ] Explore level design space created by the rules of the game
 - [ ] Change the text of the menu screen to whatever it is you decide, Andre
-- [ ] Create a set of levels that teach the level design space and how to properly play the game
 
 ### Code
 
@@ -77,6 +70,13 @@ This can be boiled down to simply level, text, level, text, where each text is e
 
 Just to keep my spirits up, I'm putting everything we've finished here.
 
+- [x] Explore level design space created by the rules of the game
+- [x] Create a set of levels that teach the level design space and how to properly play the game
+- [x] Who are the main characters?
+- [x] What is the main conflict?
+- [x] How does the story proceed?
+- [x] Write the tutorial segment
+- [x] Write the story beats
 - [x] Fix how aliens come in
 - [x] Music plays while the screen shows the text
 	- [x] Create three separate pieces of music from the main machine rolls forward piece

@@ -8,7 +8,7 @@ const FINISHED_TUTORIAL = false;
 export class GameState {
 	constructor(opts) {
 		this.index = opts.index || 0;
-		this.finishedTutorial = true || opts.finishedTutorial;
+		this.finishedTutorial = opts.finishedTutorial;
 	}
 
 	static getInstance() {

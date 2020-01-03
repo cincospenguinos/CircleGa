@@ -198,6 +198,6 @@ export class SpaceScene extends Phaser.Scene {
 
 		const instance = GameState.getInstance();
 		instance.levelComplete();
-		instance.transition(this);
+		setTimeout(() => GameState.getInstance().transition(this), 1000);
 	}
 }
