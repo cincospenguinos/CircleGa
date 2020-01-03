@@ -15,7 +15,14 @@ const inputViewHtml = `
 		}
 	</style>
 
-	<div id="input-view-container"></div>
+	<div id="input-view-container">
+		<div class="input-item">
+			<span style="color: red;">Red stars COUNTER CLOCKWISE</span>
+		</div>
+		<div class="input-item">
+			<span style="color: blue;">Blue stars CLOCKWISE</span>
+		</div>
+	</div>
 `;
 
 export class InputView {

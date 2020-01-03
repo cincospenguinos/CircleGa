@@ -26,7 +26,6 @@ export class SpaceScene extends Phaser.Scene {
 		this.bullets = new Bullets(this);
 		this.killCount = 0;
 		this.finishedTutorial = gameState.hasFinishedTutorial();
-		this.levelStarted = false;
 
 		this.collisionValidation = new CollisionValidation(this.players, this.bullets);
 	}
@@ -64,6 +63,8 @@ export class SpaceScene extends Phaser.Scene {
 			p2Slow: this.input.keyboard.addKey('S'),
 			p2Fire: this.input.keyboard.addKey('W'),
 		};
+
+		this.tutorial = new Tutorial(this);
 	}
 
 	create() {
@@ -83,43 +84,34 @@ export class SpaceScene extends Phaser.Scene {
 			this.players.add(playerTwo);
 		}
 
-		this.tutorial = new Tutorial(this);
-
 		this.currentLevel = this._createLevel();
 		this.currentLevel.draw();
-
-		if (this.tutorial.isComplete()) {
-			this._startLevel();
-		}
 	}
 
 	update() {
-		const playerOne = this.players.get(Constants.sprites.playerOne.key);
-		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
+		if (this.currentLevel) {
+			const playerOne = this.players.get(Constants.sprites.playerOne.key);
+			const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
-		this._handleInput(playerOne, playerTwo);
-		this.collisionValidation.handleCollisions(this.currentLevel.getAliens());
-		this.players.update();
-		this.bullets.update();
+			this._handleInput(playerOne, playerTwo);
+			this.collisionValidation.handleCollisions(this.currentLevel.getAliens());
+			this.players.update();
+			this.bullets.update();
 
-		if (!playerOne && !playerTwo) {
-			this.currentLevel.setPlayersDead(true);
-		}
+			if (!playerOne && !playerTwo) {
+				this.currentLevel.setPlayersDead(true);
+			}
 
-		this.currentLevel.update();
-		this.tutorial.update();
+			this.currentLevel.update();
+			this.tutorial.update();
 
-		if (this.tutorial.isComplete() && !this.levelStarted) {
-			this._startLevel();
-		}
+			if (this.tutorial.isComplete() && !this.currentLevel.isStarted()) {
+				this.currentLevel.start();
+			}
 
-		if (this.currentLevel.isComplete()) {
-			this.time.addEvent({
-				delay: 2500,
-				callback: () => { this._completeLevel() },
-				callbackScope: this,
-				loop: false,
-			});
+			if (this.currentLevel.isComplete()) {
+				this._completeLevel();
+			}
 		}
 	}
 
@@ -201,22 +193,11 @@ export class SpaceScene extends Phaser.Scene {
 		return new Level(this, enemies, stars);
 	}
 
-	_startLevel() {
-		this.levelStarted = true;
-		this.time.addEvent({
-			delay: 1000,
-			callback: () => { this.currentLevel.start() },
-			callbackScope: this,
-			loop: false,
-		});
-	}
-
 	_completeLevel() {
+		this.currentLevel = null;
+
 		const instance = GameState.getInstance();
 		instance.levelComplete();
-		instance.save();
-
-		const sceneInfo = instance.getSceneInfo();
-		this.scene.start(sceneInfo.key, sceneInfo);
+		instance.transition(this);
 	}
 }

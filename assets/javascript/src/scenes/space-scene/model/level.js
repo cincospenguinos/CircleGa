@@ -17,6 +17,8 @@ export class Level {
 
 		this.enemies = [];
 		this.lock = false;
+		this.started = false;
+		this.complete = false;
 	}
 
 	draw() {
@@ -28,9 +30,9 @@ export class Level {
 
 	start() {
 		this.started = true;
-		this.complete = false;
 		this.currentLineIndex = 0;
 		this._runLine();
+		debugger;
 	}
 
 	update() {
@@ -43,8 +45,12 @@ export class Level {
 		}
 	}
 
+	isStarted() {
+		return this.started;
+	}
+
 	isComplete() {
-		return this.complete;
+		return this.started && this.complete;
 	}
 
 	setPlayersDead(bool) {

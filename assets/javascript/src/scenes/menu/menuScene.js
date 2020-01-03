@@ -81,12 +81,13 @@ export class MenuScene extends Phaser.Scene {
 	}
 
 	makeSelection() {
-		const players = this.selection.current === 'onePlayer' ? 1 : 2;
-		this.backgroundMusic.stop();
-
-		const nextScene = GameState.getInstance().getSceneInfo({ players });
-		setTimeout(() => this.scene.start(nextScene.key, nextScene), 500);
 		this.scene.pause();
+		this.backgroundMusic.stop();
+		
+		const players = this.selection.current === 'onePlayer' ? 1 : 2;
+
+		const instance = GameState.getInstance();
+		instance.transition(this, { players });
 	}
 
 	drawSelection() {

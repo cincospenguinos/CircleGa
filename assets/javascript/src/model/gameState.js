@@ -8,7 +8,7 @@ const FINISHED_TUTORIAL = false;
 export class GameState {
 	constructor(opts) {
 		this.index = opts.index || 0;
-		this.finishedTutorial = opts.finishedTutorial;
+		this.finishedTutorial = true || opts.finishedTutorial;
 	}
 
 	static getInstance() {
@@ -36,6 +36,12 @@ export class GameState {
 
 	setTutorialFinished(bool) {
 		this.finishedTutorial = bool;
+	}
+
+	transition(scene, opts = {}) {
+		scene.scene.stop();
+		const info = this.getSceneInfo(opts);
+		setTimeout(() => scene.scene.start(info.key, info), 1000);
 	}
 
 	getSceneInfo() {

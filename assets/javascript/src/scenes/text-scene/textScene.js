@@ -40,10 +40,11 @@ export class TextScene extends Phaser.Scene {
 		});
 
 		if (moveOn) {
-			GameState.getInstance().textShown();
-			this.scene.start(Constants.scenes.spaceScene);
 			this.backgroundMusic.stop();
-			return;
+
+			const instance = GameState.getInstance();
+			instance.textShown();
+			instance.transition(this);
 		}
 	}
 

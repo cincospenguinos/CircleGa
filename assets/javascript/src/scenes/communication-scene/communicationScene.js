@@ -23,19 +23,9 @@ export class CommunicationScene extends Phaser.Scene {
 
 	update() {
 		if (this.communication.isComplete()) {
-
-			this.time.addEvent({
-				delay: 1000,
-				callback: () => {
-					const instance = GameState.getInstance();
-					instance.communicationComplete();
-
-					const sceneInfo = instance.getSceneInfo();
-					this.scene.start(sceneInfo.key, sceneInfo);
-				},
-				callbackScope: this,
-				loop: false,
-			});
+			const instance = GameState.getInstance();
+			instance.communicationComplete();
+			instance.transition(this);
 		}
 	}
 }
