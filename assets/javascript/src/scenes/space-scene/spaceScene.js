@@ -212,7 +212,11 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	_completeLevel() {
-		GameState.getInstance().levelComplete();
-		this.scene.start(Constants.scenes.textScene, {});
+		const instance = GameState.getInstance();
+		instance.levelComplete();
+		instance.save();
+
+		const sceneInfo = instance.getSceneInfo();
+		this.scene.start(sceneInfo.key, sceneInfo);
 	}
 }

@@ -14,39 +14,26 @@ export class GameState {
 	}
 
 	static getInstance() {
-		return new GameState({
-			index: parseInt(localStorage.getItem(CURRENT_INDEX)),
-			currentText: parseInt(localStorage.getItem(CURRENT_TEXT)),
-			finishedTutorial: (localStorage.getItem(FINISHED_TUTORIAL) == 'true'),
-		});
-	}
+		if (!this.instance) {
+			this.instance = new GameState({
+				index: 0,
+				finishedTutorial: false,
+			});
+		}
 
-	static init() {
-		new GameState({
-			index: 0,
-			currentText: 0,
-			finishedTutorial: false,
-		})._save();
-	}
-
-	static nextSceneInfo(opts = {}) {
-		const data = this.getInstance().getSceneInfo();
-		return data;
+		return this.instance;
 	}
 
 	levelComplete() {
 		this.index += 1;
-		this._save();
 	}
 
 	textShown() {
-		this.currentText += 1;
-		this._save();
+		this.index += 1;
 	}
 
 	setTutorialFinished(bool) {
 		this.finishedTutorial = bool;
-		this._save();
 	}
 
 	getSceneInfo() {
@@ -59,6 +46,13 @@ export class GameState {
 		}
 	}
 
+	save() {
+		localStorage.setItem(CURRENT_INDEX, this.index);
+		localStorage.setItem(CURRENT_LEVEL, this.currentLevel);
+		localStorage.setItem(CURRENT_TEXT, this.currentText);
+		localStorage.setItem(FINISHED_TUTORIAL, this.finishedTutorial);
+	}
+
 	getCurrentLevelIndex() {
 		return this.currentLevel - 1;
 	}
@@ -69,13 +63,6 @@ export class GameState {
 
 	hasFinishedTutorial() {
 		return this.finishedTutorial;
-	}
-
-	_save() {
-		localStorage.setItem(CURRENT_INDEX, this.index);
-		localStorage.setItem(CURRENT_LEVEL, this.currentLevel);
-		localStorage.setItem(CURRENT_TEXT, this.currentText);
-		localStorage.setItem(FINISHED_TUTORIAL, this.finishedTutorial);
 	}
 
 	_sceneFor(key) {
