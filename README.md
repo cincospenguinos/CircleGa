@@ -1,6 +1,6 @@
 # dest.MF
 
-An homage to Galaga.
+An homage to and deconstruction of Galaga.
 
 ## Starting the project
 
@@ -9,32 +9,25 @@ An homage to Galaga.
 3. Run `bundle exec jekyll s`
 4. The game is now running on `localhost:4000`
 
-## Organization
-
-The organization of the game is as follows:
-
-* Tutorial level showing the ropes on how to play
-* Level 1
-* Story exposition 1
-* Level 2
-* Text exposition 1
-
-And then
-
-* Level
-* Story
-* Level
-* Text
-
-This can be boiled down to simply level, text, level, text, where each text is either a story beat or a citation.
-
 ## TODO
 
-- [ ] Fix transitions
-	* I like the idea of having to accept a transmission when migrating to a communication scene,
-	  and the text just appearing on screen when it's time
+Here's things we need to work on sooner rather than later:
+
+- [ ] Put on screen what keys to press to make a selection
+- [ ] Crashing should cause a player to respawn
+- [ ] The first level is too long at 12 lines
+- [ ] The second and third levels are too short
+- [ ] Use single melody for the entire thing--the opening melody should be used in text excerpts
 - [ ] Make the ring larger--covering almost the whole screen
 	* It's hard to maneuver with too little space, and I'd like to explore having the ring be bigger
+- [ ] Handle transitions in a better way
+	* I like the idea of having to accept a transmission with the enter key when migrating to a communication scene, and the text just appearing on screen when it's time
+- [ ] Consider making a pause button, depending on the length of the game
+- [ ] Consider making a really big level editor screen size so you can modify paths more easily
+	* This would open up the number of places stars could be
+- [ ] Consider causing stars to flash in the order enemies will go by so patterns are telegraphed to the player
+- [ ] Consider changing the color of the stars to something else--red and blue are coded as the players
+- [ ] Consider dropping the second player altogether--it's not really something this experience warrants
 
 ### Art and Animation
 
@@ -134,7 +127,6 @@ Various pieces of enlightenment philosophy and excerpts of literature about the 
 * [Guns](https://opengameart.org/content/4-projectile-launches)
 * [Atmospheric sky sound](https://opengameart.org/content/red-eclipse-sounds)
 * [Another gun sound](https://opengameart.org/content/residue-sfx)
-* Down the line, let's use [Phoenix and Elixir](https://www.youtube.com/watch?v=I5L9_cXwBcU) for a multiplayer server
 * [Check out this thing about shaders!](https://www.dynetisgames.com/2018/12/09/shaders-phaser-3/)
 
 ## Ideas
