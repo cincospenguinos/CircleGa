@@ -35,13 +35,22 @@ export class Level {
 	}
 
 	update() {
-		if (!this.complete) {
-			if (this.currentLine && this.currentLine.isComplete() && !this.lock) {
+		if (!(this.complete || this.lock)) {
+			if (this.currentLine && this.currentLine.isComplete()) {
 				this.lock = true;
 				this.currentLineIndex++;
 				this._runLine();
 			}
+
+			if (this.playersDead) {
+				this.currentLine.setPlayersDead(true);
+				this.lock = true;
+			}
 		}
+	}
+
+	unlock() {
+		this.lock = false;
 	}
 
 	isStarted() {

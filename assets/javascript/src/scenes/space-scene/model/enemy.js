@@ -12,6 +12,14 @@ export class Enemy extends Entity {
 		this._executeMovement();
 	}
 
+	doubleTime() {
+		this.currentTimeline.setTimeScale(2);
+	}
+
+	normalTime() {
+		this.currentTimeline.setTimeScale(1);
+	}
+
 	_executeMovement() {
 		const tweens = this._generateTweens();
 		this.currentTimeline = this.scene.tweens.timeline({

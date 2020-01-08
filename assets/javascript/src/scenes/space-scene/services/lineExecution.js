@@ -12,6 +12,7 @@ export class LineExecution {
 		this.complete = false;
 		this.playersDead = config.playersDead || false;
 		this.amountLeft = this.currentLine.amount;
+		this.executions = [];
 	}
 
 	execute() {
@@ -25,6 +26,10 @@ export class LineExecution {
 						...props,
 						completionCallback: () => {
 							this.amountLeft -= 1;
+
+							if (this.amountLeft === 0) {
+								this.enemies = [];
+							}
 						},
 					});
 
@@ -37,8 +42,18 @@ export class LineExecution {
 		}
 	}
 
+	setPlayersDead(bool) {
+		this.playersDead = bool;
+
+		if (this.playersDead) {
+			this.enemies.forEach(e => e.doubleTime());
+		} else {
+			this.enemies.forEach(e => e.normalTime());
+		}
+	}
+
 	isComplete() {
-		return this.amountLeft === 0;
+		return this.amountLeft <= 0;
 	}
 
 	_enemyProps() {

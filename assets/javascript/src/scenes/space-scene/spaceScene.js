@@ -70,12 +70,11 @@ export class SpaceScene extends Phaser.Scene {
 	create() {
 		const sprites = Constants.keys.sprites;
 		const { centerOfScreen, bottomOfRing } = Constants.coordinates;
-		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(bottomOfRing));
 
 		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.background);
 		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.gameTrack);
 
-		const playerOne = this._createPlayer(playerOnePos, sprites.playerOne);
+		const playerOne = this._createPlayerOne();
 		this.players.add(playerOne);
 
 		if (this.playerCount == 2) {
@@ -89,21 +88,33 @@ export class SpaceScene extends Phaser.Scene {
 	}
 
 	update() {
-		if (this.currentLevel) {
-			const playerOne = this.players.get(Constants.sprites.playerOne.key);
-			const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
+		const playerOne = this.players.get(Constants.sprites.playerOne.key);
+		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
-			this._handleInput(playerOne, playerTwo);
-			this.collisionValidation.handleCollisions(this.currentLevel.getAliens());
-			this.players.update();
-			this.bullets.update();
+		this._handleInput(playerOne, playerTwo);
+		this.players.update();
+		this.bullets.update();
 
-			if (!playerOne && !playerTwo) {
-				this.currentLevel.setPlayersDead(true);
+		this.tutorial.update();
+
+		if (this._levelLoaded()) {
+			const aliens = this.currentLevel.getAliens();
+
+			if (this._arePlayersDead() && aliens.count() === 0) {
+				const playerOne = this._createPlayerOne();
+				this.players.add(playerOne);
+				this.currentLevel.setPlayersDead(false);
+
+				setTimeout(() => {
+					debugger;
+					this.currentLevel.unlock();
+				}, 1000);
 			}
 
 			this.currentLevel.update();
-			this.tutorial.update();
+
+			this.collisionValidation.handleCollisions(aliens);
+			this.currentLevel.setPlayersDead(this._arePlayersDead());
 
 			if (this.tutorial.isComplete() && !this.currentLevel.isStarted()) {
 				this.currentLevel.start();
@@ -113,6 +124,13 @@ export class SpaceScene extends Phaser.Scene {
 				this._completeLevel();
 			}
 		}
+	}
+
+	_arePlayersDead() {
+		const playerOne = this.players.get(Constants.sprites.playerOne.key);
+		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
+
+		return !playerOne && !playerTwo;
 	}
 
 	_loadLevel() {
@@ -167,6 +185,12 @@ export class SpaceScene extends Phaser.Scene {
 		}
 	}
 
+	_createPlayerOne() {
+		const bottomOfRing = Constants.coordinates.bottomOfRing;
+		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(bottomOfRing));
+		return this._createPlayer(playerOnePos, Constants.keys.sprites.playerOne)
+	}
+
 	_createPlayer(position, key, opts = {}) {
 		return new Player({
 			scene: this,
@@ -199,5 +223,9 @@ export class SpaceScene extends Phaser.Scene {
 		const instance = GameState.getInstance();
 		instance.levelComplete();
 		setTimeout(() => GameState.getInstance().transition(this), 1000);
+	}
+
+	_levelLoaded() {
+		return !!this.currentLevel;
 	}
 }
