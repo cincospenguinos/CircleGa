@@ -2,7 +2,7 @@ import { Constants } from '../../../const/index.js';
 import { GameState } from '../../../model/gameState.js';
 
 export class Tutorial {
-	constructor(scene) {
+	constructor(scene, onComplete) {
 		this.scene = scene;
 		this.complete = GameState.getInstance().hasFinishedTutorial();
 		this.tasks = {
@@ -25,6 +25,7 @@ export class Tutorial {
 		}
 
 		this.currentTask = undefined;
+		this.onComplete = onComplete;
 	}
 
 	update() {
@@ -87,5 +88,6 @@ export class Tutorial {
 	_tutorialCompleted() {
 		this.complete = true;
 		GameState.getInstance().setTutorialFinished(this.complete);
+		this.onComplete();
 	}
 }

@@ -62,6 +62,7 @@ Here's things we need to work on sooner rather than later:
 
 Just to keep my spirits up, I'm putting everything we've finished here.
 
+- [x] Show level indicators
 - [x] Crashing should cause a player to respawn
 - [x] Explore level design space created by the rules of the game
 - [x] Create a set of levels that teach the level design space and how to properly play the game

@@ -10,6 +10,7 @@ import { CollisionValidation } from './services/collisionValidation.js';
 import { Level } from './model/level.js';
 import { Tutorial } from './model/tutorial.js';
 import { Bezier } from './model/bezier.js';
+import * as romanNumeralHelpers from './services/romanNumerals.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -64,7 +65,7 @@ export class SpaceScene extends Phaser.Scene {
 			p2Fire: this.input.keyboard.addKey('W'),
 		};
 
-		this.tutorial = new Tutorial(this);
+		this.tutorial = new Tutorial(this, () => this.currentLevel.start());
 	}
 
 	create() {
@@ -85,6 +86,17 @@ export class SpaceScene extends Phaser.Scene {
 
 		this.currentLevel = this._createLevel();
 		this.currentLevel.draw();
+
+		if (this.tutorial.isComplete()) {
+			const currentLevelNum = parseInt(this.levelInfo.replace('.json', ''));
+			const indicatorText = romanNumeralHelpers.toRomanNumerals(currentLevelNum);
+			const levelIndicator = this._showString(indicatorText);
+
+			setTimeout(() => {
+				levelIndicator.destroy();
+				this.currentLevel.start();
+			}, 2000);
+		}
 	}
 
 	update() {
@@ -105,9 +117,7 @@ export class SpaceScene extends Phaser.Scene {
 				this.players.add(playerOne);
 				this.currentLevel.setPlayersDead(false);
 
-				const centerOfScreen = Constants.coordinates.centerOfScreen;
-				const string = this.add.text(centerOfScreen.x, centerOfScreen.y, 'Ready');
-				string.x = (Constants.dimensions.screen.width - string.width) / 2;
+				const string = this._showString('Ready');
 
 				setTimeout(() => {
 					this.currentLevel.unlock();
@@ -119,10 +129,6 @@ export class SpaceScene extends Phaser.Scene {
 
 			this.collisionValidation.handleCollisions(aliens);
 			this.currentLevel.setPlayersDead(this._arePlayersDead());
-
-			if (this.tutorial.isComplete() && !this.currentLevel.isStarted()) {
-				this.currentLevel.start();
-			}
 
 			if (this.currentLevel.isComplete()) {
 				this._completeLevel();
@@ -231,5 +237,13 @@ export class SpaceScene extends Phaser.Scene {
 
 	_levelLoaded() {
 		return !!this.currentLevel;
+	}
+
+	_showString(str) {
+		const centerOfScreen = Constants.coordinates.centerOfScreen;
+		const string = this.add.text(centerOfScreen.x, centerOfScreen.y, str);
+		string.x = (Constants.dimensions.screen.width - string.width) / 2;
+
+		return string;
 	}
 }
