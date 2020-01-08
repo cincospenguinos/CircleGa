@@ -106,7 +106,6 @@ export class SpaceScene extends Phaser.Scene {
 				this.currentLevel.setPlayersDead(false);
 
 				setTimeout(() => {
-					debugger;
 					this.currentLevel.unlock();
 				}, 1000);
 			}
