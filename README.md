@@ -14,7 +14,6 @@ An homage to and deconstruction of Galaga.
 Here's things we need to work on sooner rather than later:
 
 - [ ] Put on screen what keys to press to make a selection
-- [ ] Crashing should cause a player to respawn
 - [ ] The first level is too long at 12 lines
 - [ ] The second and third levels are too short
 - [ ] Use single melody for the entire thing--the opening melody should be used in text excerpts
@@ -63,6 +62,7 @@ Here's things we need to work on sooner rather than later:
 
 Just to keep my spirits up, I'm putting everything we've finished here.
 
+- [x] Crashing should cause a player to respawn
 - [x] Explore level design space created by the rules of the game
 - [x] Create a set of levels that teach the level design space and how to properly play the game
 - [x] Who are the main characters?
