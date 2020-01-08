@@ -105,8 +105,13 @@ export class SpaceScene extends Phaser.Scene {
 				this.players.add(playerOne);
 				this.currentLevel.setPlayersDead(false);
 
+				const centerOfScreen = Constants.coordinates.centerOfScreen;
+				const string = this.add.text(centerOfScreen.x, centerOfScreen.y, 'Ready');
+				string.x = (Constants.dimensions.screen.width - string.width) / 2;
+
 				setTimeout(() => {
 					this.currentLevel.unlock();
+					string.destroy();
 				}, 1000);
 			}
 

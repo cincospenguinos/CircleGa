@@ -64,7 +64,7 @@ export class Tutorial {
 	_showTask(task) {
 		const centerOfScreen = Constants.coordinates.centerOfScreen;
 		const string = this.scene.add.text(centerOfScreen.x, centerOfScreen.y, task.text);
-		string.x = (Constants.dimensions.screen.width - string.width) / 2
+		string.x = (Constants.dimensions.screen.width - string.width) / 2;
 
 		this.currentTask = {
 			key: task.key,
