@@ -1,6 +1,7 @@
 import { Entity } from './entity.js';
 import { Constants } from '../../../const/index.js';
-import { distanceBetween, parameterizedDistance } from '../../../helpers/coordinates.js';
+
+const FIRING_DISTANCE = 10;
 
 export class Enemy extends Entity {
 	constructor(config) {
@@ -9,6 +10,9 @@ export class Enemy extends Entity {
 		this.lines = config.lines;
 		this.tweenConfig = config.tweenConfig || {};
 		this.completionCallback = config.completionCallback;
+		this.yellowStarPositions = config.yellowStarPositions || [];
+		this.fireCallback = config.fireCallback;
+		this.canFire = config.canFire || true;
 		this._executeMovement();
 	}
 
@@ -18,6 +22,10 @@ export class Enemy extends Entity {
 
 	normalTime() {
 		this.currentTimeline.setTimeScale(1);
+	}
+
+	setCanFire(bool) {
+		this.canFire = bool;
 	}
 
 	_executeMovement() {
@@ -55,6 +63,18 @@ export class Enemy extends Entity {
 				onUpdate: (tween, target) => {
 					const position = bezier.getTweenPoint(target.val);
 					const angle = Phaser.Math.Angle.Between(this.x, this.y, position.x, position.y) + Math.PI / 2;
+
+					if (this.fireCallback && this.canFire) {
+						this.yellowStarPositions.forEach((yellowStar) => {
+							const { x, y } = yellowStar;
+							const distance = Phaser.Math.Distance.Between(x, y, this.x, this.y);
+
+							if (distance < FIRING_DISTANCE) {
+								this.fireCallback(this);
+								this.canFire = false;
+							}
+						});
+					}
 
 					this.setX(position.x);
 					this.setY(position.y);

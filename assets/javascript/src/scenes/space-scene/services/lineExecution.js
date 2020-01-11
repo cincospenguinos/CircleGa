@@ -13,6 +13,7 @@ export class LineExecution {
 		this.playersDead = config.playersDead || false;
 		this.amountLeft = this.currentLine.amount;
 		this.executions = [];
+		this.enemyOpts = config.enemyOpts || {};
 	}
 
 	execute() {
@@ -69,6 +70,7 @@ export class LineExecution {
 			tweenConfig: {
 				duration: trueDuration,
 			},
+			...this.enemyOpts,
 			key: Constants.keys.sprites.enemyOne
 		};
 	}

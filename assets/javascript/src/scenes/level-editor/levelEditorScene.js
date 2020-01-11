@@ -30,6 +30,7 @@ export class LevelEditorScene extends Phaser.Scene {
 			createBezier: 'SPACE',
 			redStar: 'R',
 			blueStar: 'B',
+			yellowStar: 'Y',
 			export: 'ENTER',
 			nextPath: 'N',
 			showInputView: 'H',
@@ -37,13 +38,14 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	preload() {
-		const { enemyOne, point, gameTrack, redStar, blueStar } = Constants.sprites;
+		const { enemyOne, point, gameTrack, redStar, blueStar, yellowStar } = Constants.sprites;
 
 		this.load.spritesheet(enemyOne.key, enemyOne.location, enemyOne.config);
 		this.load.image(point.key, point.location, point.config);
 		this.load.image(gameTrack.key, gameTrack.location, gameTrack.config);
 		this.load.image(redStar.key, redStar.location, redStar.config);
 		this.load.image(blueStar.key, blueStar.location, blueStar.config);
+		this.load.image(yellowStar.key, yellowStar.location, yellowStar.config);
 
 		this.keys = this.input.keyboard.addKeys(this.keyMapping);
 
@@ -91,6 +93,10 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.blueStar)) {
 			this.factory.addStar('blue');
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.yellowStar)) {
+			this.factory.addStar('yellow');
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.export)) {

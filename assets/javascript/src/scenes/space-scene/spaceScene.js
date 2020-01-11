@@ -38,13 +38,14 @@ export class SpaceScene extends Phaser.Scene {
 			background, playerOne, playerTwo,
 			gameTrack, redBullet, blueBullet,
 			enemyBullet, enemyOne, redStar,
-			blueStar,
+			blueStar, yellowStar,
 		} = Constants.sprites;
 
 		this.load.image(gameTrack.key, gameTrack.location);
 		this.load.image(background.key, background.location);
 		this.load.image(redStar.key, redStar.location, redStar.config);
 		this.load.image(blueStar.key, blueStar.location, blueStar.config);
+		this.load.image(yellowStar.key, yellowStar.location, yellowStar.config);
 		this.load.spritesheet(playerOne.key, playerOne.location, playerOne.config);
 		this.load.spritesheet(playerTwo.key, playerTwo.location, playerTwo.config);
 		this.load.spritesheet(redBullet.key, redBullet.location, redBullet.config);
@@ -224,7 +225,13 @@ export class SpaceScene extends Phaser.Scene {
 			}
 		});
 
-		return new Level(this, enemies, stars);
+		return new Level(this, enemies, stars, (enemy) => this._enemyFires(enemy));
+	}
+
+	_enemyFires(enemy) {
+		const playerOne = this.players.get(Constants.sprites.playerOne.key);
+		this.bullets.addBullet(enemy.texture.key, { x: enemy.x, y: enemy.y },
+			{ x: playerOne.x, y: playerOne.y });
 	}
 
 	_completeLevel() {

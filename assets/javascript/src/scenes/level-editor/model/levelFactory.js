@@ -20,6 +20,7 @@ const DEFAULT_POINTS = [
 const STAR_KEYS = {
 	red: Constants.keys.sprites.redStar,
 	blue: Constants.keys.sprites.blueStar,
+	yellow: Constants.keys.sprites.yellowStar,
 };
 
 export class LevelFactory {
@@ -37,6 +38,7 @@ export class LevelFactory {
 		this.stars = {
 			red: [],
 			blue: [],
+			yellow: [],
 		};
 	}
 

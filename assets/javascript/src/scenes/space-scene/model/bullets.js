@@ -16,6 +16,10 @@ export class Bullet extends Entity {
 		pos.x += this.xVel;
 		pos.y += this.yVel;
 		this._setPosition(pos);
+
+		if (this.texture.key === Constants.sprites.enemyBullet.key) {
+			this.angle += 20;
+		}
 	}
 
 	isOutOfBounds() {
@@ -32,7 +36,7 @@ export class Bullet extends Entity {
 
 export class Bullets {
 	static PLAYER_BULLET_VEL = 15;
-	static ENEMY_BULLET_VEL = 10;
+	static ENEMY_BULLET_VEL = 7;
 
 	constructor(scene) {
 		this.scene = scene;
@@ -112,6 +116,8 @@ export class Bullets {
 			return Constants.keys.sprites.redBullet;
 		} else if(origin === Constants.keys.sprites.playerTwo) {
 			return Constants.keys.sprites.blueBullet;
+		} else if (origin === Constants.keys.sprites.enemyOne) {
+			return Constants.keys.sprites.enemyBullet;
 		}
 	}
 }

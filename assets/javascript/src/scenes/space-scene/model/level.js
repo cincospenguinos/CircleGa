@@ -11,7 +11,7 @@ const STAR_KEYS = {
 };
 
 export class Level {
-	constructor(scene, lines, stars) {
+	constructor(scene, lines, stars, fireCallback = undefined) {
 		this.lines = lines;
 		this.stars = stars;
 		this.scene = scene;
@@ -20,6 +20,7 @@ export class Level {
 		this.lock = false;
 		this.started = false;
 		this.complete = false;
+		this.fireCallback = fireCallback;
 	}
 
 	draw() {
@@ -93,11 +94,25 @@ export class Level {
 	_runLine() {
 		if (this.currentLineIndex < this.lines.length) {
 			const currentLine = this.lines[this.currentLineIndex];
-			this.currentLine = new LineExecution(this.scene, currentLine, { playersDead: this.playersDead });
+			this.currentLine = new LineExecution(this.scene, currentLine, {
+				playersDead: this.playersDead,
+				enemyOpts: this._enemyOpts(),
+			});
 			this.currentLine.execute();
 			this.lock = false;
 		} else {
 			this.complete = true;
+		}
+	}
+
+	_enemyOpts() {
+		return {
+			yellowStarPositions: this.stars.filter(star => star.color === 'yellow'),
+			fireCallback: (enemy) => {
+				if (this.fireCallback) {
+					this.fireCallback(enemy);
+				}
+			},
 		}
 	}
 }
