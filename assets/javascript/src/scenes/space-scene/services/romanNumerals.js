@@ -8,7 +8,7 @@ const numerals = {
 	50: 'L',
 };
 
-export function toRomanNumerals(decimalNumber) {
+export const toRomanNumerals = (decimalNumber) => {
 	if (decimalNumber <= 0) {
 		return '';	
 	}

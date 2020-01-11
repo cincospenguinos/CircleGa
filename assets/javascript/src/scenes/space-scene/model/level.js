@@ -7,6 +7,7 @@ import { EntityCollection } from '../services/entityCollection.js';
 const STAR_KEYS = {
 	red: Constants.keys.sprites.redStar,
 	blue: Constants.keys.sprites.blueStar,
+	yellow: Constants.keys.sprites.yellowStar,
 };
 
 export class Level {

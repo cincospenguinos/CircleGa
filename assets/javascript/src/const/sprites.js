@@ -92,6 +92,13 @@ export const SPRITES = {
 			frameHeight: 32,
 		},
 	},
+	yellowStar: {
+		location: `${spriteDir}/yellowStar.png`,
+		config: {
+			frameWidth: 32,
+			frameHeight: 32,
+		},
+	},
 	communicationBorder: {
 		location: `${spriteDir}/communicationBorder.png`,
 		config: {
