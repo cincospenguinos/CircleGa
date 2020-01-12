@@ -6,22 +6,32 @@ export class Response extends Phaser.GameObjects.Image {
 		this.scene = config.scene;
 		this.responseKey = config.responseKey;
 		this.text = config.text;
-		this.onSelect = config.onSelect;
+		this.selected = config.selected || false;
 
 		this.scene.add.existing(this);
 		this.responseText = this.scene.add.text(this.x, this.y - 8, this.text);
-		this.responseText.setTint(0xFF2222);
 
-		this.setAlpha(0.01);
-		this.setInteractive();
-		this.on('pointerover', () => this._onHover());
-		this.on('pointerout', () => this._onOut());
-		this.on('pointerdown', () => this.onSelect());
+		this._update();
 	}
 
 	destroy() {
 		this.responseText.destroy();
 		super.destroy();
+	}
+
+	setSelected(bool) {
+		this.selected = bool;
+		this._update();
+	}
+
+	_update() {
+		if (this.selected) {
+			this.setAlpha(1);
+			this.responseText.setTint(0xFF0000);
+		} else {
+			this.setAlpha(0.01);
+			this.responseText.setTint(0xFF2222);
+		}
 	}
 
 	_onHover() {

@@ -11,11 +11,12 @@ An homage to and deconstruction of Galaga.
 
 ## TODO
 
+- [ ] Make the communication scene text animate onto the screen
+- [ ] Setup auto-stop
+
 Here's things we need to work on sooner rather than later:
 
 - [ ] Put on screen what keys to press to make a selection
-- [ ] The first level is too long at 12 lines
-- [ ] The second and third levels are too short
 - [ ] Use single melody for the entire thing--the opening melody should be used in text excerpts
 - [ ] Make the ring larger--covering almost the whole screen
 	* It's hard to maneuver with too little space, and I'd like to explore having the ring be bigger
@@ -62,6 +63,9 @@ Here's things we need to work on sooner rather than later:
 
 Just to keep my spirits up, I'm putting everything we've finished here.
 
+- [x] Make the communication scene use the arrow keys and enter
+- [x] The first level is too long at 12 lines
+- [x] The second and third levels are too short
 - [x] Show level indicators
 - [x] Crashing should cause a player to respawn
 - [x] Explore level design space created by the rules of the game

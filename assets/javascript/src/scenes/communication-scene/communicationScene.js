@@ -12,8 +12,18 @@ export class CommunicationScene extends Phaser.Scene {
 	}
 
 	preload() {
+		const { communicationBorder } = Constants.sprites;
 		this.load.json(this.communicationKey, `assets/data/communications/${this.communicationKey}`);
-		this.load.image(Constants.keys.sprites.communicationBorder, Constants.sprites.communicationBorder.location);
+		this.load.image(communicationBorder.key, communicationBorder.location);
+
+		const cursors = this.input.keyboard.createCursorKeys();
+		const enter = 
+
+		this.keys = this.input.keyboard.addKeys({
+			next: 'DOWN',
+			previous: 'UP',
+			select: 'ENTER',
+		});
 	}
 
 	create() {
@@ -22,6 +32,18 @@ export class CommunicationScene extends Phaser.Scene {
 	}
 
 	update() {
+		if (Phaser.Input.Keyboard.JustDown(this.keys.next)) {
+			this.communication.next();
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.previous)) {
+			this.communication.previous();
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keys.select)) {
+			this.communication.select();
+		}
+
 		if (this.communication.isComplete()) {
 			const instance = GameState.getInstance();
 			instance.communicationComplete();

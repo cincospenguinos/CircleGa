@@ -27,10 +27,35 @@ export class Communication {
 
 		this.currentMessage = this._messages[data.firstMessageKey];
 		this.currentResponses = this._getCurrentResponses();
+		this.complete = false;
+		this.responseIndex = 0;
 
 		this.printer = new Printer(this.scene);
+	}
 
-		this.complete = false;
+	next() {
+		const oldIndex = this.responseIndex;
+
+		if (this.responseIndex > 0) {
+			this.responseIndex -= 1;
+		}
+
+		this._updateResponses(oldIndex, this.responseIndex);
+	}
+
+	previous() {
+		const oldIndex = this.responseIndex;
+
+		if (this.responseIndex < (this.presentedResponses.length - 1)) {
+			this.responseIndex += 1;
+		}
+
+		this._updateResponses(oldIndex, this.responseIndex);
+	}
+
+	select() {
+		const selectedResponse = this.presentedResponses[this.responseIndex];
+		this.responseSelected(selectedResponse.responseKey);
 	}
 
 	show() {
@@ -40,14 +65,14 @@ export class Communication {
 		this.currentResponses.forEach((r, index) => {
 			const x = Constants.coordinates.centerOfScreen.x;
 			const y = Constants.dimensions.screen.height - 30 * (index + 1);
-			const onSelect = () => this.responseSelected(r.key);
 
 			const responseObj = new Response({
 				scene: this.scene,
 				x, y,
 				text: r.text,
 				key: Constants.keys.sprites.communicationBorder,
-				onSelect,
+				responseKey: r.key,
+				selected: this.responseIndex === index,
 			});
 
 			this.presentedResponses.push(responseObj);
@@ -77,6 +102,11 @@ export class Communication {
 
 	isComplete() {
 		return this.complete;
+	}
+
+	_updateResponses(oldIndex, newIndex) {
+		this.presentedResponses[oldIndex].setSelected(false);
+		this.presentedResponses[newIndex].setSelected(true);
 	}
 
 	_getCurrentResponses() {

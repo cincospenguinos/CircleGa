@@ -80,7 +80,11 @@ export class SpaceScene extends Phaser.Scene {
 		this.players.add(playerOne);
 
 		if (this.playerCount == 2) {
-			const playerTwoPos = coordinateHelpers.toGame({ radius: coordinateHelpers.radius, theta: Math.PI, type: 'polar' });
+			const playerTwoPos = coordinateHelpers.toGame({
+				radius: coordinateHelpers.radius,
+				theta: Math.PI,
+				type: 'polar'
+			});
 			const playerTwo = this._createPlayer(playerTwoPos, sprites.playerTwo);
 			this.players.add(playerTwo);
 		}
