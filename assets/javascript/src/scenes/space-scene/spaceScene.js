@@ -35,10 +35,10 @@ export class SpaceScene extends Phaser.Scene {
 		this._loadLevel();
 
 		const {
-			background, playerOne, playerTwo,
+			background, playerOne, yellowStar,
 			gameTrack, redBullet, blueBullet,
 			enemyBullet, enemyOne, redStar,
-			blueStar, yellowStar,
+			blueStar,
 		} = Constants.sprites;
 
 		this.load.image(gameTrack.key, gameTrack.location);
@@ -47,7 +47,6 @@ export class SpaceScene extends Phaser.Scene {
 		this.load.image(blueStar.key, blueStar.location, blueStar.config);
 		this.load.image(yellowStar.key, yellowStar.location, yellowStar.config);
 		this.load.spritesheet(playerOne.key, playerOne.location, playerOne.config);
-		this.load.spritesheet(playerTwo.key, playerTwo.location, playerTwo.config);
 		this.load.spritesheet(redBullet.key, redBullet.location, redBullet.config);
 		this.load.spritesheet(blueBullet.key, blueBullet.location, blueBullet.config);
 		this.load.spritesheet(enemyBullet.key, enemyBullet.location, enemyBullet.config);
@@ -79,16 +78,6 @@ export class SpaceScene extends Phaser.Scene {
 		const playerOne = this._createPlayerOne();
 		this.players.add(playerOne);
 
-		if (this.playerCount == 2) {
-			const playerTwoPos = coordinateHelpers.toGame({
-				radius: coordinateHelpers.radius,
-				theta: Math.PI,
-				type: 'polar'
-			});
-			const playerTwo = this._createPlayer(playerTwoPos, sprites.playerTwo);
-			this.players.add(playerTwo);
-		}
-
 		this.currentLevel = this._createLevel();
 		this.currentLevel.draw();
 
@@ -106,9 +95,8 @@ export class SpaceScene extends Phaser.Scene {
 
 	update() {
 		const playerOne = this.players.get(Constants.sprites.playerOne.key);
-		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
-		this._handleInput(playerOne, playerTwo);
+		this._handleInput(playerOne);
 		this.players.update();
 		this.bullets.update();
 
@@ -143,9 +131,8 @@ export class SpaceScene extends Phaser.Scene {
 
 	_arePlayersDead() {
 		const playerOne = this.players.get(Constants.sprites.playerOne.key);
-		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
-		return !playerOne && !playerTwo;
+		return !playerOne;
 	}
 
 	_loadLevel() {
@@ -153,7 +140,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.load.json(this.levelKey, `assets/data/levels/${this.levelInfo}`);
 	}
 
-	_handleInput(playerOne, playerTwo) {
+	_handleInput(playerOne) {
 		if (playerOne) {
 			if (playerOne.canMove()) {
 				if (this.keys.p1Right.isDown) {
@@ -162,8 +149,7 @@ export class SpaceScene extends Phaser.Scene {
 				} else if (this.keys.p1Left.isDown) {
 					this.tutorial.completeTask('movement');
 					playerOne.accelerate(-1);
-				} else if (this.keys.p1Slow.isDown) {
-					this.tutorial.completeTask('slowing');
+				} else {
 					playerOne.slow();
 				}
 			}
@@ -171,22 +157,6 @@ export class SpaceScene extends Phaser.Scene {
 			if (this.keys.p1Fire.isDown) {
 				this.tutorial.completeTask('firing');
 				this._fireBullet(playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
-			}
-		}
-
-		if (playerTwo) {
-			if (playerTwo.canMove()) {
-				if (this.keys.p2Right.isDown) {
-					playerTwo.accelerate(1);
-				} else if (this.keys.p2Left.isDown) {
-					playerTwo.accelerate(-1);
-				} else if (this.keys.p2Slow.isDown) {
-					playerTwo.slow();
-				}
-			}
-
-			if (this.keys.p2Fire.isDown) {
-				this._fireBullet(playerTwo, Constants.sprites.playerTwo.key, Constants.sprites.blueBullet.key);
 			}
 		}
 	}
@@ -203,15 +173,12 @@ export class SpaceScene extends Phaser.Scene {
 	_createPlayerOne() {
 		const bottomOfRing = Constants.coordinates.bottomOfRing;
 		const playerOnePos = coordinateHelpers.toGame(coordinateHelpers.toPolar(bottomOfRing));
-		return this._createPlayer(playerOnePos, Constants.keys.sprites.playerOne)
-	}
 
-	_createPlayer(position, key, opts = {}) {
 		return new Player({
 			scene: this,
-			x: position.x,
-			y: position.y,
-			key,
+			x: playerOnePos.x,
+			y: playerOnePos.y,
+			key: Constants.keys.sprites.playerOne,
 		});
 	}
 

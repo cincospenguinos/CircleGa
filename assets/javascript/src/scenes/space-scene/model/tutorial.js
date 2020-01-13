@@ -10,10 +10,6 @@ export class Tutorial {
 				text: 'Use left and right arrow keys to move (A & D for second player)',
 				key: 'movement',
 			},
-			slowing: {
-				text: 'Use down arrow key (S) to slow down',
-				key: 'slowing',
-			},
 			firing: {
 				text: 'Use up arrow key (W) to fire',
 				key: 'firing',

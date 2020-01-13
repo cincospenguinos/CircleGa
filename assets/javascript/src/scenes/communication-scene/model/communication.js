@@ -123,5 +123,6 @@ export class Communication {
 	_clearOldResponses() {
 		this.presentedResponses.forEach(obj => obj.destroy());
 		this.presentedResponses = [];
+		this.responseIndex = 0;
 	}
 }

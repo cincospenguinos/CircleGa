@@ -60,7 +60,7 @@ export class Printer {
 		return lines;
 	}
 
-	_printLine(line) { // TODO: Have this animate the message better
+	_printLine(line) {
 		const x = Printer.CARRIAGE_START;
 		const y = this.lineNumber * Printer.LINE_HEIGHT;
 		this.lineNumber += 1;
