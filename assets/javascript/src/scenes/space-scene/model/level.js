@@ -26,7 +26,8 @@ export class Level {
 	draw() {
 		this.stars.forEach((s) => {
 			const spriteKey = STAR_KEYS[s.color];
-			this.scene.add.sprite(s.x, s.y, spriteKey);
+			const star = this.scene.add.sprite(s.x, s.y, spriteKey);
+			star.setScale(Constants.dimensions.scale.sprite);
 		});
 	}
 

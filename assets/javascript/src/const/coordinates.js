@@ -9,7 +9,7 @@ const topOfRing = {
 
 const bottomOfRing = {
 	x: DIMENSIONS.screen.width / 2,
-	y: (DIMENSIONS.screen.height - SPRITES.gameTrack.config.frameHeight / 2),
+	y: (DIMENSIONS.screen.height - SPRITES.gameTrack.config.frameHeight / 2) * DIMENSIONS.scale.gameTrack,
 	type: 'game',
 };
 

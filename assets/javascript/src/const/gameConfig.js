@@ -4,7 +4,8 @@ export const DIMENSIONS = {
 		height: 800,
 	},
 	scale: {
-		sprite: 0.75,
+		sprite: 0.65,
+		gameTrack: 1.4,
 	},
 }
 

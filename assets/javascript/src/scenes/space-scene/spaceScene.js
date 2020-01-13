@@ -73,7 +73,8 @@ export class SpaceScene extends Phaser.Scene {
 		const { centerOfScreen, bottomOfRing } = Constants.coordinates;
 
 		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.background);
-		this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.gameTrack);
+		const track = this.add.image(centerOfScreen.x, centerOfScreen.y, sprites.gameTrack);
+		track.setScale(Constants.dimensions.scale.gameTrack);
 
 		const playerOne = this._createPlayerOne();
 		this.players.add(playerOne);

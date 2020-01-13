@@ -6,7 +6,7 @@
 import { COORDINATES } from '../const/coordinates.js';
 import { DIMENSIONS } from '../const/gameConfig.js';
 
-export const radius = COORDINATES.centerOfScreen.y - COORDINATES.topOfRing.y;
+export const radius = (COORDINATES.centerOfScreen.y - COORDINATES.topOfRing.y) * DIMENSIONS.scale.gameTrack;
 
 export const toPolar = (coordinates) => {
 	if (coordinates.type === 'polar') {

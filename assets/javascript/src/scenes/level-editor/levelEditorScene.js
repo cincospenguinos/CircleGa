@@ -40,9 +40,9 @@ export class LevelEditorScene extends Phaser.Scene {
 	preload() {
 		const { enemyOne, point, gameTrack, redStar, blueStar, yellowStar } = Constants.sprites;
 
+		this.load.image(gameTrack.key, gameTrack.location, gameTrack.config);
 		this.load.spritesheet(enemyOne.key, enemyOne.location, enemyOne.config);
 		this.load.image(point.key, point.location, point.config);
-		this.load.image(gameTrack.key, gameTrack.location, gameTrack.config);
 		this.load.image(redStar.key, redStar.location, redStar.config);
 		this.load.image(blueStar.key, blueStar.location, blueStar.config);
 		this.load.image(yellowStar.key, yellowStar.location, yellowStar.config);
@@ -57,7 +57,8 @@ export class LevelEditorScene extends Phaser.Scene {
 
 	create() {
 		const { centerOfScreen } = Constants.coordinates;
-		this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
+		const track = this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
+		track.setScale(Constants.dimensions.scale.gameTrack);
 
 		const menuNode = this.add.dom(200, 200, 'div', '');
 		this.menu = new PathMenu(menuNode, (amount, duration, delay) => this.factory.updateTweenConfig(amount, duration, delay));
