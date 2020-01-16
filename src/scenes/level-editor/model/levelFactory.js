@@ -77,8 +77,33 @@ export class LevelFactory {
 		return this.paths.concat(this.currentPath);
 	}
 
-	getLevel() {
-		return new Level(this.scene, this.lines, this.stars);
+	getLevel(oldDimensions) {
+		const { screen } = Constants.dimensions;
+		const originalX = (screen.width - oldDimensions.width) / 2;
+		const originalY = (screen.height - oldDimensions.height) / 2;
+
+		const stars = {};
+		Object.keys(this.stars).forEach((color) => {
+			stars[color] = this.stars[color].map((star) => {
+				star.x -= originalX;
+				star.y -= originalY;
+
+				return star;
+			});
+		});
+
+		const lines = this.lines.map((line) => {
+			line.paths.forEach((bezier) => {
+				bezier.points.forEach((p) => {
+					p.x -= originalX;
+					p.y -= originalY;
+				});
+			});
+
+			return line;
+		});
+
+		return new Level(this.scene, lines, stars);
 	}
 
 	getTweenConfig() {

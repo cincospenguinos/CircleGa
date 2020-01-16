@@ -35,6 +35,10 @@
 	color: yellow;
 }
 
+.red-selected {
+	color: red;
+}
+
 .button-blue {
 	composes: button;
 	border-color: blue;
@@ -43,6 +47,11 @@
 .button-yellow {
 	composes: button;
 	border-color: yellow;
+}
+
+.button-red {
+	composes: button;
+	border-color: red;
 }
 
 .input {

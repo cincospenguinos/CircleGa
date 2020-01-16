@@ -1,9 +1,6 @@
 import ReactDOM from 'react-dom';
 import { Constants } from '../../const/index.js';
 import { Enemy } from '../space-scene/model/enemy.js';
-import { PathMenu } from './view/pathMenu.js';
-import { LevelDataView } from './view/levelDataView.js';
-import { InputView } from './view/inputView.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 import { LevelFactory } from './model/levelFactory.js';
 import store from '../../state/store.js';
@@ -27,10 +24,9 @@ export class LevelEditorScene extends Phaser.Scene {
 			toggleMenu: 'M',
 			addItem: 'A',
 			execute: 'E',
-			createBezier: 'SPACE',
+			createBezier: 'B',
 			export: 'ENTER',
 			nextPath: 'N',
-			showInputView: 'H',
 		};
 	}
 
@@ -54,6 +50,7 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	create() {
+		this._showOldBoundaries();
 		const { centerOfScreen } = Constants.coordinates;
 		const track = this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
 		track.setScale(Constants.dimensions.scale.gameTrack);
@@ -117,6 +114,7 @@ export class LevelEditorScene extends Phaser.Scene {
 		if (Phaser.Input.Keyboard.JustDown(this.keys.addItem)) {
 			const selectedItem = selectors.getSelectedItem(store.getState());
 			switch(selectedItem) {
+				case 'red':
 				case 'blue':
 				case 'yellow': {
 					this.factory.addStar(selectedItem);
@@ -125,17 +123,13 @@ export class LevelEditorScene extends Phaser.Scene {
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.export)) {
-			const level = this.factory.getLevel();
+			const level = this.factory.getLevel(this.oldDimensions);
 			const json = level.toJson();
-			this.levelDataView.show(json);
+			console.log(json);
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.nextPath)) {
 			this.factory.newPath();
-		}
-
-		if (Phaser.Input.Keyboard.JustDown(this.keys.showInputView)) {
-			this.inputView.toggle();
 		}
 	}
 

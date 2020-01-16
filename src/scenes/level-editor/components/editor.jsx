@@ -48,6 +48,12 @@ function Editor({
 		<div className={className}>
 			<div className={styles.items}>
 				<StarButton
+					selected={currentItem === 'red'}
+					text="Red Star"
+					color="red"
+					onClick={onStarClick}
+				/>
+				<StarButton
 					selected={currentItem === 'blue'}
 					text="Blue Star"
 					color="blue"
