@@ -25,6 +25,7 @@ export class LevelEditorScene extends Phaser.Scene {
 
 		this.keyMapping = {
 			toggleMenu: 'M',
+			addItem: 'A',
 			execute: 'E',
 			createBezier: 'SPACE',
 			redStar: 'R',

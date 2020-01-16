@@ -1,5 +1,7 @@
 .container {
-	max-width: 250px;
+	display: flex;
+	background-color: white;
+	z-index: 1;
 }
 
 .shown {
@@ -10,4 +12,30 @@
 .hidden {
 	composes: container;
 	display: none;
+}
+
+.items > * {
+	margin: 0 4px;
+}
+
+.button {
+	height: 25px;
+}
+
+.blue-selected {
+	color: blue;
+}
+
+.yellow-selected {
+	color: yellow;
+}
+
+.button-blue {
+	composes: button;
+	border-color: blue;
+}
+
+.button-yellow {
+	composes: button;
+	border-color: yellow;
 }
