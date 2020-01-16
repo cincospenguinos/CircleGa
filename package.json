@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/cincospenguinos/CircleGa#readme",
   "devDependencies": {
+    "babel-loader": "^8.0.6",
+    "phaser": "^3.22.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
-  }
+  },
+  "dependencies": {}
 }
