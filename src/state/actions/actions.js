@@ -4,3 +4,10 @@ export const setEditorVisible = (visible) => {
 		visible,
 	};
 };
+
+export const selectionMade = (item) => {
+	return {
+		type: 'SELECTION_MADE',
+		item,
+	}
+};

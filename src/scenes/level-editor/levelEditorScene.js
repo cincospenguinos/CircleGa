@@ -28,9 +28,6 @@ export class LevelEditorScene extends Phaser.Scene {
 			addItem: 'A',
 			execute: 'E',
 			createBezier: 'SPACE',
-			redStar: 'R',
-			blueStar: 'B',
-			yellowStar: 'Y',
 			export: 'ENTER',
 			nextPath: 'N',
 			showInputView: 'H',
@@ -117,16 +114,14 @@ export class LevelEditorScene extends Phaser.Scene {
 			this.factory.appendPath();
 		}
 
-		if (Phaser.Input.Keyboard.JustDown(this.keys.redStar)) {
-			this.factory.addStar('red');
-		}
-
-		if (Phaser.Input.Keyboard.JustDown(this.keys.blueStar)) {
-			this.factory.addStar('blue');
-		}
-
-		if (Phaser.Input.Keyboard.JustDown(this.keys.yellowStar)) {
-			this.factory.addStar('yellow');
+		if (Phaser.Input.Keyboard.JustDown(this.keys.addItem)) {
+			const selectedItem = selectors.getSelectedItem(store.getState());
+			switch(selectedItem) {
+				case 'blue':
+				case 'yellow': {
+					this.factory.addStar(selectedItem);
+				}
+			}
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.export)) {

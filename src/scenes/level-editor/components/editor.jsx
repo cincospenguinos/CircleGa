@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../../../state/actions/actions.js';
 import styles from './styles.css';
 
 function StarButton({ text, onClick, selected, color }) {
 	const colorClass = styles[`button-${color}`];
-
 	const className = selected ? `${styles[`${color}-selected`]} ${colorClass}` : colorClass;
 
 	return (<button className={className} onClick={() => onClick(color)}>{text}</button>);
@@ -12,17 +12,23 @@ function StarButton({ text, onClick, selected, color }) {
 
 function Editor({
 	visible,
+	onSelectionMade,
 }) {
 	const [currentItem, setCurrentItem] = useState(undefined);
 	const className = visible ? styles.shown : styles.hidden;
 
+	const setItem = (item) => {
+		setCurrentItem(item);
+		onSelectionMade(item);
+	};
+
 	const onStarClick = (color) => {
 		if (currentItem === color) {
-			setCurrentItem(undefined);
+			setItem(undefined);
 			return;
 		}
 
-		setCurrentItem(color);
+		setItem(color);
 	};
 
 	return (
@@ -41,7 +47,7 @@ function Editor({
 					onClick={onStarClick}
 				/>
 			</div>
-			<div>
+			<div className={styles.items}>
 			</div>
 		</div>
 	);
@@ -54,7 +60,9 @@ const mapStateToProps = (state, _) => {
 };
 
 const mapDispatchToProps = (dispatch, _) => {
-	return {};
+	return {
+		onSelectionMade: (item) => dispatch(actions.selectionMade(item)),
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);
