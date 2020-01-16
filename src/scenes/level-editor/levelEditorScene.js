@@ -50,7 +50,6 @@ export class LevelEditorScene extends Phaser.Scene {
 		};
 
 		this.scale.resize(width, height);
-		this.cameras.main.setBounds(0, 0, width, height);
 
 		const { enemyOne, point, gameTrack, redStar, blueStar, yellowStar } = Constants.sprites;
 
