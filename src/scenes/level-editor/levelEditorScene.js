@@ -8,6 +8,7 @@ import { distanceBetween } from '../../helpers/coordinates.js';
 import { LevelFactory } from './model/levelFactory.js';
 import store from '../../state/store.js';
 import * as actions from '../../state/actions/actions.js';
+import * as selectors from '../../state/selectors/selectors.js';
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
@@ -19,6 +20,8 @@ export class LevelEditorScene extends Phaser.Scene {
 			red: [],
 			blue: [],
 		};
+
+		this.dispatch = store.dispatch;
 
 		this.keyMapping = {
 			toggleMenu: 'M',
@@ -34,20 +37,7 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	preload() {
-		store.dispatch(actions.setEditorVisible(true));
-		this.oldDimensions = { ...Constants.dimensions.screen };
-
-		Constants.dimensions.screen.width *= 1.5;
-		Constants.dimensions.screen.height *= 1.5;
-		const { width, height } = Constants.dimensions.screen;
-
-		Constants.coordinates.centerOfScreen = {
-			x: width / 2,
-			y: height / 2,
-		};
-
-		this.scale.resize(width, height);
-
+		this._increaseScreenSize();
 		const { enemyOne, point, gameTrack, redStar, blueStar, yellowStar } = Constants.sprites;
 
 		this.load.image(gameTrack.key, gameTrack.location, gameTrack.config);
@@ -66,6 +56,34 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	create() {
+		const { centerOfScreen } = Constants.coordinates;
+		const track = this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
+		track.setScale(Constants.dimensions.scale.gameTrack);
+
+		store.dispatch(actions.setEditorVisible(true));
+		this.factory = new LevelFactory(this);
+	}
+
+	update() {
+		this._handleInput();
+	}
+
+	_increaseScreenSize() {
+		this.oldDimensions = { ...Constants.dimensions.screen };
+
+		Constants.dimensions.screen.width *= 1.5;
+		Constants.dimensions.screen.height *= 1.5;
+		const { width, height } = Constants.dimensions.screen;
+
+		Constants.coordinates.centerOfScreen = {
+			x: width / 2,
+			y: height / 2,
+		};
+
+		this.scale.resize(width, height);
+	}
+
+	_showOldBoundaries() {
 		const graphics = this.add.graphics();
 		graphics.setDefaultStyles({
 			lineStyle: {
@@ -82,29 +100,12 @@ export class LevelEditorScene extends Phaser.Scene {
 		const y = (Constants.dimensions.screen.height - this.oldDimensions.height) / 2;
 
 		graphics.strokeRect(x, y, this.oldDimensions.width, this.oldDimensions.height);
-
-		const { centerOfScreen } = Constants.coordinates;
-		const track = this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
-		track.setScale(Constants.dimensions.scale.gameTrack);
-
-		const menuNode = this.add.dom(200, 200, 'div', '');
-		this.menu = new PathMenu(menuNode, (amount, duration, delay) => this.factory.updateTweenConfig(amount, duration, delay));
-
-		const levelDataNode = this.add.dom(350, 350, 'div', '');
-		this.levelDataView = new LevelDataView(levelDataNode);
-
-		const inputViewNode = this.add.dom(centerOfScreen.x, 700, 'div', '');
-		this.inputView = new InputView(inputViewNode, this.keyMapping);
-		this.factory = new LevelFactory(this);
-	}
-
-	update() {
-		this._handleInput();
 	}
 
 	_handleInput() {
 		if (Phaser.Input.Keyboard.JustDown(this.keys.toggleMenu)) {
-			this.menu.toggle();
+			const isVisible = selectors.isEditorVisible(store.getState());
+			this.dispatch(actions.setEditorVisible(!isVisible));
 		}
 
 		if (Phaser.Input.Keyboard.JustDown(this.keys.execute)) {

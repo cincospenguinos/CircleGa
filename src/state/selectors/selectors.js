@@ -1,3 +1,3 @@
 export const isEditorVisible = (state) => {
-	return state.isEditorVisible;
+	return state.editorVisible;
 };
