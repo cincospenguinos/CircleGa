@@ -4,7 +4,8 @@
   "description": "An homage to and deconstruction of Galaga.",
   "private": "true",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx webpack --watch --config='webpack.dev.config.js'"
   },
   "repository": {
     "type": "git",
