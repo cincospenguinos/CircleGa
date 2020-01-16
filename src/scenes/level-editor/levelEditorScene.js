@@ -6,6 +6,8 @@ import { LevelDataView } from './view/levelDataView.js';
 import { InputView } from './view/inputView.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 import { LevelFactory } from './model/levelFactory.js';
+import store from '../../state/store.js';
+import * as actions from '../../state/actions/actions.js';
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
@@ -32,6 +34,7 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	preload() {
+		store.dispatch(actions.setEditorVisible(true));
 		this.oldDimensions = { ...Constants.dimensions.screen };
 
 		Constants.dimensions.screen.width *= 1.5;

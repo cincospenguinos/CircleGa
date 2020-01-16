@@ -8,18 +8,17 @@ function Editor({
 	const className = visible ? styles.shown : styles.hidden;
 
 	return (
-		<div id="editor" className={className}>
-		</div>
+		<div id="editor" className={className}></div>
 	);
 }
 
 const mapStateToProps = (state, _) => {
 	return {
-		visible: state.editorShown,
+		visible: state.editorVisible,
 	};
 };
 
-const mapDispatchToProps = () => {
+const mapDispatchToProps = (dispatch, _) => {
 	return {};
 };
 
