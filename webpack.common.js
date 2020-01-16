@@ -9,10 +9,21 @@ module.exports = {
 	module: {
 		rules: [
 	    {
-	    	test: /\.js$/,
+	    	test: /\.jsx?$/,
 	    	exclude: /node_modules/,
 	    	loader: 'babel-loader',
 	    },
+	    {
+	    	test: /\.css$/,
+	    	loader: 'style-loader',
+	    },
+	    {
+        test: /\.css$/,
+        loader: 'css-loader',
+        query: {
+			    modules: true,
+			  },
+      },
 	  ],
 	},
 };

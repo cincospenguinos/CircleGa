@@ -1,0 +1,13 @@
+.container {
+	max-width: 250px;
+}
+
+.shown {
+	composes: container;
+	display: block;
+}
+
+.hidden {
+	composes: container;
+	display: none;
+}

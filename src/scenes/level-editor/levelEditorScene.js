@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import { Constants } from '../../const/index.js';
 import { Enemy } from '../space-scene/model/enemy.js';
 import { PathMenu } from './view/pathMenu.js';
@@ -5,13 +6,6 @@ import { LevelDataView } from './view/levelDataView.js';
 import { InputView } from './view/inputView.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 import { LevelFactory } from './model/levelFactory.js';
-
-const DEFAULT_POINTS = [
-	Constants.coordinates.centerOfScreen,
-	{ x: 100, y: 200 },
-	{ x: 100, y: 300 },
-	{ x: 100, y: 400 },
-];
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
