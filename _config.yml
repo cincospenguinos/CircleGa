@@ -45,3 +45,4 @@ exclude:
   - package.json
   - webpack.dev.config.js
   - webpack.prod.config.js
+  - webpack.common.js
