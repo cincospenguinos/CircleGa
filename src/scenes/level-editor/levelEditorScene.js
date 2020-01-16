@@ -50,6 +50,15 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	create() {
+		this.lineGraphics = this.add.graphics();
+		this.lineGraphics.setDefaultStyles({
+			lineStyle: {
+				width: 1,
+				color: 0x22FF22,
+				alpha: 1,
+			},
+		});
+
 		this._showOldBoundaries();
 		const { centerOfScreen } = Constants.coordinates;
 		const track = this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
@@ -61,6 +70,17 @@ export class LevelEditorScene extends Phaser.Scene {
 
 	update() {
 		this._handleInput();
+
+		this.lineGraphics.clear();
+		if (selectors.showStarLines(store.getState())) {
+			const { centerOfScreen } = Constants.coordinates;
+
+			Object.values(this.factory.stars).flat().forEach((star) => {
+				let line = new Phaser.Geom.Line(star.x, star.y, centerOfScreen.x, centerOfScreen.y);
+				line = Phaser.Geom.Line.Extend(line, 1000, 1000);
+				this.lineGraphics.strokeLineShape(line);
+			});
+		}
 	}
 
 	_increaseScreenSize() {

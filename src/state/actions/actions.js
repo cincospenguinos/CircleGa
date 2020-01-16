@@ -18,3 +18,9 @@ export const updateTweenConfig = (config) => {
 		config,
 	}
 };
+
+export const toggleStarLines = () => {
+	return {
+		type: 'TOGGLE_STAR_LINES',
+	};
+}

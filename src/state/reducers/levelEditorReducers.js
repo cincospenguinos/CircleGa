@@ -15,6 +15,12 @@ export const reducer = (state = {}, action) => {
 				...state,
 				...action.config,
 			};
+		case 'TOGGLE_STAR_LINES':
+			const showStarLines = !state.showStarLines;
+			return {
+				...state,
+				showStarLines,
+			};
 		default:
 			return state;
 	}

@@ -10,3 +10,7 @@ export const getTweenConfig = (state) => {
 	const { amount, duration, delay } = state;
 	return { amount, duration, delay };
 };
+
+export const showStarLines = (state) => {
+	return state.showStarLines;
+};

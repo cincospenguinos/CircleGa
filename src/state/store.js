@@ -6,6 +6,7 @@ const initialState = {
 	amount: 1,
 	delay: 300,
 	duration: 2000,
+	showStarLines: false,
 };
 
 const store = createStore(reducer, initialState);

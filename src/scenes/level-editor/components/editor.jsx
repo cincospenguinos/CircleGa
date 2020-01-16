@@ -17,6 +17,7 @@ function Editor({
 	delay,
 	onSelectionMade,
 	onTweenConfigChange,
+	toggleStarLines,
 }) {
 	const [currentItem, setCurrentItem] = useState(undefined);
 	const className = visible ? styles.shown : styles.hidden;
@@ -68,6 +69,9 @@ function Editor({
 			</div>
 			<div className={styles.items}>
 				<div>
+					<button onClick={() => toggleStarLines()}>Toggle Star Lines</button>
+				</div>
+				<div>
 					<label htmlFor="duration">Duration:
 						<input
 							name="duration"
@@ -118,6 +122,7 @@ const mapDispatchToProps = (dispatch, _) => {
 	return {
 		onSelectionMade: (item) => dispatch(actions.selectionMade(item)),
 		onTweenConfigChange: (config) => dispatch(actions.updateTweenConfig(config)),
+		toggleStarLines: () => dispatch(actions.toggleStarLines()),
 	};
 };
 
