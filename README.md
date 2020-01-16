@@ -8,7 +8,9 @@ An homage to and deconstruction of Galaga.
 	* Run the installer
 	* Make sure you choose to install the other necessary tools (Python 2.7, Chocolatey, etc.)
 2. Now [upgrade npm](https://matthewhorne.me/how-to-update-npm-on-windows-10/)
-
+3. Open a git bash terminal
+4. `cd to/the/directory/the/repo/is/in`
+5. Run `npm install`. You should only need to do this once.
 
 ## Starting the project
 
@@ -16,7 +18,7 @@ You need git bash and a command to develop. This is what you'll do:
 
 1. Open a git bash terminal
 2. `cd to/the/directory/the/repo/is/in`
-3. Run `npx webpack --watch --mode=development`
+3. Run `npm run dev`
 4. Open a command prompt window
 5. `> cd to\the\directory\the\repo\is\in`
 6. Run `bundle exec jekyll s`
