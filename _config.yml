@@ -39,3 +39,9 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - README.md
+  - src/
+  - .babelrc
+  - package-lock.json
+  - package.json
+  - webpack.dev.config.js
+  - webpack.prod.config.js
