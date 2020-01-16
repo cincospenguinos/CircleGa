@@ -8,14 +8,18 @@ import { CommunicationScene } from './scenes/communication-scene/communicationSc
 import { EndScene } from './scenes/end-scene/endScene.js';
 
 const screenDimensions = Constants.dimensions.screen;
-const scenes = [ MenuScene, SpaceScene, TextScene, CommunicationScene, LevelEditorScene, EndScene];
+const scene = [MenuScene, SpaceScene, TextScene, CommunicationScene, LevelEditorScene, EndScene];
 
 const config = {
     type: Phaser.AUTO,
     width: screenDimensions.width,
     height: screenDimensions.height,
     parent: 'game',
-    scene: scenes,
+    scene,
+    scale: {
+    	mode: Phaser.Scale.NONE,
+    	autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
     physics: {
     	default: 'arcade',
     	arcade: {
@@ -28,4 +32,4 @@ const config = {
     },
 };
 
-const game = new Phaser.Game(config);
+export const game = new Phaser.Game(config);

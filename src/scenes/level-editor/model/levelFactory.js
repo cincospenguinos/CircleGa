@@ -10,12 +10,14 @@ import { Bezier } from '../../space-scene/model/bezier.js';
  * - A set of lines is what makes up a level
  */
 
-const DEFAULT_POINTS = [
-	Constants.coordinates.centerOfScreen,
-	{ x: 100, y: 200 },
-	{ x: 100, y: 300 },
-	{ x: 100, y: 400 },
-];
+const getDefaultPoints = () => {
+	return [
+		Constants.coordinates.centerOfScreen,
+		{ x: 100, y: 200 },
+		{ x: 100, y: 300 },
+		{ x: 100, y: 400 },
+	];
+};
 
 const STAR_KEYS = {
 	red: Constants.keys.sprites.redStar,
@@ -93,7 +95,7 @@ export class LevelFactory {
 
 	_nextPositions() {
 		const previousPosition = this.currentPath.getPoints()[3];
-		return DEFAULT_POINTS.map((position, index) => {
+		return getDefaultPoints().map((position, index) => {
 			if (index === 0) {
 				return { x: previousPosition.x, y: previousPosition.y };
 			}
@@ -103,6 +105,6 @@ export class LevelFactory {
 	}
 
 	_createNewPath(points = null) {
-		return new Bezier(this.scene, points || DEFAULT_POINTS);
+		return new Bezier(this.scene, points || getDefaultPoints());
 	}
 }

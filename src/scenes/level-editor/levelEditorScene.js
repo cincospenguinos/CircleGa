@@ -38,6 +38,20 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	preload() {
+		this.oldDimensions = { ...Constants.dimensions.screen };
+
+		Constants.dimensions.screen.width *= 1.5;
+		Constants.dimensions.screen.height *= 1.5;
+		const { width, height } = Constants.dimensions.screen;
+
+		Constants.coordinates.centerOfScreen = {
+			x: width / 2,
+			y: height / 2,
+		};
+
+		this.scale.resize(width, height);
+		this.cameras.main.setBounds(0, 0, width, height);
+
 		const { enemyOne, point, gameTrack, redStar, blueStar, yellowStar } = Constants.sprites;
 
 		this.load.image(gameTrack.key, gameTrack.location, gameTrack.config);
@@ -56,6 +70,23 @@ export class LevelEditorScene extends Phaser.Scene {
 	}
 
 	create() {
+		const graphics = this.add.graphics();
+		graphics.setDefaultStyles({
+			lineStyle: {
+				width: 1,
+				color: 0xffffff,
+				alpha: 1,
+			},
+			fillStyle: {
+				alpha: 0,
+			}
+		});
+
+		const x = (Constants.dimensions.screen.width - this.oldDimensions.width) / 2;
+		const y = (Constants.dimensions.screen.height - this.oldDimensions.height) / 2;
+
+		graphics.strokeRect(x, y, this.oldDimensions.width, this.oldDimensions.height);
+
 		const { centerOfScreen } = Constants.coordinates;
 		const track = this.add.image(centerOfScreen.x, centerOfScreen.y, Constants.sprites.gameTrack.key);
 		track.setScale(Constants.dimensions.scale.gameTrack);
