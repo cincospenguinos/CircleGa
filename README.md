@@ -2,17 +2,29 @@
 
 An homage to and deconstruction of Galaga.
 
+## Project Setup
+
+1. To help take care of everything in a nice fancy way we're going to use Webpack, which requires node. So to use the latest version of this project, install the LTS supported version of NodeJS [here](https://nodejs.org/en/download/)
+	* Run the installer
+	* Make sure you choose to install the other necessary tools (Python 2.7, Chocolatey, etc.)
+2. Now [upgrade npm](https://matthewhorne.me/how-to-update-npm-on-windows-10/)
+
+
 ## Starting the project
 
-1. Open up the command prompt
-2. `> cd to\the\directory\the\repo\is\in`
-3. Run `bundle exec jekyll s`
-4. The game is now running on `localhost:4000`
+You need git bash and a command to develop. This is what you'll do:
+
+1. Open a git bash terminal
+2. `cd to/the/directory/the/repo/is/in`
+3. Run `npx webpack --watch --mode=development`
+4. Open a command prompt window
+5. `> cd to\the\directory\the\repo\is\in`
+6. Run `bundle exec jekyll s`
+7. The game is now running on `localhost:4000`
 
 ## TODO
 
 - [ ] Make the communication scene text animate onto the screen
-- [ ] Setup auto-stop
 
 Here's things we need to work on sooner rather than later:
 
@@ -63,6 +75,7 @@ Here's things we need to work on sooner rather than later:
 
 Just to keep my spirits up, I'm putting everything we've finished here.
 
+- [x] Setup auto-stop
 - [x] Make the communication scene use the arrow keys and enter
 - [x] The first level is too long at 12 lines
 - [x] The second and third levels are too short
