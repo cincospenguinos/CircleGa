@@ -11,3 +11,10 @@ export const selectionMade = (item) => {
 		item,
 	}
 };
+
+export const updateTweenConfig = (config) => {
+	return {
+		type: 'UPDATE_TWEEN_CONFIG',
+		config,
+	}
+};

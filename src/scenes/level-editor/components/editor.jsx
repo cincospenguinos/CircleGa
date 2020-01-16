@@ -12,10 +12,23 @@ function StarButton({ text, onClick, selected, color }) {
 
 function Editor({
 	visible,
+	duration,
+	amount,
+	delay,
 	onSelectionMade,
+	onTweenConfigChange,
 }) {
 	const [currentItem, setCurrentItem] = useState(undefined);
 	const className = visible ? styles.shown : styles.hidden;
+
+	const setTweenConfig = (newVal) => {
+		onTweenConfigChange({
+			delay,
+			amount,
+			duration,
+			...newVal,
+		});
+	};
 
 	const setItem = (item) => {
 		setCurrentItem(item);
@@ -48,6 +61,39 @@ function Editor({
 				/>
 			</div>
 			<div className={styles.items}>
+				<div>
+					<label htmlFor="duration">Duration:
+						<input
+							name="duration"
+							type="number"
+							className={styles.input}
+							defaultValue={duration}
+							onChange={(e) => onTweenConfigChange({ duration: parseInt(e.target.value) })}
+						/>
+					</label>
+				</div>
+				<div>
+					<label htmlFor="duration">Amount:
+						<input
+							name="amount"
+							type="number"
+							className={styles.input}
+							defaultValue={amount}
+							onChange={(e) => onTweenConfigChange({ amount: parseInt(e.target.value) })}
+						/>
+					</label>
+				</div>
+				<div>
+					<label htmlFor="delay">Delay:
+						<input
+							name="delay"
+							type="number"
+							className={styles.input}
+							defaultValue={delay}
+							onChange={(e) => onTweenConfigChange({ delay: parseInt(e.target.value) })}
+						/>
+					</label>
+				</div>
 			</div>
 		</div>
 	);
@@ -56,12 +102,16 @@ function Editor({
 const mapStateToProps = (state, _) => {
 	return {
 		visible: state.editorVisible,
+		duration: state.duration,
+		amount: state.amount,
+		delay: state.delay,
 	};
 };
 
 const mapDispatchToProps = (dispatch, _) => {
 	return {
 		onSelectionMade: (item) => dispatch(actions.selectionMade(item)),
+		onTweenConfigChange: (config) => dispatch(actions.updateTweenConfig(config)),
 	};
 };
 

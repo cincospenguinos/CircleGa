@@ -10,6 +10,11 @@ export const reducer = (state = {}, action) => {
 				...state,
 				selectedItem: action.item,
 			};
+		case 'UPDATE_TWEEN_CONFIG':
+			return {
+				...state,
+				...action.config,
+			};
 		default:
 			return state;
 	}

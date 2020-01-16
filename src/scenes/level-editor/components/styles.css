@@ -1,17 +1,22 @@
 .container {
-	display: flex;
 	background-color: white;
 	z-index: 1;
 }
 
 .shown {
 	composes: container;
-	display: block;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
 }
 
 .hidden {
 	composes: container;
 	display: none;
+}
+
+.items {
+	display: inline-flex;
 }
 
 .items > * {
@@ -38,4 +43,9 @@
 .button-yellow {
 	composes: button;
 	border-color: yellow;
+}
+
+.input {
+	font-size: 12px;
+	width: 60px;
 }

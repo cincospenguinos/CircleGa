@@ -81,16 +81,12 @@ export class LevelFactory {
 		return new Level(this.scene, this.lines, this.stars);
 	}
 
-	updateTweenConfig(amount, duration, delay) {
-		this.tweenConfig = {
-			amount,
-			duration,
-			delay,
-		}
-	}
-
 	getTweenConfig() {
 		return this.tweenConfig;
+	}
+
+	setTweenConfig(config) {
+		this.tweenConfig = config;
 	}
 
 	_nextPositions() {
