@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../../state/actions/actions.js';
+import * as actions from '../../../state/actions/levelEditorActions.js';
+import * as selectors from '../../../state/selectors/levelEditorSelectors.js';
 import styles from './styles.css';
 
 function StarButton({ text, onClick, selected, color }) {
@@ -111,10 +112,10 @@ function Editor({
 
 const mapStateToProps = (state, _) => {
 	return {
-		visible: state.editorVisible,
-		duration: state.duration,
-		amount: state.amount,
-		delay: state.delay,
+		visible: selectors.isEditorVisible(state),
+		duration: selectors.getTweenConfig(state).duration,
+		amount: selectors.getTweenConfig(state).amount,
+		delay: selectors.getTweenConfig(state).delay,
 	};
 };
 

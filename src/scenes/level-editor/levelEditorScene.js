@@ -4,8 +4,8 @@ import { Enemy } from '../space-scene/model/enemy.js';
 import { distanceBetween } from '../../helpers/coordinates.js';
 import { LevelFactory } from './model/levelFactory.js';
 import store from '../../state/store.js';
-import * as actions from '../../state/actions/actions.js';
-import * as selectors from '../../state/selectors/selectors.js';
+import * as actions from '../../state/actions/levelEditorActions.js';
+import * as selectors from '../../state/selectors/levelEditorSelectors.js';
 
 export class LevelEditorScene extends Phaser.Scene {
 	constructor() {
@@ -32,10 +32,12 @@ export class LevelEditorScene extends Phaser.Scene {
 
 	preload() {
 		this._increaseScreenSize();
-		const { enemyOne, point, gameTrack, redStar, blueStar, yellowStar } = Constants.sprites;
+		const { warrior, nonWarrior, point, gameTrack,
+						redStar, blueStar, yellowStar } = Constants.sprites;
 
 		this.load.image(gameTrack.key, gameTrack.location, gameTrack.config);
-		this.load.spritesheet(enemyOne.key, enemyOne.location, enemyOne.config);
+		this.load.spritesheet(warrior.key, warrior.location, warrior.config);
+		this.load.spritesheet(nonWarrior.key, nonWarrior.location, nonWarrior.config);
 		this.load.image(point.key, point.location, point.config);
 		this.load.image(redStar.key, redStar.location, redStar.config);
 		this.load.image(blueStar.key, blueStar.location, blueStar.config);
@@ -163,7 +165,6 @@ export class LevelEditorScene extends Phaser.Scene {
 			scene: this,
 			x: centerOfScreen.x,
 			y: centerOfScreen.y,
-			key: Constants.sprites.enemyOne.key,
 			lines,
 			tweenConfig,
 		});

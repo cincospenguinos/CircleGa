@@ -105,5 +105,19 @@ export const SPRITES = {
 			frameWidth: 900,
 			frameHeight: 30,
 		}
+	},
+	nonWarrior: {
+		location: `${spriteDir}/nonWarrior.png`,
+		config: {
+			frameWidth: 64,
+			frameHeight: 64,
+		}
+	},
+	warrior: {
+		location: `${spriteDir}/warrior.png`,
+		config: {
+			frameWidth: 64,
+			frameHeight: 64,
+		}
 	}
 };

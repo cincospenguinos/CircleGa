@@ -1,4 +1,4 @@
-export const reducer = (state = {}, action) => {
+export default function(state = {}, action) {
 	switch (action.type) {
 		case 'SET_EDITOR_VISIBLE':
 			return {

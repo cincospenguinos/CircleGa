@@ -5,7 +5,8 @@ const FIRING_DISTANCE = 10;
 
 export class Enemy extends Entity {
 	constructor(config) {
-		super(config);
+		const key = config.canFire ? Constants.keys.sprites.warrior : Constants.keys.sprites.nonWarrior;
+		super({ ...config, key });
 
 		this.lines = config.lines;
 		this.tweenConfig = config.tweenConfig || {};

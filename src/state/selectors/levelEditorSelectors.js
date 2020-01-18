@@ -1,16 +1,16 @@
 export const isEditorVisible = (state) => {
-	return state.editorVisible;
+	return state.levelEditor.editorVisible;
 };
 
 export const getSelectedItem = (state) => {
-	return state.selectedItem;
+	return state.levelEditor.selectedItem;
 };
 
 export const getTweenConfig = (state) => {
-	const { amount, duration, delay } = state;
+	const { amount, duration, delay } = state.levelEditor;
 	return { amount, duration, delay };
 };
 
 export const showStarLines = (state) => {
-	return state.showStarLines;
+	return state.levelEditor.showStarLines;
 };

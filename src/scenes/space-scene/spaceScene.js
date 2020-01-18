@@ -37,7 +37,7 @@ export class SpaceScene extends Phaser.Scene {
 		const {
 			background, playerOne, yellowStar,
 			gameTrack, redBullet, blueBullet,
-			enemyBullet, enemyOne, redStar,
+			enemyBullet, warrior, nonWarrior, redStar,
 			blueStar,
 		} = Constants.sprites;
 
@@ -50,7 +50,8 @@ export class SpaceScene extends Phaser.Scene {
 		this.load.spritesheet(redBullet.key, redBullet.location, redBullet.config);
 		this.load.spritesheet(blueBullet.key, blueBullet.location, blueBullet.config);
 		this.load.spritesheet(enemyBullet.key, enemyBullet.location, enemyBullet.config);
-		this.load.spritesheet(enemyOne.key, enemyOne.location, enemyOne.config);
+		this.load.spritesheet(warrior.key, warrior.location, warrior.config);
+		this.load.spritesheet(nonWarrior.key, nonWarrior.location, nonWarrior.config);
 
 		const cursors = this.input.keyboard.createCursorKeys();
 
