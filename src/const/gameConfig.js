@@ -14,11 +14,11 @@ export const CONFIG = {
 };
 
 export const ORDER = [
-	'level-1',
+	'level-1_1',
 	'text-consumersBuyStolenGoods',
-	'level-2',
-	'level-3',
-	'level-4',
+	'level-1_2',
+	'level-1_3',
+	'level-1_4',
 	'communication-1',
 	'end',
 ];

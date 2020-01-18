@@ -89,7 +89,7 @@ export class SpaceScene extends Phaser.Scene {
 
 		if (this.tutorial.isComplete()) {
 			const currentLevelNum = parseInt(this.levelInfo.replace('.json', ''));
-			const indicatorText = romanNumeralHelpers.toRomanNumerals(currentLevelNum);
+			const indicatorText = this._getIndicatorText();
 			const levelIndicator = this._showString(indicatorText);
 
 			setTimeout(() => {
@@ -97,6 +97,14 @@ export class SpaceScene extends Phaser.Scene {
 				this.currentLevel.start();
 			}, 2000);
 		}
+	}
+
+	_getIndicatorText() {
+		const numbers = this.levelInfo.replace('.json', '').split('_');
+		const stage = romanNumeralHelpers.toRomanNumerals(numbers[0]);
+		const level = romanNumeralHelpers.toRomanNumerals(numbers[1]).toLowerCase();
+
+		return `${stage}-${level}`;
 	}
 
 	update() {
