@@ -13,6 +13,7 @@ export class CollisionValidation {
 		const playerTwo = this.players.get(Constants.sprites.playerTwo.key);
 
 		this._playerToPlayer(playerOne, playerTwo);
+
 		aliens.all().forEach((a) => {
 			this._playerToEnemy(playerOne, aliens, a);
 			this._playerToEnemy(playerTwo, aliens, a);

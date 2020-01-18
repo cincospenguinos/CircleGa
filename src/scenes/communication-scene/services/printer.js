@@ -24,7 +24,7 @@ export class Printer {
 	printResponse(text) {
 		this._extractLinesFrom(text).forEach((line) => {
 			const textObj = this._printLine(line);
-			textObj.setTint(0xFF2222);
+			textObj.setTint(0xF84444);
 		});
 	}
 

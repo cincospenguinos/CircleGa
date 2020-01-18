@@ -17,10 +17,4 @@ const levelEditor = {
 	showStarLines: false,
 };
 
-const initialState = {
-	levelEditor,
-	player,
-};
-
-const store = createStore(reducer, initialState);
-export default store;
+export default createStore(reducer, { player, levelEditor });

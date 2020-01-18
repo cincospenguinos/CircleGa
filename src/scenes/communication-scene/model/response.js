@@ -27,20 +27,10 @@ export class Response extends Phaser.GameObjects.Image {
 	_update() {
 		if (this.selected) {
 			this.setAlpha(1);
-			this.responseText.setTint(0xFF0000);
+			this.responseText.setTint(0xF84444);
 		} else {
 			this.setAlpha(0.01);
-			this.responseText.setTint(0xFF2222);
+			this.responseText.setTint(0xE83030);
 		}
-	}
-
-	_onHover() {
-		this.setAlpha(1);
-		this.responseText.setTint(0xFF0000);
-	}
-
-	_onOut() {
-		this.setAlpha(0.01);
-		this.responseText.setTint(0xFF2222);
 	}
 }

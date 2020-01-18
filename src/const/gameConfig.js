@@ -16,6 +16,9 @@ export const CONFIG = {
 export const ORDER = [
 	'level-1',
 	'text-consumersBuyStolenGoods',
+	'level-2',
+	'level-3',
+	'level-4',
 	'communication-1',
 	'end',
 ];
