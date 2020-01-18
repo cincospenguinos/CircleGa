@@ -8,9 +8,9 @@
   ],
   "enemies": [
     {
-      "duration": 3500,
+      "duration": 3200,
       "amount": 2,
-      "delay": 1000,
+      "delay": 625,
       "points": [
         [
           {
@@ -33,9 +33,9 @@
       ]
     },
     {
-      "duration": 3500,
+      "duration": 3200,
       "amount": 2,
-      "delay": 1000,
+      "delay": 625,
       "points": [
         [
           {
@@ -58,9 +58,9 @@
       ]
     },
     {
-      "duration": 3500,
+      "duration": 3200,
       "amount": 2,
-      "delay": 1000,
+      "delay": 625,
       "points": [
         [
           {
@@ -85,7 +85,7 @@
     {
       "duration": 3000,
       "amount": 2,
-      "delay": 1000,
+      "delay": 625,
       "points": [
         [
           {
