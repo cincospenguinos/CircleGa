@@ -1,13 +1,9 @@
 import { Entity } from './entity.js';
 import { Constants } from '../../../const/index.js';
 import * as coordinateHelpers from '../../../helpers/coordinates.js';
+import * as selectors from '../../../state/selectors/playerSelectors.js';
 
 export class Player extends Entity {
-	static MAX_VELOCITY = Math.PI / 128;
-	static MAX_COOLDOWN = 15;
-	static ACCELERATION = Math.PI / 1024;
-	static MOVEMENT_COOLDOWN = 20;
-
 	constructor(config) {
 		super(config);
 
@@ -15,6 +11,13 @@ export class Player extends Entity {
 		this.velocity = 0;
 		this.fireCooldown = 0;
 		this.moveCooldown = 0;
+	}
+
+	static updateStaticProps(state) {
+		this.MAX_VELOCITY = selectors.getMaxVelocity(state);
+		this.ACCELERATION = selectors.getAcceleration(state);
+		this.BULLET_COOLDOWN = selectors.getBulletCooldown(state);
+		this.MAX_BULLETS = selectors.getMaxBullets(state);
 	}
 
 	accelerate(direction) {
@@ -69,7 +72,7 @@ export class Player extends Entity {
 	}
 
 	fireBullet() {
-		this.fireCooldown = Player.MAX_COOLDOWN;
+		this.fireCooldown = Player.BULLET_COOLDOWN;
 		const polar = coordinateHelpers.toPolar(this.getPosition());
 		polar.radius *= 9 / 10
 		return coordinateHelpers.toGame(polar);

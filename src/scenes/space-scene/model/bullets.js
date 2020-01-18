@@ -1,6 +1,7 @@
 import { Entity } from './entity.js';
 import { Constants } from '../../../const/index.js';
 import * as coordinateHelpers from '../../../helpers/coordinates.js';
+import * as selectors from '../../../state/selectors/playerSelectors.js';
 
 export class Bullet extends Entity {
 	constructor(config) {
@@ -43,6 +44,10 @@ export class Bullets {
 		this.nextKey = 1;
 		this.bullets = [];
 		this.originCounts = {};
+	}
+
+	static updateStaticProps(state) {
+		this.PLAYER_BULLET_VEL = selectors.getBulletVelocity(state);
 	}
 
 	addBullet(firingOrigin, bulletPosition, target = undefined) {
@@ -88,7 +93,7 @@ export class Bullets {
 	_createBullet(firingOrigin, bulletPosition, target = Constants.coordinates.centerOfScreen) {
 		const rotation = Phaser.Math.Angle.Between(bulletPosition.x, bulletPosition.y, target.x, target.y) + Math.PI / 2;
 
-		const totalVel = firingOrigin === Constants.keys.sprites.enemyOne ? Bullets.ENEMY_BULLET_VEL : Bullets.PLAYER_BULLET_VEL;
+		const totalVel = firingOrigin === Constants.keys.sprites.warrior ? Bullets.ENEMY_BULLET_VEL : Bullets.PLAYER_BULLET_VEL;
 		const key = this._spriteKeyFor(firingOrigin);
 
 		const xVel = totalVel * Math.cos(rotation - Math.PI / 2);
@@ -116,7 +121,7 @@ export class Bullets {
 			return Constants.keys.sprites.redBullet;
 		} else if(origin === Constants.keys.sprites.playerTwo) {
 			return Constants.keys.sprites.blueBullet;
-		} else if (origin === Constants.keys.sprites.enemyOne) {
+		} else if (origin === Constants.keys.sprites.warrior) {
 			return Constants.keys.sprites.enemyBullet;
 		}
 	}

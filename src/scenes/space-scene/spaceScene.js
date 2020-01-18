@@ -11,6 +11,7 @@ import { Level } from './model/level.js';
 import { Tutorial } from './model/tutorial.js';
 import { Bezier } from './model/bezier.js';
 import * as romanNumeralHelpers from './services/romanNumerals.js';
+import store from '../../state/store.js';
 
 export class SpaceScene extends Phaser.Scene {
 	constructor() {
@@ -29,6 +30,9 @@ export class SpaceScene extends Phaser.Scene {
 		this.finishedTutorial = gameState.hasFinishedTutorial();
 
 		this.collisionValidation = new CollisionValidation(this.players, this.bullets);
+
+		Player.updateStaticProps(store.getState());
+		Bullets.updateStaticProps(store.getState());
 	}
 
 	preload() {
@@ -157,7 +161,6 @@ export class SpaceScene extends Phaser.Scene {
 			}
 
 			if (this.keys.p1Fire.isDown) {
-				this.tutorial.completeTask('firing');
 				this._fireBullet(playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
 			}
 		}
@@ -166,7 +169,7 @@ export class SpaceScene extends Phaser.Scene {
 	_fireBullet(player, playerSpriteKey, bulletSpriteKey) {
 		this.tutorial.completeTask('firing');
 
-		if (this.bullets.bulletCountFor(playerSpriteKey) < 2 && player.canFire()) {
+		if (this.bullets.bulletCountFor(playerSpriteKey) < Player.MAX_BULLETS && player.canFire()) {
 			const bulletPosition = player.fireBullet();
 			this.bullets.addBullet(playerSpriteKey, bulletPosition);
 		}
