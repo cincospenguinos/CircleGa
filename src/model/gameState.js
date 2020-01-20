@@ -44,13 +44,14 @@ export class GameState {
 		setTimeout(() => scene.scene.start(info.key, info), 1000);
 	}
 
-	getSceneInfo() {
+	getSceneInfo(opts = {}) {
 		const orderData = Constants.order[this.index].split('-');
 		const key = this._sceneFor(orderData[0]);
 
 		return {
 			key: this._sceneFor(orderData[0]),
 			content: `${orderData[1]}.json`,
+			...opts
 		}
 	}
 

@@ -7,11 +7,11 @@ export class Tutorial {
 		this.complete = GameState.getInstance().hasFinishedTutorial();
 		this.tasks = {
 			movement: {
-				text: 'Use left and right arrow keys to move (A & D for second player)',
+				text: 'Use left and right arrow keys to move',
 				key: 'movement',
 			},
 			firing: {
-				text: 'Use up arrow key (W) to fire',
+				text: 'Use up arrow key to fire',
 				key: 'firing',
 			},
 			noEscape: {

@@ -11,6 +11,7 @@ import { Level } from './model/level.js';
 import { Tutorial } from './model/tutorial.js';
 import { Bezier } from './model/bezier.js';
 import * as romanNumeralHelpers from './services/romanNumerals.js';
+import { LifeCount } from './view/lifeCount.js';
 import store from '../../state/store.js';
 
 export class SpaceScene extends Phaser.Scene {
@@ -23,6 +24,7 @@ export class SpaceScene extends Phaser.Scene {
 
 		this.playerCount = data.players;
 		this.levelInfo = data.content;
+		this.lifeCountView = new LifeCount(this, { lifeCount: data.lifeCount });
 
 		this.players = new EntityCollection();
 		this.bullets = new Bullets(this);
@@ -87,6 +89,8 @@ export class SpaceScene extends Phaser.Scene {
 		this.currentLevel = this._createLevel();
 		this.currentLevel.draw();
 
+		this.lifeCountView.draw();
+
 		if (this.tutorial.isComplete()) {
 			const currentLevelNum = parseInt(this.levelInfo.replace('.json', ''));
 			const indicatorText = this._getIndicatorText();
@@ -104,7 +108,7 @@ export class SpaceScene extends Phaser.Scene {
 		const stage = romanNumeralHelpers.toRomanNumerals(numbers[0]);
 		const level = romanNumeralHelpers.toRomanNumerals(numbers[1]).toLowerCase();
 
-		return `${stage}-${level}`;
+		return `${stage}.${level}`;
 	}
 
 	update() {
@@ -135,6 +139,11 @@ export class SpaceScene extends Phaser.Scene {
 			this.currentLevel.update();
 
 			this.collisionValidation.handleCollisions(aliens);
+
+			if (this._arePlayersDead()) {
+				this.lifeCountView.updateLifeTotal(-1);
+			}
+
 			this.currentLevel.setPlayersDead(this._arePlayersDead());
 
 			if (this.currentLevel.isComplete()) {
@@ -223,7 +232,10 @@ export class SpaceScene extends Phaser.Scene {
 
 		const instance = GameState.getInstance();
 		instance.levelComplete();
-		setTimeout(() => GameState.getInstance().transition(this), 1000);
+		setTimeout(() => GameState
+			.getInstance()
+			.transition(this, { lifeCount: this.lifeCountView.livesLeft }),
+		1000);
 	}
 
 	_levelLoaded() {
