@@ -138,18 +138,18 @@ export class SpaceScene extends Phaser.Scene {
 
 					if (this._arePlayersDead()) {
 						this.lifeCountView.updateLifeTotal(-1);
+						this.currentLevel.setPlayersDead(true);
 						this.sceneState = 'playerDeath';
 					}
 
-					this.currentLevel.setPlayersDead(this._arePlayersDead());
-
 					if (this.currentLevel.isComplete()) {
-						this._completeLevel();
+						this.sceneState = 'transition';
 					}
 				}
 
 				break;
 			case 'playerDeath':
+				const aliens = this.currentLevel.getAliens();
 				if (this._arePlayersDead() && aliens.count() === 0) {
 					const playerOne = this._createPlayerOne();
 					this.players.add(playerOne);
@@ -161,6 +161,19 @@ export class SpaceScene extends Phaser.Scene {
 						this.currentLevel.unlock();
 						string.destroy();
 						this.sceneState = 'play';
+					}, 1000);
+				}
+
+				break;
+			case 'transition':
+				this.sceneState = '';
+				GameState.getInstance().levelComplete();
+
+				if (GameState.getInstance().getSceneInfo().key === Constants.scenes.communicationScene) {
+					console.log('Show the communication prompt!');
+				} else {
+					setTimeout(() => {
+						this._completeLevel();
 					}, 1000);
 				}
 
@@ -245,13 +258,7 @@ export class SpaceScene extends Phaser.Scene {
 
 	_completeLevel() {
 		this.currentLevel = null;
-
-		const instance = GameState.getInstance();
-		instance.levelComplete();
-		setTimeout(() => GameState
-			.getInstance()
-			.transition(this, { lifeCount: this.lifeCountView.livesLeft }),
-		1000);
+		GameState.getInstance().transition(this, { lifeCount: this.lifeCountView.livesLeft });
 	}
 
 	_levelLoaded() {
