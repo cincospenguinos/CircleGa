@@ -91,6 +91,8 @@ export class SpaceScene extends Phaser.Scene {
 
 		this.lifeCountView.draw();
 
+		this.sceneState = 'tutorial';
+
 		if (this.tutorial.isComplete()) {
 			const currentLevelNum = parseInt(this.levelInfo.replace('.json', ''));
 			const indicatorText = this._getIndicatorText();
@@ -118,37 +120,51 @@ export class SpaceScene extends Phaser.Scene {
 		this.players.update();
 		this.bullets.update();
 
-		this.tutorial.update();
+		switch(this.sceneState) {
+			case 'tutorial':
+				this.tutorial.update();
 
-		if (this._levelLoaded()) {
-			const aliens = this.currentLevel.getAliens();
+				if (this.tutorial.isComplete()) {
+					this.sceneState = 'play';
+				}
 
-			if (this._arePlayersDead() && aliens.count() === 0) {
-				const playerOne = this._createPlayerOne();
-				this.players.add(playerOne);
-				this.currentLevel.setPlayersDead(false);
+				break;
+			case 'play':
+				if (this._levelLoaded()) {
+					this.currentLevel.update();
 
-				const string = this._showString('Ready');
+					const aliens = this.currentLevel.getAliens();
+					this.collisionValidation.handleCollisions(aliens);
 
-				setTimeout(() => {
-					this.currentLevel.unlock();
-					string.destroy();
-				}, 1000);
-			}
+					if (this._arePlayersDead()) {
+						this.lifeCountView.updateLifeTotal(-1);
+						this.sceneState = 'playerDeath';
+					}
 
-			this.currentLevel.update();
+					this.currentLevel.setPlayersDead(this._arePlayersDead());
 
-			this.collisionValidation.handleCollisions(aliens);
+					if (this.currentLevel.isComplete()) {
+						this._completeLevel();
+					}
+				}
 
-			if (this._arePlayersDead()) {
-				this.lifeCountView.updateLifeTotal(-1);
-			}
+				break;
+			case 'playerDeath':
+				if (this._arePlayersDead() && aliens.count() === 0) {
+					const playerOne = this._createPlayerOne();
+					this.players.add(playerOne);
+					this.currentLevel.setPlayersDead(false);
 
-			this.currentLevel.setPlayersDead(this._arePlayersDead());
+					const string = this._showString('Ready');
 
-			if (this.currentLevel.isComplete()) {
-				this._completeLevel();
-			}
+					setTimeout(() => {
+						this.currentLevel.unlock();
+						string.destroy();
+						this.sceneState = 'play';
+					}, 1000);
+				}
+
+				break;
 		}
 	}
 
