@@ -12,6 +12,7 @@ import { Tutorial } from './model/tutorial.js';
 import { Bezier } from './model/bezier.js';
 import * as romanNumeralHelpers from './services/romanNumerals.js';
 import { LifeCount } from './view/lifeCount.js';
+import { TransmissionRequest } from './view/transmissionRequest.js';
 import store from '../../state/store.js';
 
 export class SpaceScene extends Phaser.Scene {
@@ -44,13 +45,14 @@ export class SpaceScene extends Phaser.Scene {
 			background, playerOne, yellowStar,
 			gameTrack, redBullet, blueBullet,
 			enemyBullet, warrior, nonWarrior, redStar,
-			blueStar,
+			blueStar, transmissionRequest,
 		} = Constants.sprites;
 
 		this.load.image(gameTrack.key, gameTrack.location);
 		this.load.image(background.key, background.location);
 		this.load.image(redStar.key, redStar.location, redStar.config);
 		this.load.image(blueStar.key, blueStar.location, blueStar.config);
+		this.load.image(transmissionRequest.key, transmissionRequest.location);
 		this.load.image(yellowStar.key, yellowStar.location, yellowStar.config);
 		this.load.spritesheet(playerOne.key, playerOne.location, playerOne.config);
 		this.load.spritesheet(redBullet.key, redBullet.location, redBullet.config);
@@ -58,6 +60,7 @@ export class SpaceScene extends Phaser.Scene {
 		this.load.spritesheet(enemyBullet.key, enemyBullet.location, enemyBullet.config);
 		this.load.spritesheet(warrior.key, warrior.location, warrior.config);
 		this.load.spritesheet(nonWarrior.key, nonWarrior.location, nonWarrior.config);
+		this.load.audio(Constants.sounds.transmissionRequest.key, Constants.sounds.transmissionRequest.location);
 
 		const cursors = this.input.keyboard.createCursorKeys();
 
@@ -66,10 +69,7 @@ export class SpaceScene extends Phaser.Scene {
 			p1Left: cursors.left,
 			p1Slow: cursors.down,
 			p1Fire: cursors.up,
-			p2Right: this.input.keyboard.addKey('D'),
-			p2Left: this.input.keyboard.addKey('A'),
-			p2Slow: this.input.keyboard.addKey('S'),
-			p2Fire: this.input.keyboard.addKey('W'),
+			enter: this.input.keyboard.addKey('ENTER'),
 		};
 
 		this.tutorial = new Tutorial(this, () => this.currentLevel.start());
@@ -92,6 +92,8 @@ export class SpaceScene extends Phaser.Scene {
 		this.lifeCountView.draw();
 
 		this.sceneState = 'tutorial';
+
+		this.transmissionRequest = new TransmissionRequest(this);
 
 		if (this.tutorial.isComplete()) {
 			const currentLevelNum = parseInt(this.levelInfo.replace('.json', ''));
@@ -166,11 +168,11 @@ export class SpaceScene extends Phaser.Scene {
 
 				break;
 			case 'transition':
-				this.sceneState = '';
+				this.sceneState = 'transmission-waiting';
 				GameState.getInstance().levelComplete();
 
 				if (GameState.getInstance().getSceneInfo().key === Constants.scenes.communicationScene) {
-					console.log('Show the communication prompt!');
+					this.transmissionRequest.show();
 				} else {
 					setTimeout(() => {
 						this._completeLevel();
@@ -208,6 +210,11 @@ export class SpaceScene extends Phaser.Scene {
 
 			if (this.keys.p1Fire.isDown) {
 				this._fireBullet(playerOne, Constants.sprites.playerOne.key, Constants.sprites.redBullet.key);
+			}
+
+			if (this.sceneState === 'transmission-waiting' && this.keys.enter.isDown) {
+				this.transmissionRequest.hide();
+				this._completeLevel();
 			}
 		}
 	}

@@ -119,5 +119,8 @@ export const SPRITES = {
 			frameWidth: 64,
 			frameHeight: 64,
 		}
+	},
+	transmissionRequest: {
+		location: `${spriteDir}/transmissionRequest.png`,
 	}
 };

@@ -87,5 +87,11 @@ export const SOUNDS = {
 			url: 'https://www.youtube.com/watch?v=qS7nqwGt4-I',
 			notes: 'Chopped up and distorted to fit the other screams. This one was hard for me to make, and harder for me to include.',
 		}
+	},
+	transmissionRequest: {
+		location: `${soundsDir}/transmissionRequest.mp3`,
+		config: {
+			loop: true,
+		}
 	}
 };
