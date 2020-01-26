@@ -98,7 +98,7 @@ export class SpaceScene extends Phaser.Scene {
 		if (this.tutorial.isComplete()) {
 			const currentLevelNum = parseInt(this.levelInfo.replace('.json', ''));
 			const indicatorText = this._getIndicatorText();
-			const levelIndicator = this._showString(indicatorText);
+			const levelIndicator = this._showString(indicatorText, false);
 
 			setTimeout(() => {
 				levelIndicator.destroy();
@@ -278,9 +278,10 @@ export class SpaceScene extends Phaser.Scene {
 		return !!this.currentLevel;
 	}
 
-	_showString(str) {
+	_showString(str, isDiagetic = true) {
+		const font = isDiagetic ? Constants.fonts.spaceSceneTransmission : Constants.fonts.spaceSceneNote;
 		const centerOfScreen = Constants.coordinates.centerOfScreen;
-		const string = this.add.text(centerOfScreen.x, centerOfScreen.y, str);
+		const string = this.add.text(centerOfScreen.x, centerOfScreen.y, str, font);
 		string.x = (Constants.dimensions.screen.width - string.width) / 2;
 
 		return string;

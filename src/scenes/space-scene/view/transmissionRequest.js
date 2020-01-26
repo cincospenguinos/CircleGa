@@ -6,7 +6,9 @@ export class TransmissionRequest {
 	constructor(scene) {
 		this.scene = scene;
 
-		this.sound = this.scene.sound.add(Constants.sounds.transmissionRequest.key, Constants.sounds.transmissionRequest.config);
+		const { transmissionRequest } = Constants.sounds;
+		this.sound = this.scene.sound.add(transmissionRequest.key, transmissionRequest.config);
+
 		this.isShown = false;
 	}
 
@@ -18,7 +20,8 @@ export class TransmissionRequest {
 			this.panel.x = width - (this.panel.width / 2);
 			this.panel.y = (height - 100) - (this.panel.height / 2);
 			
-			this.text = this.scene.add.text(0, 100, TransmissionRequest.TEXT);
+			this.text = this.scene.add.text(0, 100, TransmissionRequest.TEXT,
+				Constants.fonts.spaceSceneTransmission);
 			this.text.x = this.panel.x - (this.text.width / 2)
 			this.text.y = this.panel.y - 10;
 

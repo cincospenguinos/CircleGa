@@ -43,13 +43,6 @@ export class TextExcerpt {
 		return this.source || '';
 	}
 
-	getFont() {
-		return {
-			fontFamily: 'Arial',
-			fontSize: '24px',
-		}
-	}
-
 	_getStep() {
 		if (this.type === 'quote') {
 			return 75;

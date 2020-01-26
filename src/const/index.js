@@ -8,6 +8,7 @@ import { SOUNDS } from './sounds.js';
 import { TEXT, TEXT_ORDER } from './text.js';
 import { LEVELS, LEVEL_ORDER } from './levels.js';
 import { COMMUNICATIONS } from './communications.js';
+import { FONTS } from './fonts.js';
 
 const extractKeys = (obj) => {
 	const keys = {};
@@ -40,6 +41,7 @@ export const Constants = {
 	coordinates: appendKeysTo(COORDINATES),
 	dimensions: appendKeysTo(DIMENSIONS),
 	enemies: appendKeysTo(ENEMY_TYPES),
+	fonts: FONTS,
 	keys: KEYS,
 	scenes: SCENES,
 	sounds: appendKeysTo(SOUNDS),

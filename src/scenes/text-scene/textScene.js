@@ -50,14 +50,13 @@ export class TextScene extends Phaser.Scene {
 
 	_showText(excerpt) {
 		const { width, height } = Constants.dimensions.screen;
-		this.add.text(25, 25, excerpt.getText(), excerpt.getFont());
+		this.add.text(25, 25, excerpt.getText(), Constants.fonts.textReference);
 
-		const sourceFont = {...excerpt.getFont(), font: 'italic 24px Arial' };
-		const source = this.add.text(0, height - 25, excerpt.getSource(), sourceFont);
+		const source = this.add.text(0, height - 25, excerpt.getSource(), Constants.fonts.textSource);
 		source.x = width - source.width;
 
 		const author = this.add.text(0, height - 50,
-			`--- ${excerpt.getAuthor() || 'Author Unknown'}`, excerpt.getFont());
+			`--- ${excerpt.getAuthor() || 'Author Unknown'}`, Constants.fonts.textAuthor);
 		author.x = width - source.width;
 	}
 }

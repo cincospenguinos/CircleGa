@@ -30,7 +30,7 @@ export class Printer {
 
 	_averagePixelsPerChar() {
 		const text = 'The quick brown fox jumped over the lazy dog.?!@#$%^&*()-=1234567890';
-		const obj = this.scene.add.text(0, 0, text);
+		const obj = this.scene.add.text(0, 0, text, Constants.fonts.communicationScene);
 		const average = obj.displayWidth / text.length;
 
 		obj.destroy();
