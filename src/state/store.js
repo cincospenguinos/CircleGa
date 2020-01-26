@@ -7,6 +7,8 @@ const player = {
 	bulletVelocity: 12,
 	maxBullets: 2,
 	bulletCooldown: 45,
+	currentLevel: 1,
+	lifeTotal: 3,
 };
 
 const levelEditor = {

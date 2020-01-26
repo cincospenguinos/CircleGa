@@ -28,6 +28,29 @@ export default function (state = {}, action) {
 				...state,
 				bulletCooldown,
 			};
+		case 'RESET_LIFE_TOTAL': {
+			const lifeTotal = 3;
+
+			return {
+				...state,
+				lifeTotal,
+			};
+		}
+		case 'PLAYER_DIED': {
+			const lifeTotal = state.lifeTotal - 1;
+
+			return {
+				...state,
+				lifeTotal,
+			};
+		}
+		case 'NEXT_LEVEL':
+			const currentLevel = state.currentLevel + 1;
+
+			return {
+				...state,
+				currentLevel,
+			}
 		case 'SET_MAX_BULLETS':
 			const maxBullets = action.maxBullets;
 

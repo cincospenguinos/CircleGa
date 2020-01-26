@@ -12,6 +12,7 @@ const STAR_KEYS = {
 
 export class Level {
 	constructor(scene, lines, stars, fireCallback = undefined) {
+		this.scene = scene;
 		this.lines = lines;
 		this.stars = stars;
 		this.scene = scene;

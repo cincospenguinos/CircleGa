@@ -1,9 +1,9 @@
 import { Constants } from '../../../const/index.js';
 
 export class LifeCount {
-	constructor(scene, opts = {}) {
+	constructor(scene, lifeCount) {
 		this.scene = scene;
-		this.lifeCount = opts.lifeCount || 3;
+		this.currentLives = lifeCount;
 		this.lifeSprites = [];
 	}
 
@@ -15,7 +15,7 @@ export class LifeCount {
 
 		const { playerOne } = Constants.sprites;
 
-		for (let i = 0; i < this.lifeCount; i++) {
+		for (let i = 0; i < this.currentLives; i++) {
 			const sprite = this.scene.add.sprite(edgeOfScreen.x - 25 * i, edgeOfScreen.y,
 				playerOne.key);
 			sprite.setScale(0.5);
@@ -23,18 +23,26 @@ export class LifeCount {
 		}
 	}
 
-	updateLifeTotal(lifeDifference) {
-		this.lifeCount += lifeDifference;
+	playerDied() {
+		this.currentLives -= 1;
+		this._update();
+	}
 
-		this._clear();
-		this.draw();
+	resetLifeTotal() {
+		this.currentLives = 3;
+		this._update();
+	}
+
+	updateLifeTotal(lifeDifference) {
+		this.currentLives += lifeDifference;
 	}
 
 	get livesLeft() {
 		return this.lifeSprites.length;
 	}
 
-	_clear() {
+	_update() {
 		this.lifeSprites.forEach(s => s.destroy());
+		this.draw();
 	}
 }

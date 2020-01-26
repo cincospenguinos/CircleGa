@@ -1,14 +1,14 @@
 import { Constants } from '../const/index.js';
-
-const CURRENT_LEVEL = 'current_level';
-const CURRENT_TEXT = 'current_text';
-const CURRENT_INDEX = 'current_index';
-const FINISHED_TUTORIAL = false;
+import * as playerActions from '../state/actions/playerActions.js';
+import * as playerSelectors from '../state/selectors/playerSelectors.js';
+import store from '../state/store.js';
 
 export class GameState {
 	constructor(opts) {
 		this.index = opts.index || 0;
 		this.finishedTutorial = opts.finishedTutorial;
+		this.getState = store.getState;
+		this.dispatch = store.dispatch;
 	}
 
 	static getInstance() {
@@ -34,6 +34,14 @@ export class GameState {
 		this.index += 1;
 	}
 
+	playerDied() {
+		store.dispatch(playerActions.playerDied());
+	}
+
+	getLifeCount() {
+		return playerSelectors.getLifeTotal(this.getState());
+	}
+
 	setTutorialFinished(bool) {
 		this.finishedTutorial = bool;
 	}
@@ -41,6 +49,12 @@ export class GameState {
 	transition(scene, opts = {}) {
 		scene.scene.stop();
 		const info = this.getSceneInfo(opts);
+
+		if (this._transitioningToNextLevel(info)) {
+			store.dispatch(playerActions.nextLevel());
+			store.dispatch(playerActions.resetLifeTotal());
+		}
+
 		setTimeout(() => scene.scene.start(info.key, info), 1000);
 	}
 
@@ -53,13 +67,6 @@ export class GameState {
 			content: `${orderData[1]}.json`,
 			...opts
 		}
-	}
-
-	save() {
-		localStorage.setItem(CURRENT_INDEX, this.index);
-		localStorage.setItem(CURRENT_LEVEL, this.currentLevel);
-		localStorage.setItem(CURRENT_TEXT, this.currentText);
-		localStorage.setItem(FINISHED_TUTORIAL, this.finishedTutorial);
 	}
 
 	getCurrentLevelIndex() {
@@ -87,5 +94,17 @@ export class GameState {
 			default:
 				throw `No scene for ${key}`;
 		}
+	}
+
+	_transitioningToNextLevel(info) {
+		if (info.key !== 'level') {
+			return false;
+		}
+
+		const nextLevel = parseInt(info.content[0]);
+		const lastLevel = playerSelectors.getCurrentLevel(this.getState());
+
+		debugger;
+		return nextLevel === lastLevel + 1;
 	}
 }

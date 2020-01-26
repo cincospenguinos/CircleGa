@@ -24,24 +24,23 @@ You need git bash and a command to develop. This is what you'll do:
 6. Run `bundle exec jekyll s`
 7. The game is now running on `localhost:4000`
 
-## TODO
+## Stefano's TODO List
 
-- [ ] Make the communication scene text animate onto the screen
+- [ ] Left, right, death, and fire animations for the player
+- [ ] Explore character designs with Andre
+	* They'll be based off traditional garb of the Ute nation
+- [ ] Discuss the main story beats with Andre and begin "background" design
+	* I'm reluctant to call them backgrounds, since 
+
+## TODO
 
 Here's things we need to work on sooner rather than later:
 
-- [ ] Put on screen what keys to press to make a selection
 - [ ] Use single melody for the entire thing--the opening melody should be used in text excerpts
 - [ ] Make the ring larger--covering almost the whole screen
 	* It's hard to maneuver with too little space, and I'd like to explore having the ring be bigger
-- [ ] Handle transitions in a better way
-	* I like the idea of having to accept a transmission with the enter key when migrating to a communication scene, and the text just appearing on screen when it's time
-- [ ] Consider making a pause button, depending on the length of the game
-- [ ] Consider making a really big level editor screen size so you can modify paths more easily
-	* This would open up the number of places stars could be
 - [ ] Consider causing stars to flash in the order enemies will go by so patterns are telegraphed to the player
-- [ ] Consider changing the color of the stars to something else--red and blue are coded as the players
-- [ ] Consider dropping the second player altogether--it's not really something this experience warrants
+- [ ] Change the text of the menu screen to whatever it is you decide, Andre
 
 ### Art and Animation
 
@@ -54,29 +53,22 @@ Here's things we need to work on sooner rather than later:
 - [ ] Explosion animation for aliens
 - [ ] Death animation for the aliens
 
-### Level design
-
-- [ ] Change the text of the menu screen to whatever it is you decide, Andre
-
-### Code
-
-- [ ] Allow players to connect and move together
-	- [ ] A single key for each flips connect/disconnect mode
-	- [ ] A separate sprite with a lit side shows up
-	- [ ] A separate sprite and connection animation plays/shows up
-
 ### Sound
 
 - [ ] Sound effect for shot fired by player
 - [ ] Sound effect for shot fired by alien
-- [ ] Sound effect for alien death
 - [ ] Sound effect for alien explosion (could just be the same as player)
-- [ ] Sound effect for crashing into the other player (this helps make crashing appear as a negative consequence)
 
 ### Finished
 
 Just to keep my spirits up, I'm putting everything we've finished here.
 
+- [x] Sound effect for alien death
+- [x] Handle transitions in a better way
+	* I like the idea of having to accept a transmission with the enter key when migrating to a communication scene, and the text just appearing on screen when it's time
+- [x] Consider making a really big level editor screen size so you can modify paths more easily
+	* This would open up the number of places stars could be
+- [x] Consider dropping the second player altogether--it's not really something this experience warrants
 - [x] Setup auto-stop
 - [x] Make the communication scene use the arrow keys and enter
 - [x] The first level is too long at 12 lines

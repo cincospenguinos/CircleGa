@@ -17,3 +17,11 @@ export const getBulletCooldown = (state) => {
 export const getMaxBullets = (state) => {
 	return state.player.maxBullets;
 };
+
+export const getLifeTotal = (state) => {
+	return state.player.lifeTotal;
+};
+
+export const getCurrentLevel = (state) => {
+	return state.player.currentLevel;
+};

@@ -25,7 +25,7 @@ export class SpaceScene extends Phaser.Scene {
 
 		this.playerCount = data.players;
 		this.levelInfo = data.content;
-		this.lifeCountView = new LifeCount(this, { lifeCount: data.lifeCount });
+		this.lifeCountView = new LifeCount(this, gameState.getLifeCount());
 
 		this.players = new EntityCollection();
 		this.bullets = new Bullets(this);
@@ -139,12 +139,11 @@ export class SpaceScene extends Phaser.Scene {
 					this.collisionValidation.handleCollisions(aliens);
 
 					if (this._arePlayersDead()) {
-						this.lifeCountView.updateLifeTotal(-1);
+						this.lifeCountView.playerDied();
+						GameState.getInstance().playerDied();
 						this.currentLevel.setPlayersDead(true);
 						this.sceneState = 'playerDeath';
-					}
-
-					if (this.currentLevel.isComplete()) {
+					} else if (this.currentLevel.isComplete()) {
 						this.sceneState = 'transition';
 					}
 				}
@@ -152,18 +151,25 @@ export class SpaceScene extends Phaser.Scene {
 				break;
 			case 'playerDeath':
 				const aliens = this.currentLevel.getAliens();
-				if (this._arePlayersDead() && aliens.count() === 0) {
-					const playerOne = this._createPlayerOne();
-					this.players.add(playerOne);
-					this.currentLevel.setPlayersDead(false);
 
-					const string = this._showString('Ready');
+				if (aliens.count() === 0) {
+					if (this.lifeCountView.currentLives === 0) {
+						throw 'Hey show an end scene!';
+					}
 
-					setTimeout(() => {
-						this.currentLevel.unlock();
-						string.destroy();
-						this.sceneState = 'play';
-					}, 1000);
+					if (this._arePlayersDead()) {
+						const playerOne = this._createPlayerOne();
+						this.players.add(playerOne);
+						this.currentLevel.setPlayersDead(false);
+
+						const string = this._showString('Ready');
+
+						setTimeout(() => {
+							this.currentLevel.unlock();
+							string.destroy();
+							this.sceneState = 'play';
+						}, 1000);
+					}
 				}
 
 				break;
@@ -265,7 +271,7 @@ export class SpaceScene extends Phaser.Scene {
 
 	_completeLevel() {
 		this.currentLevel = null;
-		GameState.getInstance().transition(this, { lifeCount: this.lifeCountView.livesLeft });
+		GameState.getInstance().transition(this);
 	}
 
 	_levelLoaded() {
