@@ -30,7 +30,9 @@ You need git bash and a command to develop. This is what you'll do:
 - [ ] Explore character designs with Andre
 	* They'll be based off traditional garb of the Ute nation
 - [ ] Discuss the main story beats with Andre and begin "background" design
-	* I'm reluctant to call them backgrounds, since 
+	* I'm reluctant to call them backgrounds, since they are worlds for the player to interact with
+- [ ] Add nice way to present a transmission request
+	* The one I made is absolute trash
 
 ## TODO
 
