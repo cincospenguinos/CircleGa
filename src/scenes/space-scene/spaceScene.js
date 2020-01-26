@@ -154,7 +154,7 @@ export class SpaceScene extends Phaser.Scene {
 
 				if (aliens.count() === 0) {
 					if (this.lifeCountView.currentLives === 0) {
-						throw 'Hey show an end scene!';
+						GameState.getInstance().returnToLastLevel(this);
 					}
 
 					if (this._arePlayersDead()) {

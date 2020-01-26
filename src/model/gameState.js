@@ -42,6 +42,13 @@ export class GameState {
 		return playerSelectors.getLifeTotal(this.getState());
 	}
 
+	returnToLastLevel(scene) {
+		const lastLevel = playerSelectors.getCurrentLevel(this.getState());
+		store.dispatch(playerActions.resetLifeTotal());
+
+		this.transition(scene, { orderData: `level-${lastLevel}_1` });
+	}
+
 	setTutorialFinished(bool) {
 		this.finishedTutorial = bool;
 	}
@@ -59,7 +66,8 @@ export class GameState {
 	}
 
 	getSceneInfo(opts = {}) {
-		const orderData = Constants.order[this.index].split('-');
+		const order = opts.order || Constants.order[this.index];
+		const orderData = order.split('-');
 		const key = this._sceneFor(orderData[0]);
 
 		return {
@@ -104,7 +112,6 @@ export class GameState {
 		const nextLevel = parseInt(info.content[0]);
 		const lastLevel = playerSelectors.getCurrentLevel(this.getState());
 
-		debugger;
 		return nextLevel === lastLevel + 1;
 	}
 }
